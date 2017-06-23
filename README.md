@@ -1,4 +1,4 @@
-# Summoners War Merger
+# Summoners War Merger (hosted at [GitHub Pages](https://wolven531.github.io/sw_merger/))
 
 ## Goals
 - Demonstrate **full stack** technical capabilities 💻 
