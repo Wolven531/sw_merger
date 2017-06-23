@@ -26,7 +26,7 @@
 ## Technologies
 - Angular 2.0
   - ![Angular 2.0][logoAngular] 
-  - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
+  - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
 - Babel transpiler
   - ![Babel][logoBabel] 
   - **LOTS** of help from [this](https://github.com/babel/example-node-server)  (babel example node server) repository (from the babel team itself)
@@ -35,11 +35,11 @@
   - [eventbrite](https://www.eventbrite.com/engineering/learning-es6-for-of-loop/) has a surprisingly cogent article
   - [exploringjs.com](http://exploringjs.com/es6/ch_oop-besides-classes.html) was beyond helpful
 - Node v6.11.0
-  - ![Node v6.11.0][logoNode]
+  - ![Node v6.11.0][logoNode] 
 - NPM 3.10.10
-  - ![NPM 3.10.10][logoNpm]
+  - ![NPM 3.10.10][logoNpm] 
 - Visual Studio Code 1.13.1
-  - ![Visual Studio Code 1.13.1][logoVsc]
+  - ![Visual Studio Code 1.13.1][logoVsc] 
 
 [logoAngular]: ./SummSim/public/img/logo_angular.png "AngularJS"
 [logoBabel]: ./SummSim/public/img/logo_babel.png "Babel"
