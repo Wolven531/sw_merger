@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+# Summoners War Merger
 
-You can use the [editor on GitHub](https://github.com/Wolven531/sw_merger/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Goals
+- Demonstrate **full stack** technical capabilities 💻
+- Demonstrate _rapid_ 🏁 prototyping
+- Sharpen `Angular 2.0` skills
+- Sharpen general `JavaScript` skills
+  - Utilize `Babel` (practice setting up automatic code transpilation)
+  - Utilize ESlint
+    - Safer code ⛑
+    - Nicely formatted 🙌
+    - Visual Studio Code has a beautiful integration for this already ❤️
+  - Utilize ES6+ where possible
+    - ✅ const
+    - ✅ let
+- Sharpen general server engineering skills
+  - Explore new `brotli` encoding (and other image / video encodings)
+  - Practice `NodeJS` package management (`package.json`, `npm`, `nodemon`) ![]()
+  - Practice `GitHub` issue tracking and project management
+  - Practice integrating multiple data sources
+    - [SummonersWar.co](https://summonerswar.co)
+    - [SWFR (SW France)](http://www.swfr.tv/summon-simulator)
+- Make useful tool for gaming
+  - **Avid** SW player (as are most of my friends)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Technologies
+- ![NodeJs][logoNode]
+- ![Angular 2.0][logoAngular]
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Wolven531/sw_merger/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[logoNode]: ./public/img/logo_node.png "NodeJS"
+[logoAngular]: ./public/img/logo_angular.png "AngularJS"
