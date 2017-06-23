@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "start": "nodemon ./bin/www --exec babel-node --presets es2015,stage-2"
+    "start": "nodemon ./bin/www --ignore ./data/ --exec babel-node --presets es2015,stage-2"
   },
   "dependencies": {
     "async": "^2.4.1",
@@ -21,6 +21,7 @@
     "jquery": "^3.2.1",
     "jsdom": "^11.0.0",
     "minimal-request-promise": "^1.4.0",
+    "moment": "^2.18.1",
     "morgan": "~1.8.2",
     "ngrok": "^2.2.11",
     "nodemon": "^1.11.0",

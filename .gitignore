@@ -59,3 +59,10 @@ typings/
 
 # mac files
 .DS_Store
+
+# data directory
+SummSim/data/dark/*.json
+SummSim/data/fire/*.json
+SummSim/data/light/*.json
+SummSim/data/water/*.json
+SummSim/data/wind/*.json
