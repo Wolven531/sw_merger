@@ -24,17 +24,22 @@
   - **Avid** SW player (as are most of my friends) 😎🤓
 
 ## Technologies
-- ![Angular 2.0][logoAngular] Angular 2.0
+- Angular 2.0
+  - ![Angular 2.0][logoAngular] 
   - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
-- ![Babel][logoBabel] Babel transpiler
-  - **LOTS** of help from [this](https://github.com/babel/example-node-server)  (babel example node server) repository (from babel)
+- Babel transpiler
+  - ![Babel][logoBabel] 
+  - **LOTS** of help from [this](https://github.com/babel/example-node-server)  (babel example node server) repository (from the babel team itself)
   - [es6-features.org](http://es6-features.org/) was useful for reference on new features
   - [pawelgrzybek.com](https://pawelgrzybek.com/whats-new-in-ecmascript-2017/) helped a bit too
   - [eventbrite](https://www.eventbrite.com/engineering/learning-es6-for-of-loop/) has a surprisingly cogent article
   - [exploringjs.com](http://exploringjs.com/es6/ch_oop-besides-classes.html) was beyond helpful
-- ![Node v6.11.0][logoNode] Node v6.11.0
-- ![NPM 3.10.10][logoNpm] NPM 3.10.10
-- ![Visual Studio Code 1.13.1][logoVsc] Visual Studio Code 1.13.1
+- Node v6.11.0
+  - ![Node v6.11.0][logoNode]
+- NPM 3.10.10
+  - ![NPM 3.10.10][logoNpm]
+- Visual Studio Code 1.13.1
+  - ![Visual Studio Code 1.13.1][logoVsc]
 
 [logoAngular]: ./SummSim/public/img/logo_angular.png "AngularJS"
 [logoBabel]: ./SummSim/public/img/logo_babel.png "Babel"
