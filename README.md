@@ -24,8 +24,14 @@
   - **Avid** SW player (as are most of my friends)
 
 ## Technologies
-- ![NodeJs][logoNode]
 - ![Angular 2.0][logoAngular]
+- ![Babel][logoBabel]
+- ![Node v6.11.0][logoNode]
+- ![NPM 3.10.10][logoNpm]
+- ![Visual Studio Code 1.13.1][logoVsc]
 
-[logoNode]: ./public/img/logo_node.png "NodeJS"
-[logoAngular]: ./public/img/logo_angular.png "AngularJS"
+[logoAngular]: ./SummSim/public/img/logo_angular.png "AngularJS"
+[logoBabel]: ./SummSim/public/img/logo_babel.png "Babel"
+[logoNode]: ./SummSim/public/img/logo_node.png "NodeJS"
+[logoNpm]: ./SummSim/public/img/logo_npm.png "NPM"
+[logoVsc]: ./SummSim/public/img/logo_vsc.png "Visual Studio Code [logo has MIT license]"
