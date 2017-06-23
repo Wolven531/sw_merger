@@ -2,10 +2,11 @@
 
 ## Goals
 
-- Demonstrate **full stack** technical capabilities 💻 
+- Demonstrate **full stack** technical capabilities 💻
 - Demonstrate _rapid_ 🏁 prototyping
 - Make useful tool for gaming
-  - **Avid** SW player (as are most of my friends) 😎🤓
+  - I am an **Avid** SW player (as are most of my friends) 🤓
+  - A **lot** of my friends play SW 😎
 
 ### Goal - Sharpen `Angular 2.0` skills
 
@@ -28,7 +29,7 @@
 - Practice `GitHub` issue tracking and project management
 - Practice integrating multiple data sources
   - [SummonersWar.co](https://summonerswar.co)
-  - [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷 
+  - [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷
 
 ## Technologies
 
