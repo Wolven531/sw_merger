@@ -1,6 +1,7 @@
 # Summoners War Merger (hosted at [GitHub Pages](https://wolven531.github.io/sw_merger/))
 
 ## Goals
+
 - Demonstrate **full stack** technical capabilities 💻 
 - Demonstrate _rapid_ 🏁 prototyping
 - Make useful tool for gaming
@@ -9,6 +10,7 @@
 ### Goal - Sharpen `Angular 2.0` skills
 
 ### Goal - Sharpen general `JavaScript` skills
+
 - Utilize `Babel`
   - ✅ Practice setting up automatic code transpilation
 - Utilize ESlint
@@ -18,7 +20,9 @@
 - Utilize ES6+ where possible
   - ✅ const
   - ✅ let
+
 ### Goal - Sharpen general server engineering skills
+
 - Explore new `brotli` encoding (and other image / video encodings)
 - Practice `NodeJS` package management (`package.json`, `npm`, `nodemon`)
 - Practice `GitHub` issue tracking and project management
@@ -27,6 +31,7 @@
   - [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷 
 
 ## Technologies
+
 - Angular `2.0`
   - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
 - Babel transpiler
