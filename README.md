@@ -5,7 +5,7 @@
 - Demonstrate **full stack** technical capabilities 💻
 - Demonstrate _rapid_ 🏁 prototyping
 - Make useful tool for gaming
-  - I am an **Avid** SW player (as are most of my friends) 🤓
+  - I am an **avid** SW player (as are most of my friends) 🤓
   - A **lot** of my friends play SW 😎
 
 ### Goal - Sharpen `Angular 2.0` skills
