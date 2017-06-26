@@ -1,0 +1,11 @@
+<div class="app-cont">
+    <h1>{{title}}</h1>
+    <div class="monster-cont">
+        <h2>All Monsters</h2>
+        <ul class="monsters">
+            <li *ngFor="let tmpMon of monsters">
+                <span class="badge">{{tmpMon.id}}</span> {{tmpMon.name}}
+            </li>
+        </ul>
+    </div>
+</div>
