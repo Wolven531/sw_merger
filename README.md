@@ -19,8 +19,9 @@
   - 🙌 Nicely formatted
   - ❤️ Visual Studio Code has a beautiful integration for this already
 - Utilize ES6+ where possible
-  - ✅ const
-  - ✅ let
+  - ✅ const vs let
+  - ✅ Template literals
+  - ✅ Tagged template literals ([Mozilla's MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) was very useful)
 
 ### Goal - Sharpen general server engineering skills
 
