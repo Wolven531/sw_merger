@@ -5,10 +5,23 @@
 - Demonstrate **full stack** technical capabilities 💻
 - Demonstrate _rapid_ 🏁 prototyping
 - Make useful tool for gaming
-  - I am an **Avid** SW player (as are most of my friends) 🤓
+  - I am an **avid** SW player (as are most of my friends) 🤓
   - A **lot** of my friends play SW 😎
 
 ### Goal - Sharpen `Angular 2.0` skills
+
+- Utilize TypeScript for the Angular application
+  - ✅ All components are to be written in TypeScript, as the Angular team suggests (and Angular quick start generates)
+  - ✅ Utilize properties and components properly
+  - ⏳ Add proper routing (and hash navigation where applicable)
+- Maintain CSS Quality
+  - ✅ No `!important` flags are to be used in the CSS
+  - ✅ Only `em` units are to be used in the CSS
+  - ✅ No repeated identifiers
+  - ⏳ Add build step to automatically verify CSS formatting / quality (something like ESLint for CSS)
+- Customize and enhance site from generated code
+  - ⏳ Add accurate favicon to admin site (after creating one)
+  - ⏳ Add FB OpenGraph (and other social platforms) meta tags
 
 ### Goal - Sharpen general `JavaScript` skills
 
