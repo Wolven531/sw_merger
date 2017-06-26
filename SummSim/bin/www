@@ -1,66 +1,67 @@
 #!/usr/bin/env node
 'use strict';
 
-var app = require('../app');
-var debug = require('debug')('app:server');
-var http = require('http');
-var ngrok = require('ngrok');
+const app = require('../app');
+const debug = require('debug')('app:server');
+const http = require('http');
+const ngrok = require('ngrok');
 
-var port = process.env.PORT || 5555;
-var optsNgrok = {
-    proto: 'http', // http|tcp|tls 
-    addr: port, // port or network address 
-    // auth: 'user:pwd', // http basic authentication for tunnel 
-    // subdomain: 'alex', // reserved tunnel name https://alex.ngrok.io 
-    // authtoken: '12345', // your authtoken from ngrok.com 
-    region: 'us' // one of ngrok regions (us, eu, au, ap), defaults to us, 
-    // configPath: '~/git/project/ngrok.yml' // custom path for ngrok config file 
+const port = process.env.PORT || 5555;
+const optsNgrok = {
+    proto: 'http', // http|tcp|tls
+    addr: port, // port or network address
+    // auth: 'user:pwd', // http basic authentication for tunnel
+    // subdomain: 'alex', // reserved tunnel name https://alex.ngrok.io
+    // authtoken: '12345', // your authtoken from ngrok.com
+    region: 'us', // one of ngrok regions (us, eu, au, ap), defaults to us,
+    // configPath: '~/git/project/ngrok.yml' // custom path for ngrok config file
 };
+
 app.set('port', port);
 
 // NOTE: event listener for HTTP server 'error' event.
-var onError = function (error) {
+const onError = function(error) {
     if (error.syscall !== 'listen') {
         throw error;
     }
 
-    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
     // NOTE: handle specific listen errors with friendly messages
     switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
+    case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+    case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+    default:
+        throw error;
     }
 };
 
 // NOTE: event listener for HTTP server 'listening' event.
-var onListening = function () {
-    var addr = server.address();
-    var bind = (typeof addr === 'string') ? addr : addr.port;
-    var dispStart = 'Whoo! Server started up!';
-    var dispLoc = '| LOC=localhost:' + bind + ' |';
-    var dispPub;
+const onListening = function() {
+    // const addr = server.address();
+    // const bind = (typeof addr === 'string') ? addr : addr.port;
 
-    ngrok.connect(optsNgrok, function (err, url) {
+    ngrok.connect(optsNgrok, function(err, url) {
         if (err || !url) {
             console.error(err || 'noUrl');
         }
-        dispPub = '| PUB=' + url + ' |';
 
-        console.info(dispStart, dispLoc, dispPub);
-        debug(dispStart + dispLoc + dispPub);
+        console.info(
+            `
+            GENERATE RANDOM = ${ url }
+            VIEW ALL MONS = ${ url }/monsters
+            `
+        );
     });
 };
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

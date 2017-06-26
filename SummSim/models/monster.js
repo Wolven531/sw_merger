@@ -14,12 +14,9 @@ const SummMon = function(data, opts) {
 
     if (!opts) {
         opts = {
-            memOnly: false,
+            memOnly: true,
         };
     }
-
-    self._tsCreation = moment.utc();
-    self.missingFields = [];
 
     if (!data) {
         console.warn(`[${ self.getModelName() }] [cosntructor] data was missing or null`);
@@ -28,6 +25,14 @@ const SummMon = function(data, opts) {
     if (typeof data === 'string') {
         data = JSON.parse(data);
     }
+
+    // NOTE: for now carry forward the serialize time
+    if (data.hasOwnProperty('_tsSerialize')) {
+        self._tsSerialize = data._tsSerialize;
+    }
+
+    self._tsCreation = moment.utc();
+    self.missingFields = [];
 
     // NOTE: awill: consider automating this
     // using the enum, convert below initialization code to loop && function
@@ -206,6 +211,9 @@ SummMon.MONSTER_ELEMENT = {
     Light: 'light',
     Water: 'water',
     Wind: 'wind',
+    asArray: function() {
+        return ['dark', 'fire', 'light', 'water', 'wind'];
+    },
 };
 
 /*
@@ -233,7 +241,7 @@ SummMon.MONSTER_PROPERTIES = {
     ld: {
         internal_prop: 'ld',
         required: true,
-        default: '',
+        default: false,
         display: 'Legendary',
     },
     star_level: {
@@ -386,29 +394,29 @@ SummMon.prototype.saveToFile = function(opts) {
 SummMon.prototype.serialize = function() {
     const self = this;
 
-    let returnVal = {
-        id: self.id,
-        name: self.name,
-        isMissingRequiredProp: self.isMissingRequiredProp(),
-        isMissingProp: self.isMissingProp(),
-        missingFields: self.missingFields,
-        type: self.type,
-        isLegend: self.isLegendary,
-        star: self.star_level,
-        img: self.image_base,
-        img_a: self.image_awakened,
-        level: self.level,
-        hp: self.base_hp,
-        attack: self.base_attack,
-        def: self.base_defense,
-        speed: self.base_speed,
-        crit_r: self.base_crit_rate,
-        crit_d: self.base_crit_damage,
-        resist: self.base_resistance,
-        accuracy: self.base_accuracy,
-        _tsCreation: self._tsCreation,
-        _tsSerialize: moment.utc(),
-    };
+    let returnVal = {};
+    returnVal[SummMon.MONSTER_PROPERTIES.id.internal_prop] = self.id;
+    returnVal[SummMon.MONSTER_PROPERTIES.name.internal_prop] = self.name;
+    returnVal[SummMon.MONSTER_PROPERTIES.type.internal_prop] = self.type;
+    returnVal[SummMon.MONSTER_PROPERTIES.ld.internal_prop] = self.isLegendary;
+    returnVal[SummMon.MONSTER_PROPERTIES.star_level.internal_prop] = self.star_level;
+    returnVal[SummMon.MONSTER_PROPERTIES.img_base.internal_prop] = self.image_base;
+    returnVal[SummMon.MONSTER_PROPERTIES.img_awakened.internal_prop] = self.image_awakened;
+    returnVal[SummMon.MONSTER_PROPERTIES.level.internal_prop] = self.level;
+    // NOTE: behind non-required props
+    returnVal[SummMon.MONSTER_PROPERTIES.base_hp.internal_prop] = self.base_hp;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_attack.internal_prop] = self.base_attack;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_defense.internal_prop] = self.base_defense;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_speed.internal_prop] = self.base_speed;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_crit_rate.internal_prop] = self.base_crit_rate;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_crit_damage.internal_prop] = self.base_crit_damage;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_resistance.internal_prop] = self.base_resistance;
+    returnVal[SummMon.MONSTER_PROPERTIES.base_accuracy.internal_prop] = self.base_accuracy;
+    returnVal.isMissingRequiredProp = self.isMissingRequiredProp();
+    returnVal.isMissingProp = self.isMissingProp();
+    returnVal.missingFields = self.missingFields;
+    returnVal._tsCreation = self._tsCreation;
+    returnVal._tsSerialize = moment.utc();
 
     return JSON.stringify(returnVal);
 };

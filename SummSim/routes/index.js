@@ -102,7 +102,8 @@ const simLegendarySummon = function(cb) {
             .get(url, optsSimReq)
             .then(function(resp) {
                 const body = resp.body;
-                const newMon = new SummMon(body);
+                // NOTE: memOnly === false forces a save to disk
+                const newMon = new SummMon(body, { memOnly: false });
 
                 returnVal.urls.searchNameUsed = newMon.name;
                 returnVal.monster = newMon;
