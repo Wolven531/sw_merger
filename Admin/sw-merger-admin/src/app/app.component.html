@@ -13,7 +13,7 @@
     <div class="monster-cont">
         <h2>All Monsters</h2>
         <ul class="monsters">
-            <li *ngFor="let tmpMon of monsters" (click)="onSelect(tmpMon)">
+            <li *ngFor="let tmpMon of monsters" (click)="onSelect(tmpMon)" [class.selected]="tmpMon === selectedMon">
                 <span class="badge">{{tmpMon.id}}</span> {{tmpMon.name}}
             </li>
         </ul>

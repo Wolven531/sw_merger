@@ -9,9 +9,14 @@ h1 {
     text-align: center;
 }
 
-.selected {
-    background-color: #FF0;
+.monsters li.selected,
+.monsters li.selected:hover {
+    background-color: #090;
     color: #FFF;
+}
+
+.monsters li.selected:hover {
+    background-color: #0C0;
 }
 
 .monster-cont {
@@ -32,16 +37,6 @@ h1 {
     margin-bottom: .3em;
     text-align: left;
     border-radius: .3em;
-    /* position: relative; */
-    /* left: 0; */
-    /* margin: .5em; */
-    /* height: 1.6em; */
-    /* border-radius: 4px; */
-}
-
-.monsters li.selected:hover {
-    background-color: #AAA;
-    color: white;
 }
 
 .monsters li:hover {
