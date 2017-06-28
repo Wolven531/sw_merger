@@ -1,9 +1,19 @@
 <div class="app-cont">
     <h1>{{title}}</h1>
+    <div *ngIf="selectedMon">
+        <h2>Details for: {{selectedMon.name}}</h2>
+        <div>
+            <label>ID: </label>{{selectedMon.id}}
+        </div>
+        <div>
+            <label for="selectedMon.name">Name: </label>
+            <input [(ngModel)]="selectedMon.name" name="selectedMon.name" placeholder="Name" />
+        </div>
+    </div>
     <div class="monster-cont">
         <h2>All Monsters</h2>
         <ul class="monsters">
-            <li *ngFor="let tmpMon of monsters">
+            <li *ngFor="let tmpMon of monsters" (click)="onSelect(tmpMon)">
                 <span class="badge">{{tmpMon.id}}</span> {{tmpMon.name}}
             </li>
         </ul>

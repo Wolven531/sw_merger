@@ -48,6 +48,10 @@ const ALL_MONSTERS: SummMon[] = [
 export class AppComponent {
     title = 'SW-Merger Admin Tool';
     monsters = ALL_MONSTERS;
+    selectedMon: SummMon;
+    onSelect(mon: SummMon): void {
+        this.selectedMon = mon;
+    };
     // mon: SummMon = {
     //     id: 1,
     //     name: 'asdf'
