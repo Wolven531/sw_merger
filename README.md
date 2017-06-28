@@ -40,12 +40,12 @@
 
 ### Goal - Sharpen general server engineering skills
 
-- Explore new `brotli` encoding (and other image / video encodings)
-- Practice `NodeJS` package management (`package.json`, `npm`, `nodemon`)
-- Practice `GitHub` issue tracking and project management
-- Practice integrating multiple data sources
-  - [SummonersWar.co](https://summonerswar.co)
-  - [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷
+- ✅ Explore new `brotli` encoding (and other image / video encodings)
+- ✅ Practice `NodeJS` package management (`package.json`, `npm`, `nodemon`)
+- ✅ Practice `GitHub` issue tracking and project management
+- ✅ Practice integrating multiple data sources
+  - ✅ [SummonersWar.co](https://summonerswar.co)
+  - ✅ [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷
 
 ## Technologies
 
