@@ -13,6 +13,7 @@
 - Utilize TypeScript for the Angular application
   - ✅ All components are to be written in TypeScript, as the Angular team suggests (and Angular quick start generates)
   - ✅ Utilize properties and components properly
+  - ✅ Utilize import / export and modular design (appropriately split classes, modules, components, css, and html)
   - ⏳ Add proper routing (and hash navigation where applicable)
 - Maintain CSS Quality
   - ✅ No `!important` flags are to be used in the CSS
