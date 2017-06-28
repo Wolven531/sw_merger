@@ -1,16 +1,14 @@
 h1 {
     color: #369;
-    /*color: #f00;*/
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 275%;
+    font-size: 2.75em;
 }
 
 .app-cont {
     text-align: center;
 }
 
-.monsters li.selected,
-.monsters li.selected:hover {
+.monsters li.selected, .monsters li.selected:hover {
     background-color: #090;
     color: #FFF;
 }
@@ -52,9 +50,5 @@ h1 {
     padding: .8em;
     background-color: #369;
     border-radius: .3em 0 0 .3em;
-    margin-right: 1em; 
-    /* line-height: 1em; */
-    /* position: relative; */
-    /* left: -1px; */
-    /* top: -4px; */
+    margin-right: 1em;
 }

@@ -1,0 +1,10 @@
+<div *ngIf="monster" id="monster-detail">
+    <h2>Details for: {{monster.name}}</h2>
+    <div>
+        <label for="monster.id">ID:</label> {{monster.id}}
+    </div>
+    <div>
+        <label for="monster.name">Name: </label>
+        <input [(ngModel)]="monster.name" name="monster.name" placeholder="Name" />
+    </div>
+</div>

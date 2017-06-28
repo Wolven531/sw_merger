@@ -1,20 +1,13 @@
 <div class="app-cont">
     <h1>{{title}}</h1>
-    <div *ngIf="selectedMon">
-        <h2>Details for: {{selectedMon.name}}</h2>
-        <div>
-            <label>ID: </label>{{selectedMon.id}}
-        </div>
-        <div>
-            <label for="selectedMon.name">Name: </label>
-            <input [(ngModel)]="selectedMon.name" name="selectedMon.name" placeholder="Name" />
-        </div>
-    </div>
+    <monster-detail [monster]="selectedMon"></monster-detail>
     <div class="monster-cont">
         <h2>All Monsters</h2>
         <ul class="monsters">
-            <li *ngFor="let tmpMon of monsters" (click)="onSelect(tmpMon)" [class.selected]="tmpMon === selectedMon">
-                <span class="badge">{{tmpMon.id}}</span> {{tmpMon.name}}
+            <li *ngFor="let currMon of monsters"
+                (click)="onSelect(currMon)"
+                [class.selected]="currMon === selectedMon">
+                <span class="badge">{{currMon.id}}</span> {{currMon.name}}
             </li>
         </ul>
     </div>

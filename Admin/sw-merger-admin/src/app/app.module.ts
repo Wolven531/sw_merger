@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';// NOTE: NgModel lives here
-
 import { AppComponent } from './app.component';
+import { MonsterDetailComponent } from './monster-detail.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        MonsterDetailComponent,
     ],
     imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+
+};

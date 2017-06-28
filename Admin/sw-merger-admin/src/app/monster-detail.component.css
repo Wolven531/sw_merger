@@ -1,0 +1,9 @@
+#monster-detail h2 {
+    background-color: #DDD;
+    border-radius: .3em;
+    font-weight: bolder;
+    margin: 0 auto 1em auto;
+    padding: 1em;
+    text-align: center;
+    width: 33%;
+}
