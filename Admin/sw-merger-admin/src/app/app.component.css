@@ -14,25 +14,22 @@ h2 {
     padding-top: 0;
 }
 
-nav a {
+nav a, nav a:visited, a:link {
+    background-color: #FFF;
+    border-radius: .3em;
+    color: #00F;
+    display: inline-block;
+    margin-top: 1em;
     padding: .5em 1em;
     text-decoration: none;
-    margin-top: 1em;
-    display: inline-block;
-    background-color: #EEE;
-    border-radius: .3em;
-}
-
-nav a:visited, a:link {
-    color: #66F;
 }
 
 nav a:hover {
-    color: #00F;
     background-color: #CCC;
+    color: #00F;
 }
 
 nav a.active {
-    color: #009;
-    background-color: #0F0;
+    background-color: #090;
+    color: #FFF;
 }

@@ -9,28 +9,27 @@
 }
 
 label {
-    display: inline-block;
-    width: 3em;
-    margin: .5em 0;
     color: #666;
+    display: inline-block;
     font-weight: bold;
+    margin: .5em 0;
+    width: 3em;
 }
 
 input {
-    height: 2em;
     font-size: 1em;
+    height: 2em;
     padding-left: .4em;
 }
 
 button {
-    margin-top: 2em;
-    font-family: Arial;
     background-color: #EEE;
     border: none;
-    padding: .5em 1em;
     border-radius: .3em;
-    cursor: pointer;
     cursor: hand;
+    font-family: Arial;
+    margin-top: 2em;
+    padding: .5em 1em;
 }
 
 button:hover {

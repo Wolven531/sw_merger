@@ -12,24 +12,24 @@
 }
 
 .monsters {
-    margin: 0 auto 2em auto;
     list-style-type: none;
+    margin: 0 auto 2em auto;
     padding: 0;
     width: 15em;
 }
 
 .monsters li {
-    cursor: pointer;
     background-color: #EEE;
-    padding: 0;
-    margin-bottom: .3em;
-    text-align: left;
     border-radius: .3em;
+    cursor: pointer;
+    margin-bottom: .3em;
+    padding: 0;
+    text-align: left;
 }
 
 .monsters li:hover {
-    color: #00F;
     background-color: #CCC;
+    color: #00F;
     left: .1em;
 }
 
@@ -41,4 +41,6 @@
     background-color: #369;
     border-radius: .3em 0 0 .3em;
     margin-right: 1em;
+    min-width: 1.5em;
+    text-align: right;
 }

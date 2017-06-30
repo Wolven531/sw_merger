@@ -8,9 +8,7 @@
         </li>
     </ul>
     <div *ngIf="selectedMon">
-        <h2>
-            {{selectedMon.name | uppercase}} is selected.
-        </h2>
+        <h2>"{{selectedMon.name | uppercase}}" is selected</h2>
         <button (click)="goToDetail()">View Details</button>
     </div>
 </div>
