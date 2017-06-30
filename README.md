@@ -15,10 +15,11 @@
   - ✅ Utilize properties and components properly
   - ✅ Utilize import / export and modular design (appropriately split classes, modules, components, css, and html)
   - ✅ Utilize dependency injection (e.g. inject data service / mock data service)
-  - ⏳ Add proper routing (and hash navigation where applicable)
+  - ✅ Add routing using Angular `Router` injection and route configuratino
+  - ⏳ Add hash navigation where applicable
 - Maintain CSS Quality
   - ✅ No `!important` flags are to be used in the CSS
-  - ✅ Only `em` units are to be used in the CSS
+  - ✅ Only `em` or `%` units are to be used in the CSS
   - ✅ No repeated identifiers
   - ⏳ Add build step to automatically verify CSS formatting / quality (something like ESLint for CSS)
 - Customize and enhance site from generated code
@@ -35,6 +36,7 @@
   - ❤️ Visual Studio Code has a beautiful integration for this already
 - Utilize ES6+ where possible
   - ✅ const vs let
+  - ✅ arrow functions (new context of `this`, more terse syntax)
   - ✅ Template literals
   - ✅ Tagged template literals ([Mozilla's MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) was very useful)
 
