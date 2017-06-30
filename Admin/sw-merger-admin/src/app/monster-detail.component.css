@@ -2,8 +2,43 @@
     background-color: #DDD;
     border-radius: .3em;
     font-weight: bolder;
-    margin: 0 auto 1em auto;
+    margin: 1em auto;
     padding: 1em;
     text-align: center;
     width: 33%;
+}
+
+label {
+    display: inline-block;
+    width: 3em;
+    margin: .5em 0;
+    color: #666;
+    font-weight: bold;
+}
+
+input {
+    height: 2em;
+    font-size: 1em;
+    padding-left: .4em;
+}
+
+button {
+    margin-top: 2em;
+    font-family: Arial;
+    background-color: #EEE;
+    border: none;
+    padding: .5em 1em;
+    border-radius: .3em;
+    cursor: pointer;
+    cursor: hand;
+}
+
+button:hover {
+    background-color: #CCC;
+}
+
+button:disabled {
+    background-color: #EEE;
+    color: #CCC;
+    cursor: auto;
 }

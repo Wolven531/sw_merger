@@ -1,14 +1,8 @@
 <div class="app-cont">
     <h1>{{title}}</h1>
-    <monster-detail [monster]="selectedMon"></monster-detail>
-    <div class="monster-cont">
-        <h2>All Monsters</h2>
-        <ul class="monsters">
-            <li *ngFor="let currMon of monsters"
-                (click)="onSelect(currMon)"
-                [class.selected]="currMon === selectedMon">
-                <span class="badge">{{currMon.id}}</span> {{currMon.name}}
-            </li>
-        </ul>
-    </div>
+    <nav>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/monsters" routerLinkActive="active">Monsters</a>
+    </nav>
+    <router-outlet></router-outlet>
 </div>

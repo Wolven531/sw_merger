@@ -1,0 +1,10 @@
+<div class="dashboard-cont">
+    <h3>Top Monsters</h3>
+    <div class="grid grid-pad">
+        <a *ngFor="let mon of monsters" [routerLink]="['/detail', mon.id]" class="col-1-4">
+            <div class="module monster">
+                <h4>{{mon.name}}</h4>
+            </div>
+        </a>
+    </div>
+</div>

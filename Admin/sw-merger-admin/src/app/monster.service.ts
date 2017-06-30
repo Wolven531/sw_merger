@@ -7,4 +7,11 @@ export class MonsterService {
     getMonsters(): Promise<SummMon[]> {
         return Promise.resolve(ALL_MONSTERS);
     };
+    getMonster(id: number): Promise<SummMon> {
+        return this.getMonsters().then(monsters => {
+           return monsters.find(monster => {
+               return monster.id === id;
+           });
+        });
+    };
 };
