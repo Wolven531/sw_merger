@@ -10,16 +10,33 @@
 
 label {
     color: #666;
-    display: inline-block;
     font-weight: bold;
-    margin: .5em 0;
-    width: 3em;
+    height: 2em;
+    text-align: left;
+    width: 7em;
 }
 
-input {
-    font-size: 1em;
+input,
+label,
+.mon-stat .val {
+    display: inline-block;
+}
+
+.mon-stat .val {
     height: 2em;
-    padding-left: .4em;
+    text-align: right;
+    width: 9em;
+}
+
+input[type="checkbox"] {
+    margin-left: 9em;
+}
+
+input[type="text"] {
+    font-size: 1em;
+    padding-right: .5em;
+    text-align: right;
+    width: 7em;
 }
 
 button {

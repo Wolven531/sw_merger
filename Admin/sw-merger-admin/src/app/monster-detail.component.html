@@ -1,11 +1,34 @@
 <div *ngIf="monster" id="monster-detail">
     <h2>Details for: {{monster.name}}</h2>
-    <div>
-        <label for="monster.id">ID:</label> {{monster.id}}
-    </div>
-    <div>
-        <label for="monster.name">Name: </label>
-        <input [(ngModel)]="monster.name" name="monster.name" placeholder="Name" />
+    <div class="mon-stat">
+        <div>
+            <label for="monster.id">ID:</label>
+            <span class="val">{{monster.id}}</span>
+        </div>
+        <div>
+            <label for="monster.isLegendary">Is Legendary: </label>
+            <span class="val">
+                <input [(ngModel)]="monster.isLegendary" type="checkbox" name="monster.isLegendary" />
+            </span>
+        </div>
+        <div>
+            <label for="monster.name">Name: </label>
+            <span class="val">
+                <input [(ngModel)]="monster.name" type="text" name="monster.name" placeholder="Name" />
+            </span>
+        </div>
+        <div>
+            <label for="monster.type">Type: </label>
+            <span class="val">
+                <input [(ngModel)]="monster.type" type="text" name="monster.type" placeholder="Type" />
+            </span>
+        </div>
+        <div>
+            <label for="monster.star_level">Star Level: </label>
+            <span class="val">
+                <input [(ngModel)]="monster.star_level" type="text" name="monster.star_level" placeholder="Star Level" />
+            </span>
+        </div>
     </div>
     <button (click)="goBack()">Back</button>
 </div>
