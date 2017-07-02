@@ -8,6 +8,19 @@ const SummMon = require('../../models/monster');
 const MonsterMgr = function() {
     let internalMap = {};
 
+    const getMonster = (monId) => {
+        if (!monId) {
+            return null;
+        }
+        // NOTE: awill: if performance becomes a pain, remove reflection checks like
+        // this and just auto force the variable to a string via explicit casting
+        // (instead of checking then converting, only convert)
+        if (typeof monId !== 'string') {
+            monId = String(monId);
+        }
+
+        return internalMap[monId];
+    };
     const getMonsterMap = (forceRefresh) => {
         console.info(`${ this.compName } [getMonsterMap] params: forceRefresh=${ forceRefresh }`);
         // NOTE: this adds explicit type safety for the optional param
@@ -34,6 +47,24 @@ const MonsterMgr = function() {
             results.push(internalMap[keys[i]]);
         }
         return results;
+    };
+    const updateMonster = (monId, monster) => {
+        if (!monId) {
+            return null;
+        }
+        if (!monster) {
+            return null;
+        }
+        if (typeof monId !== 'string') {
+            monId = String(monId);
+        }
+        // NOTE: this forces any monster that did not already exist to fail an update attempt
+        if (!getMonster(monId)) {
+            return null;
+        }
+        internalMap[monId] = monster;
+
+        return internalMap[monId];
     };
     const loadFromDisk = () => {
         console.info(`${ this.compName } [loadFromDisk] About to load from disk...`);
@@ -88,8 +119,10 @@ const MonsterMgr = function() {
     this.compName = '[MonsterMgr]';
     this.init = init;
     this.loadFromDisk = loadFromDisk;
+    this.getMonster = getMonster;
     this.getMonsterMap = getMonsterMap;
     this.getMonsterArray = getMonsterArray;
+    this.updateMonster = updateMonster;
 };
 
 module.exports = MonsterMgr;
