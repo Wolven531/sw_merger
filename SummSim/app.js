@@ -8,8 +8,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const rp = require('minimal-request-promise');
 
-const index = require('./routes/index');
+const routeIndex = require('./routes/index');
 const routeMonsters = require('./routes/monsters');
+const routeGenerator = require('./routes/generator');
 
 const app = express();
 
@@ -38,8 +39,9 @@ app.use('/*', (req, res, next) => {
     next();
 });
 
-app.use('/', index);
+app.use('/', routeIndex);
 app.use('/monsters/', routeMonsters);
+app.use('/generator/', routeGenerator);
 
 app.get('/heartbeat/', (req, res, next) => {
     const webApiUrl = 'http://127.0.0.1:4040/api/tunnels';

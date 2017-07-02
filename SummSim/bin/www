@@ -56,16 +56,6 @@ const onListening = () => {
 
         app.set('ngrokUrl', url);
         console.info(`[www] [listen] Server available at ${ url }`);
-
-        console.info(
-            `
-            GENERATE RANDOM = GET ${ url }
-            HEARTBEAT = GET ${ url }/heartbeat
-            VIEW ALL MONS = GET ${ url }/monsters
-            VIEW ONE MON = GET ${ url }/monsters/:id
-            UPDATE ONE MON = PUT ${ url }/monsters/:id
-            `
-        );
     });
 };
 
