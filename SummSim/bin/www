@@ -9,7 +9,8 @@ const ngrok = require('ngrok');
 const port = process.env.PORT || 5555;
 const optsNgrok = {
     proto: 'http', // http|tcp|tls
-    addr: port, // port or network address
+    addr: port, // port or network address to be exposed
+    web_addr: '127.0.0.1:4040', // public address
     // auth: 'user:pwd', // http basic authentication for tunnel
     // subdomain: 'alex', // reserved tunnel name https://alex.ngrok.io
     // authtoken: '12345', // your authtoken from ngrok.com
@@ -18,9 +19,10 @@ const optsNgrok = {
 };
 
 app.set('port', port);
+app.set('ngrokConfig', optsNgrok);
 
 // NOTE: event listener for HTTP server 'error' event.
-const onError = function(error) {
+const onError = (error) => {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -43,18 +45,22 @@ const onError = function(error) {
 };
 
 // NOTE: event listener for HTTP server 'listening' event.
-const onListening = function() {
+const onListening = () => {
     // const addr = server.address();
     // const bind = (typeof addr === 'string') ? addr : addr.port;
-
-    ngrok.connect(optsNgrok, function(err, url) {
+    console.info('[www] [listen] Server is opening, connecting ngrok...');
+    ngrok.connect(optsNgrok, (err, url) => {
         if (err || !url) {
             console.error(err || 'noUrl');
         }
 
+        app.set('ngrokUrl', url);
+        console.info(`[www] [listen] Server available at ${ url }`);
+
         console.info(
             `
             GENERATE RANDOM = GET ${ url }
+            HEARTBEAT = GET ${ url }/heartbeat
             VIEW ALL MONS = GET ${ url }/monsters
             VIEW ONE MON = GET ${ url }/monsters/:id
             UPDATE ONE MON = PUT ${ url }/monsters/:id
@@ -63,7 +69,23 @@ const onListening = function() {
     });
 };
 
+const onClose = () => {
+    console.info('[www] [close] Server is closing, disconnecting ngrok...');
+    ngrok.disconnect();
+    ngrok.kill();
+};
+
 const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+server.on('close', onClose);
+
+// NOTE: awill: found this at https://www.npmjs.com/package/nodemon
+// This intercepts the shutdown process for nodemon, so we can
+// properly kill connections and processes off
+process.once('SIGUSR2', () => {
+    console.info('[www] Got SIGUSR2');
+    onClose();
+    process.kill(process.pid, 'SIGUSR2');
+});
