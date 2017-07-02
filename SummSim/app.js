@@ -24,6 +24,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// NOTE: awill could optimize this to only be used for OPTIONS
+// and create another handler for GET, but since we need the origin
+// header on both, we hack it for now by handling both here
+app.use('/*', function(req, res, next) {
+    // TODO: awill: check this for security
+    // NOTE: allow localhost (and EVERYTHING else) to make requests
+    // WARNING
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    next();
+});
+
 app.use('/', index);
 app.use('/monsters/', routeMonsters);
 

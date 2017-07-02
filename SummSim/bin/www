@@ -54,8 +54,10 @@ const onListening = function() {
 
         console.info(
             `
-            GENERATE RANDOM = ${ url }
-            VIEW ALL MONS = ${ url }/monsters
+            GENERATE RANDOM = GET ${ url }
+            VIEW ALL MONS = GET ${ url }/monsters
+            VIEW ONE MON = GET ${ url }/monsters/:id
+            UPDATE ONE MON = PUT ${ url }/monsters/:id
             `
         );
     });

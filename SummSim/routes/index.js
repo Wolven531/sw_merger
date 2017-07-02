@@ -234,14 +234,6 @@ const simLegendarySummon = function(cb) {
 //     cb(null, { url: url });
 // };
 
-router.get('*', function(req, res, next) {
-    // TODO: awill: check this for security
-    // NOTE: allow localhost (and EVERYTHING else) to make requests
-    // WARNING
-    res.header('Access-Control-Allow-Origin', '*');
-    return next(null);
-});
-
 router.get('/', function(req, res, next) {
     let asyncFuncs = [];
     let returnVal = {
