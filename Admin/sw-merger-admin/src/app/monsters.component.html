@@ -4,7 +4,8 @@
         <li *ngFor="let currMon of monsters"
             (click)="onSelect(currMon)"
             [class.selected]="currMon === selectedMon">
-            <span class="badge">{{currMon.id}}</span> {{currMon.name}}
+            <span class="badge">{{currMon.id}}</span>
+            <span>{{currMon.name}}</span>
         </li>
     </ul>
     <div *ngIf="selectedMon">

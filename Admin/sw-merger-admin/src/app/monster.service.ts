@@ -7,13 +7,14 @@ import { SummMon } from './monster';
 
 @Injectable()
 export class MonsterService {
-    private monstersUrl: string = 'https://72b45a0a.ngrok.io/monsters';
+    private headers = new Headers({ 'Content-Type': 'application/json' });
+    private baseUrl = 'https://edfe9bd1.ngrok.io';
+    private monstersUrl: string = `${ this.baseUrl }/monsters`;
+    private monsterUrl: string = `${ this.baseUrl }/monsters`;
 
     constructor(private http: Http) {
-        console.log('Monster service constructor was called.');
     };
     getMonsters(): Promise<SummMon[]> {
-        console.log('getMonsters was called...');
         return this.http.get(this.monstersUrl)
              .toPromise()
              .then(resp => {
@@ -22,12 +23,38 @@ export class MonsterService {
              .catch(this.handleError);
     };
     getMonster(id: number): Promise<SummMon> {
-        return this.getMonsters().then(monsters => {
-           return monsters.find(monster => {
-               return monster.id === id;
-           });
-        });
+        const singleMonUrl = `${ this.monsterUrl }/${ id }`;
+
+        return this.http.get(singleMonUrl)
+            .toPromise()
+            .then(resp => {
+                return resp.json().monster as SummMon;
+            })
+            .catch(this.handleError);
     };
+    update(monster: SummMon): Promise<SummMon> {
+        const updateMonUrl = `${ this.monsterUrl }/${ monster.id }`;
+        const putOpts = { headers: this.headers };
+        const monAsJson = JSON.stringify(monster);
+
+        return this.http.put(updateMonUrl, monAsJson, putOpts)
+            .toPromise()
+            .then(() => {
+                return monster;
+            })
+            .catch(this.handleError);
+    };
+    delete(id: number): Promise<void> {
+        const deleteMonUrl = `${ this.monsterUrl }/${ id }`;
+
+        return this.http.delete(deleteMonUrl)
+            .toPromise()
+            .then(resp => {
+                return;
+            })
+            .catch(this.handleError);
+    };
+
     private handleError(error: any): Promise<any> {
         console.error(`An error occurred: err=${ error } err.message=${ error.message }`);
         return Promise.reject(error.message || error);

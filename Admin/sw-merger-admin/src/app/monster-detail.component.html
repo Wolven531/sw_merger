@@ -29,6 +29,15 @@
                 <input [(ngModel)]="monster.star_level" type="text" name="monster.star_level" placeholder="Star Level" />
             </span>
         </div>
+        <div>
+            <label for="monster.delete">Delete</label>
+            <span class="val">
+                <button class="delete" (click)="onDelete(monster, $event)" name="monster.delete">x</button>
+            </span>
+        </div>
     </div>
-    <button (click)="goBack()">Back</button>
+    <div class="controls">
+        <button (click)="save()">Save</button>
+        <button (click)="goBack()">Back</button>
+    </div>
 </div>

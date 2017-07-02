@@ -45,16 +45,27 @@ button {
     border-radius: .3em;
     cursor: hand;
     font-family: Arial;
-    margin-top: 2em;
     padding: .5em 1em;
 }
 
 button:hover {
-    background-color: #CCC;
+    background-color: #0FF;
 }
 
 button:disabled {
     background-color: #EEE;
     color: #CCC;
     cursor: auto;
+}
+
+.delete {
+    background-color: #F00;
+    color: #FF0;
+    font-weight: bolder;
+    overflow: hidden;
+    min-width: 2em;
+}
+
+.controls {
+    margin-top: 2em;
 }

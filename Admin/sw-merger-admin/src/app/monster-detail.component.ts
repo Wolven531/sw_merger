@@ -30,4 +30,24 @@ export class MonsterDetailComponent implements OnInit {
     goBack(): void {
         this.location.back();
     };
+    onDelete(mon: SummMon, evt: Event): void {
+        evt.stopPropagation();
+        if (confirm('Delete?') && confirm('Are you sure?')) {
+            this.delete(mon);
+        }
+    };
+    save(): void {
+        this.monsterService
+            .update(this.monster)
+            .then(() => {
+                this.goBack();
+            });
+    };
+    delete(mon: SummMon): void {
+        this.monsterService
+            .delete(mon.id)
+            .then(() => {
+                this.goBack();
+            });
+    };
 };
