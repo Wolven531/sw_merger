@@ -11,12 +11,57 @@ const router = express.Router();
 const monsterMgr = new MonsterMgr();
 monsterMgr.init();
 
+router.put(['/:mon_id'], (req, res, next) => {
+    console.info(
+        `[monsters] [router] [PUT] [/:mon_id] mon_id=${req.params.mon_id}`
+    );
+    let returnVal = {
+        staleMonster: null,
+        updatedMonster: null,
+        err: null,
+    };
+    let staleMonster = monsterMgr.getMonster(req.params.mon_id);
+    let updatedMonData = req.body || null;
+    let resultOfUpdate = null;
+
+    if (!staleMonster) {
+        res.statusCode = 404;
+        returnVal.err = 'noMonster';
+        return res.json(returnVal);
+    }
+    if (!updatedMonData) {
+        res.statusCode = 400;
+        returnVal.err = 'noMonsterData';
+        return res.json(returnVal);
+    }
+
+    // TODO: awill: Add a data validation call here before directly updating monster
+    // TODO: awill: Add a validation method in the monster manager
+    // TODO: awill: Make this update asynchronous
+
+    resultOfUpdate = monsterMgr.updateMonster(
+        staleMonster.id,
+        updatedMonData
+    );
+
+    if (!resultOfUpdate) {
+        res.statusCode = 500;
+        returnVal.err = 'monsterNotUpdated';
+        return res.json(returnVal);
+    }
+
+    returnVal.updatedMonster = resultOfUpdate;
+
+    return res.json(returnVal);
+});
+
 // NOTE: this endpoint comes first for specificity
 router.get(['/:mon_id'], (req, res, next) => {
-    console.info(`[monsters] [router] [/:mon_id] mon_id=${ req.params.mon_id }`);
-    let mapKey = String(req.params.mon_id);
+    console.info(
+        `[monsters] [router] [GET] [/:mon_id] mon_id=${req.params.mon_id}`
+    );
     let returnVal = {
-        monster: monsterMgr.getMonsterMap()[mapKey],
+        monster: monsterMgr.getMonster(req.params.mon_id),
         err: null,
     };
 
