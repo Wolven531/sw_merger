@@ -48,6 +48,19 @@ const MonsterMgr = function() {
         }
         return results;
     };
+    const removeMonster = (monId) => {
+        if (!monId) {
+            return;
+        }
+        if (typeof monId !== 'string') {
+            monId = String(monId);
+        }
+        if (!getMonster(monId)) {
+            return;
+        }
+
+        delete internalMap[monId];
+    };
     const updateMonster = (monId, monster) => {
         if (!monId) {
             return null;
@@ -123,6 +136,7 @@ const MonsterMgr = function() {
     this.getMonsterMap = getMonsterMap;
     this.getMonsterArray = getMonsterArray;
     this.updateMonster = updateMonster;
+    this.removeMonster = removeMonster;
 };
 
 module.exports = MonsterMgr;

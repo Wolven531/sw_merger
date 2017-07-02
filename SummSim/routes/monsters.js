@@ -11,6 +11,29 @@ const router = express.Router();
 const monsterMgr = new MonsterMgr();
 monsterMgr.init();
 
+router.delete(['/:mon_id'], (req, res, next) => {
+    console.info(
+        `[monsters] [router] [DELETE] [/:mon_id] mon_id=${req.params.mon_id}`
+    );
+    let returnVal = {
+        staleMonster: null,
+        err: null,
+    };
+    let staleMonster = monsterMgr.getMonster(req.params.mon_id);
+
+    if (!staleMonster) {
+        res.statusCode = 404;
+        returnVal.err = 'noMonster';
+        return res.json(returnVal);
+    }
+
+    // TODO: awill: Make this remove asynchronous
+
+    monsterMgr.removeMonster(staleMonster.id);
+
+    return res.json(returnVal);
+});
+
 router.put(['/:mon_id'], (req, res, next) => {
     console.info(
         `[monsters] [router] [PUT] [/:mon_id] mon_id=${req.params.mon_id}`
