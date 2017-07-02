@@ -45,6 +45,9 @@
 - ✅ Explore new `brotli` encoding (and other image / video encodings)
 - ✅ Practice `NodeJS` package management (`package.json`, `npm`, `nodemon`)
 - ✅ Practice `GitHub` issue tracking and project management
+- ✅ Basic CORS handling for Angular forms (not secure atm, however)
+  - Helpful: [John Zhang article](http://johnzhang.io/options-request-in-express)
+  - Good reference/refresher: [HTML 5 Rocks](https://www.html5rocks.com/en/tutorials/cors/)
 - ✅ Practice integrating multiple data sources
   - ✅ [SummonersWar.co](https://summonerswar.co)
   - ✅ [SWFR (SW France)](http://www.swfr.tv/summon-simulator) 🇫🇷
