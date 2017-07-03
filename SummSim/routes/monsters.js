@@ -93,10 +93,23 @@ router.get(['/:mon_id'], (req, res, next) => {
 
 router.get(['/'], (req, res, next) => {
     console.info('[monsters] [router] [/]');
+    const output = req.query.output || '';
+    const shouldCompress = output !== 'all';
+    let tmpMons = monsterMgr.getMonsterArray();
     let returnVal = {
-        monsters: monsterMgr.getMonsterArray(),
+        monsters: [],
         err: null,
     };
+
+    if (shouldCompress) {
+        tmpMons = tmpMons.map((mon, ind, arr) => {
+            return {
+                id: mon.id,
+                name: mon.name,
+            };
+        });
+    }
+    returnVal.monsters = tmpMons;
 
     res.json(returnVal);
 });
