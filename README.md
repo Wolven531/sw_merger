@@ -58,6 +58,7 @@
 
 - Angular `4.2.5`
   - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
+  - [Angular 2.0 Training Book](https://angular-2-training-book.rangle.io/handout/modules/introduction.html) was an incredible reference throughout and clearly explained concepts (like Module vs. Component)
 - Babel transpiler
   - **LOTS** of help from [this](https://github.com/babel/example-node-server)  (babel example node server) repository (from the babel team itself)
   - [es6-features.org](http://es6-features.org/) was useful for reference on new features
