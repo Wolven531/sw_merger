@@ -15,7 +15,8 @@
   - ✅ Utilize properties and components properly
   - ✅ Utilize import / export and modular design (appropriately split classes, modules, components, css, and html)
   - ✅ Utilize dependency injection (e.g. inject data service / mock data service)
-  - ✅ Add routing using Angular `Router` injection and route configuratino
+  - ✅ Add routing using Angular `Router` injection and route configuration
+  - ✅ Use dynamic classes and class names in templates via Angular scoped methods
   - ⏳ Add hash navigation where applicable
 - Maintain CSS Quality
   - ✅ No `!important` flags are to be used in the CSS
@@ -23,6 +24,7 @@
   - ✅ No repeated identifiers
   - ⏳ Add build step to automatically verify CSS formatting / quality (something like ESLint for CSS)
 - Customize and enhance site from generated code
+  - ✅ Add favicon to the site (uses default Angular favicon currently)
   - ⏳ Add accurate favicon to admin site (after creating one)
   - ⏳ Add FB OpenGraph (and other social platforms) meta tags
 
