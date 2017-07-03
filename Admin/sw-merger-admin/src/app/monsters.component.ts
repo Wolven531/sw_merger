@@ -23,6 +23,9 @@ export class MonstersComponent implements OnInit {
     getMonsters(): void {
         this.monsterService.getMonsters().then(monsters => this.monsters = monsters);
     };
+    getMonsterClasses(mon: SummMon): string[] {
+        return [`mon-type-${ mon.type }`];
+    };
     goToDetail(): void {
         this.router.navigate(['/detail', this.selectedMon.id]);
     };

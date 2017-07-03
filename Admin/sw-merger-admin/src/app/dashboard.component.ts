@@ -17,4 +17,7 @@ export class DashboardComponent {
     ngOnInit(): void {
         this.monsterService.getMonsters().then(monsters => this.monsters = monsters.slice(0, 4));
     };
+    getMonsterClasses(mon: SummMon): string[] {
+        return [`mon-type-${ mon.type }`];
+    };
 };

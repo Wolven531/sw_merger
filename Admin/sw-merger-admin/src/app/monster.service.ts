@@ -16,7 +16,7 @@ export class MonsterService {
     };
     getMonsters(): Promise<SummMon[]> {
         const allMonsUrl = `${ this.monstersUrl }?output=id,name,type`;
-        return this.http.get(this.monstersUrl)
+        return this.http.get(allMonsUrl)
              .toPromise()
              .then(resp => {
                  return resp.json().monsters as SummMon[];

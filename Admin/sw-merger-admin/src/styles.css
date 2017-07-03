@@ -4,7 +4,7 @@ body {
 }
 
 body, input[text], button {
-    color: #888;
+    color: #FFF;
     font-family: Cambria, Georgia;
 }
 
@@ -18,6 +18,45 @@ h2, h3 {
     color: #444;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
+}
+
+.mon-type-dark {
+    background-color: #444;
+    color: #FFF;
+}
+.mon-type-fire {
+    background-color: #A00;
+    color: #FFF;
+}
+.mon-type-light {
+    background-color: #EEE;
+    color: #333;
+}
+.mon-type-water {
+    background-color: #00A;
+    color: #FFF;
+}
+.mon-type-wind {
+    background-color: #AA0;
+    color: #FFF;
+}
+
+button {
+    background-color: #333;
+    border: none;
+    border-radius: .3em;
+    color: #FFF;
+    cursor: hand;
+    font-family: Arial;
+    padding: .5em 1em;
+}
+
+button:hover {
+    background-color: #0FF;
+}
+
+button:disabled {
+    background-color: #666;
 }
 
 /* everywhere else */

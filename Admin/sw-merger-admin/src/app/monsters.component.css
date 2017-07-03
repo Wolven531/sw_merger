@@ -1,10 +1,5 @@
-.monsters li.selected, .monsters li.selected:hover {
+.monsters li.selected .badge {
     background-color: #090;
-    color: #FFF;
-}
-
-.monsters li.selected:hover {
-    background-color: #0C0;
 }
 
 .monster-cont {
@@ -19,7 +14,6 @@
 }
 
 .monsters li {
-    background-color: #EEE;
     border-radius: .3em;
     cursor: pointer;
     margin-bottom: .3em;
@@ -28,9 +22,7 @@
 }
 
 .monsters li:hover {
-    background-color: #CCC;
-    color: #00F;
-    left: .1em;
+    background-color: #0FF;
 }
 
 .monsters .badge {

@@ -3,7 +3,8 @@
     <ul class="monsters">
         <li *ngFor="let currMon of monsters"
             (click)="onSelect(currMon)"
-            [class.selected]="currMon === selectedMon">
+            [class.selected]="currMon === selectedMon"
+            [ngClass]="getMonsterClasses(currMon)">
             <span class="badge">{{currMon.id}}</span>
             <span>{{currMon.name}}</span>
         </li>

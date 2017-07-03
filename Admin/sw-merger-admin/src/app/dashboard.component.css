@@ -41,9 +41,7 @@ h4 {
 }
 
 .module {
-    background-color: #666;
     border-radius: .3em;
-    color: #EEE;
     max-height: 10em;
     min-width: 10em;
     padding: 2em;
@@ -51,8 +49,7 @@ h4 {
 }
 
 .module:hover {
-    background-color: #EEE;
-    color: #666;
+    background-color: #0FF;
     cursor: pointer;
 }
 

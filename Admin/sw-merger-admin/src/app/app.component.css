@@ -15,9 +15,9 @@ h2 {
 }
 
 nav a, nav a:visited, a:link {
-    background-color: #FFF;
+    background-color: #333;
     border-radius: .3em;
-    color: #00F;
+    color: #FFF;
     display: inline-block;
     margin-top: 1em;
     padding: .5em 1em;
@@ -25,8 +25,7 @@ nav a, nav a:visited, a:link {
 }
 
 nav a:hover {
-    background-color: #CCC;
-    color: #00F;
+    background-color: #0FF;
 }
 
 nav a.active {

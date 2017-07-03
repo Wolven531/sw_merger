@@ -1,5 +1,7 @@
-#monster-detail h2 {
-    background-color: #DDD;
+#monster-detail h2,
+.mon-stat {
+    background-color: #090;
+    color: #FFF;
     border-radius: .3em;
     font-weight: bolder;
     margin: 1em auto;
@@ -9,11 +11,16 @@
 }
 
 label {
-    color: #666;
+    color: #FFF;
     font-weight: bold;
     height: 2em;
     text-align: left;
     width: 7em;
+}
+
+.mon-stat {
+    background-color: rgba(0, 0, 0, .7);
+    width: 40%;
 }
 
 input,
@@ -37,25 +44,6 @@ input[type="text"] {
     padding-right: .5em;
     text-align: right;
     width: 7em;
-}
-
-button {
-    background-color: #EEE;
-    border: none;
-    border-radius: .3em;
-    cursor: hand;
-    font-family: Arial;
-    padding: .5em 1em;
-}
-
-button:hover {
-    background-color: #0FF;
-}
-
-button:disabled {
-    background-color: #EEE;
-    color: #CCC;
-    cursor: auto;
 }
 
 .delete {
