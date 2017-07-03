@@ -8,13 +8,14 @@ import { SummMon } from './monster';
 @Injectable()
 export class MonsterService {
     private headers = new Headers({ 'Content-Type': 'application/json' });
-    private baseUrl = 'https://edfe9bd1.ngrok.io';
+    private baseUrl = 'https://e08da5cd.ngrok.io';
     private monstersUrl: string = `${ this.baseUrl }/monsters`;
     private monsterUrl: string = `${ this.baseUrl }/monsters`;
 
     constructor(private http: Http) {
     };
     getMonsters(): Promise<SummMon[]> {
+        const allMonsUrl = `${ this.monstersUrl }?output=id,name,type`;
         return this.http.get(this.monstersUrl)
              .toPromise()
              .then(resp => {

@@ -40,7 +40,7 @@ app.use('/*', (req, res, next) => {
 });
 
 app.use('/', routeIndex);
-app.use('/monsters/', routeMonsters);
+app.use('/monsters', routeMonsters);
 app.use('/generator/', routeGenerator);
 
 app.get('/heartbeat/', (req, res, next) => {
