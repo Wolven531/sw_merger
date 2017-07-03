@@ -8,7 +8,7 @@
   - I am an **avid** SW player 🤓
   - A **lot** of my friends play SW 😎
 
-### Goal - Sharpen `Angular 2.0` skills
+### Goal - Sharpen `Angular 4.x` skills
 
 - Utilize TypeScript for the Angular application
   - ✅ All components are to be written in TypeScript, as the Angular team suggests (and Angular quick start generates)
@@ -56,7 +56,7 @@
 
 ## Technologies
 
-- Angular `2.0`
+- Angular `4.2.5`
   - [Angular Quickstart](https://angular.io/guide/quickstart) was the most useful here (no surprise there, 🤣)
 - Babel transpiler
   - **LOTS** of help from [this](https://github.com/babel/example-node-server)  (babel example node server) repository (from the babel team itself)
@@ -68,7 +68,7 @@
 - NPM `3.10.10`
 - Visual Studio Code `1.13.1`
 
-![Angular 2.0][logoAngular] ![Babel][logoBabel] ![Node v6.11.0][logoNode] ![NPM 3.10.10][logoNpm] ![Visual Studio Code 1.13.1][logoVsc] 
+![Angular 4.2.5][logoAngular] ![Babel][logoBabel] ![Node v6.11.0][logoNode] ![NPM 3.10.10][logoNpm] ![Visual Studio Code 1.13.1][logoVsc] 
 
 [logoAngular]: ./SummSim/public/img/logo_angular.png "AngularJS"
 [logoBabel]: ./SummSim/public/img/logo_babel.png "Babel"
