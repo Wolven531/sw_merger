@@ -27,7 +27,7 @@ export class MonstersComponent implements OnInit {
         return [`mon-type-${ mon.type }`];
     };
     goToDetail(): void {
-        this.router.navigate(['/detail', this.selectedMon.id]);
+        this.router.navigate(['/monsters/detail', this.selectedMon.id]);
     };
     ngOnInit(): void {
         this.getMonsters();
