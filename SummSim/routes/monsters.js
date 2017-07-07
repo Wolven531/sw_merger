@@ -35,9 +35,7 @@ router.delete(['/:mon_id'], (req, res, next) => {
 });
 
 router.put(['/:mon_id'], (req, res, next) => {
-    console.info(
-        `[monsters] [router] [PUT] [/:mon_id] mon_id=${req.params.mon_id}`
-    );
+    console.info(`[monsters] [router] [PUT] [/:mon_id] mon_id=${req.params.mon_id}`);
     let returnVal = {
         staleMonster: null,
         updatedMonster: null,
@@ -79,10 +77,20 @@ router.put(['/:mon_id'], (req, res, next) => {
 });
 
 // NOTE: this endpoint comes first for specificity
+router.get(['/search'], (req, res, next) => {
+    console.info(`[monsters] [router] [GET] [/search] name=${ req.query.name }`);
+    const searchTermName = String(req.query.name);
+    let returnVal = {
+        monsters: monsterMgr.searchMonsters({ name: searchTermName }),
+        err: null,
+    };
+
+    res.json(returnVal);
+});
+
+// NOTE: this endpoint comes first for specificity
 router.get(['/:mon_id'], (req, res, next) => {
-    console.info(
-        `[monsters] [router] [GET] [/:mon_id] mon_id=${req.params.mon_id}`
-    );
+    console.info(`[monsters] [router] [GET] [/:mon_id] mon_id=${req.params.mon_id}`);
     let returnVal = {
         monster: monsterMgr.getMonster(req.params.mon_id),
         err: null,

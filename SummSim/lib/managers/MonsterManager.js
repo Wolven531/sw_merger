@@ -8,6 +8,30 @@ const SummMon = require('../../models/monster');
 const MonsterMgr = function() {
     let internalMap = {};
 
+    const searchMonsters = (searchOpts) => {
+        let results = [];
+        if (!searchOpts) {
+            return results;
+        }
+        const searchName = String(searchOpts.name);
+        if (searchName.length > 0) {
+            const lowerSearchName = searchName.toLowerCase();
+            // const nameResults = getMonsterArray()
+            getMonsterArray()
+                .filter((mon, ind, arr) => {
+                    if (searchName.length <= mon.name.length) {
+                        const lowerFullName = mon.name.toLowerCase();
+                        return lowerFullName.indexOf(lowerSearchName) > -1;
+                    }
+                    return false;
+                })
+                .forEach((mon, ind, arr) => {
+                    results.push(mon);
+                });
+        }
+        console.log(`[MonsterMgr] [searchMonsters] Returning search results: ${ results.length }`);
+        return results;
+    };
     const getMonster = (monId) => {
         if (!monId) {
             return null;
@@ -132,6 +156,7 @@ const MonsterMgr = function() {
     this.compName = '[MonsterMgr]';
     this.init = init;
     this.loadFromDisk = loadFromDisk;
+    this.searchMonsters = searchMonsters;
     this.getMonster = getMonster;
     this.getMonsterMap = getMonsterMap;
     this.getMonsterArray = getMonsterArray;
