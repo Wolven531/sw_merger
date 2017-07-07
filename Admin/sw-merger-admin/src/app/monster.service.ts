@@ -7,10 +7,11 @@ import { SummMon } from './monster';
 
 @Injectable()
 export class MonsterService {
+    public static BASE_URL = 'https://5cd89ac1.ngrok.io';
+
     private headers = new Headers({ 'Content-Type': 'application/json' });
-    private baseUrl = 'https://e08da5cd.ngrok.io';
-    private monstersUrl: string = `${ this.baseUrl }/monsters`;
-    private monsterUrl: string = `${ this.baseUrl }/monsters`;
+    private monstersUrl: string = `${ MonsterService.BASE_URL }/monsters`;
+    private monsterUrl: string = `${ MonsterService.BASE_URL }/monsters`;
 
     constructor(private http: Http) {
     };

@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard.component';
 
 import { MonsterDetailComponent } from './monster-detail.component';
 import { MonstersComponent } from './monsters.component';
+import { MonsterSearchComponent } from './monster-search.component';
 import { MonsterService } from './monster.service';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MonsterService } from './monster.service';
         DashboardComponent,
         MonsterDetailComponent,
         MonstersComponent,
+        MonsterSearchComponent,
     ],
     imports: [
         BrowserModule,

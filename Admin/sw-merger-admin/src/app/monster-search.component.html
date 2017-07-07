@@ -1,0 +1,12 @@
+<div id="search-component">
+    <h4>Monster Search</h4>
+    <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+    <div>
+        <div *ngFor="let mon of monsters | async"
+            (click)="gotoDetail(mon)"
+            [ngClass]="getMonsterClasses(mon)"
+            class="search-result">
+                {{mon.name}}
+        </div>
+    </div>
+</div>

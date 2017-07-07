@@ -1,0 +1,21 @@
+#search-box {
+    margin-bottom: 2em;
+    width: 15.5em;
+}
+
+#search-component {
+    background-color: #333;
+    margin: 0 auto;
+    margin-top: 9em;
+    padding: 1em 0 2em 0;
+    width: 20em;
+}
+
+.search-result {
+    cursor: pointer;
+    padding: .5em;
+}
+
+.search-result:hover {
+    background-color: #0FF;
+}
