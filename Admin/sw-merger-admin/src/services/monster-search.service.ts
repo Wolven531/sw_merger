@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { SummMon } from './monster';
+import { SummMon } from '../models/monster';
 import { MonsterService } from './monster.service';
 
 @Injectable()

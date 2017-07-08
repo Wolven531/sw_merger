@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 
-import { SummMon } from './monster';
-import { MonsterService } from './monster.service';
+import { SummMon } from '../../models/monster';
+import { MonsterService } from '../../services/monster.service';
 
 @Component({
     selector: 'dashboard-root',

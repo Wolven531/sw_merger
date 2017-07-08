@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SummMon } from './monster';
-import { MonsterService } from './monster.service';
-import { AppComponent } from './app.component';
+import { SummMon } from '../../models/monster';
+import { MonsterService } from '../../services/monster.service';
+import { AppComponent } from '../app/app.component';
 
 @Component({
     selector: 'monsters-root',

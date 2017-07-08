@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
-import { SummMon } from './monster';
+import { SummMon } from '../models/monster';
 
 @Injectable()
 export class MonsterService {

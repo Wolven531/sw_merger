@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from '../comps/app/app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from '../comps/dashboard/dashboard.component';
 
-import { MonsterDetailComponent } from './monster-detail.component';
-import { MonstersComponent } from './monsters.component';
-import { MonsterSearchComponent } from './monster-search.component';
-import { MonsterService } from './monster.service';
+import { MonsterDetailComponent } from '../comps/monster-detail/monster-detail.component';
+import { MonstersComponent } from '../comps/monsters//monsters.component';
+import { MonsterSearchComponent } from '../comps/monster-search/monster-search.component';
+import { MonsterService } from '../services/monster.service';
 
 @NgModule({
     declarations: [

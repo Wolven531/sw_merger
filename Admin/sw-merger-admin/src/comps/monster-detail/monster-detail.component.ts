@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import { SummMon } from './monster';
-import { MonsterService } from './monster.service';
+import { SummMon } from '../../models/monster';
+import { MonsterService } from '../../services/monster.service';
 
 @Component({
     selector: 'monster-detail',

@@ -12,8 +12,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { MonsterSearchService } from './monster-search.service';
-import { SummMon } from './monster';
+import { MonsterSearchService } from '../../services/monster-search.service';
+import { SummMon } from '../../models/monster';
 
 @Component({
     selector: 'monster-search',
