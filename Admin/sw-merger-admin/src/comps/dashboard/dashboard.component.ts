@@ -9,7 +9,7 @@ import { MonsterService } from '../../services/monster.service';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
     monsters: SummMon[] = [];
     constructor(private monsterService: MonsterService) {
 

@@ -1,8 +1,10 @@
 <div class="app-cont">
     <h1>{{title}}</h1>
-    <nav>
-        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a routerLink="/monsters" routerLinkActive="active">Monsters</a>
-    </nav>
-    <router-outlet></router-outlet>
+    <div ng-if="!hideNav">
+        <nav>
+            <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+            <a routerLink="/monsters" routerLinkActive="active">Monsters</a>
+        </nav>
+        <router-outlet></router-outlet>
+    </div>
 </div>

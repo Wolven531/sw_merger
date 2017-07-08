@@ -6,8 +6,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from '../comps/app/app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from '../comps/dashboard/dashboard.component';
 
+import { ApiConfigerComponent } from '../comps/api-configer/api-configer.component';
+import { DashboardComponent } from '../comps/dashboard/dashboard.component';
 import { MonsterDetailComponent } from '../comps/monster-detail/monster-detail.component';
 import { MonstersComponent } from '../comps/monsters//monsters.component';
 import { MonsterSearchComponent } from '../comps/monster-search/monster-search.component';
@@ -16,6 +17,7 @@ import { MonsterService } from '../services/monster.service';
 @NgModule({
     declarations: [
         AppComponent,
+        ApiConfigerComponent,
         DashboardComponent,
         MonsterDetailComponent,
         MonstersComponent,
