@@ -20,21 +20,19 @@ export class ApiConfigerComponent implements OnInit {
             .toPromise()
             .then(resp => {
                 if (resp.status !== 200) {
-                    const setupLocal = confirm('API is not running locally, start it?');
+                    alert('API is not running locally. To start it, run this from the same dir:\n\n cd ../../SummSim/ && npm install && npm start');
                     return;
                 }
                 this.BASE_URL = resp.json().base;
             })
-            .catch(this.handleError);
+            .catch(err => {
+                alert('API is not running locally. To start it, run this from the same dir:\n\n cd ../../SummSim/ && npm install && npm start');
+            });
     };
     goToServer(): void {
         window.open(this.BASE_URL, '_blank');
     };
     ngOnInit(): void {
         this.checkLocal();
-    };
-    private handleError(error: any): Promise<any> {
-        console.error(`An error occurred: err=${ error } err.message=${ error.message }`);
-        return Promise.reject(error.message || error);
     };
 };
