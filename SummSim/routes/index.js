@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     let returnVal = {
         err: null,
+        base: req.app.get('ngrokUrl'),
         endpoints: [
             {
                 path: '/monsters',
@@ -45,6 +46,16 @@ router.get('/', (req, res, next) => {
                     },
                 },
                 description: 'Try to delete a monster by id',
+            },
+            {
+                path: '/monsters/search',
+                method: 'get',
+                params: {
+                    name: {
+                        type: 'string',
+                    },
+                },
+                description: 'Try to search for a monster by its name',
             },
             {
                 path: '/generator/legendary',
