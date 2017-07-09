@@ -54,6 +54,8 @@ export class MonsterSearchService {
 
     search(term: string): Observable<SummMon[]> {
         let proms = this.searchP(term);
+
+        // NOTE: awill: courtesy of https://stackoverflow.com/questions/39319279/convert-promise-to-observable
         return Observable.from(proms);
     }
 
