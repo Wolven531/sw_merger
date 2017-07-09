@@ -2,6 +2,15 @@
 
 echo "Setting up environment for API..."
 
+echo "Updating npm; Running 'npm install -g npm'..."
+npm install -g npm
+
+echo "Installing global dependencies (@angular/cli babel-cli bower depcheck express nodemon requirejs)..."
+npm install -g @angular/cli babel-cli bower depcheck express nodemon requirejs
+
+echo "Running 'npm install'..."
+npm install
+
 echo "Checking for 'data' dir in $PWD..."
 if [ -e "$PWD/data" ]; then
 	echo "'data' dir exists"
