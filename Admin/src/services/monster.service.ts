@@ -1,19 +1,33 @@
+import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Http } from '@angular/http';
-import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import { SummMon } from '../models/monster';
 
 @Injectable()
 export class MonsterService {
-    public static BASE_URL = 'https://5cd89ac1.ngrok.io';
-
+    public base_url:string = 'http://127.0.0.1:5555';
     private headers = new Headers({ 'Content-Type': 'application/json' });
-    private monstersUrl: string = `${ MonsterService.BASE_URL }/monsters`;
-    private monsterUrl: string = `${ MonsterService.BASE_URL }/monsters`;
+    private monstersUrl: string = `${ this.base_url }/monsters`;
+    private monsterUrl: string = `${ this.base_url }/monsters`;
 
     constructor(private http: Http) {
+        this.checkLocal();
+    };
+    checkLocal(): Promise<void> {
+        return this.http.get(this.base_url)
+            .toPromise()
+            .then(resp => {
+                if (resp.status !== 200) {
+                    alert('API is not running locally. To start it, run start.sh in the API directory.');
+                    return;
+                }
+                this.base_url = resp.json().base;
+            })
+            .catch(err => {
+                alert('API is not running locally. To start it, run start.sh in the API directory.');
+            });
     };
     getMonsters(): Promise<SummMon[]> {
         const allMonsUrl = `${ this.monstersUrl }?output=id,name,type`;
