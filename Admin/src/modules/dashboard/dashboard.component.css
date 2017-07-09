@@ -61,6 +61,19 @@ h4 {
     padding-right: 2em;
 }
 
+.small-space-around {
+    margin: .5em 0 .5em 0;
+}
+
+.server-info {
+    background-color: #333;
+    color: #0F0;
+    margin: 0 auto;
+    padding: .5em;
+    text-align: center;
+    width: 15em;
+}
+
 @media (max-width: 600px) {
     .module {
         font-size: .8em;

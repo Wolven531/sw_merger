@@ -1,6 +1,6 @@
 <div id="search-component">
     <h4>Monster Search</h4>
-    <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+    <input #searchBox id="search-box" (keyup)="search(searchBox.value)" placeholder="Search monsters by name..." />
     <div>
         <div *ngFor="let mon of monsters | async"
             (click)="gotoDetail(mon)"

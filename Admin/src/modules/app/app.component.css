@@ -13,6 +13,9 @@ h2 {
     margin-top: 0;
     padding-top: 0;
 }
+nav {
+    margin-bottom: 2em;
+}
 
 nav a, nav a:visited, a:link {
     background-color: #333;

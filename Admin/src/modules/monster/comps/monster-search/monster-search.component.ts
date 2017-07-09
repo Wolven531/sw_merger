@@ -12,22 +12,24 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { MonsterSearchService } from '../../services/monster-search.service';
-import { SummMon } from '../../models/monster';
+import { SummMon } from '../../../../models/monster';
+import { MonsterSearchService } from '../../../../services/monster-search.service';
 
 @Component({
     selector: 'monster-search',
     templateUrl: './monster-search.component.html',
     styleUrls: ['./monster-search.component.css'],
-    providers: [MonsterSearchService]
+    providers: [MonsterSearchService],
 })
 export class MonsterSearchComponent implements OnInit {
-    monsters: Observable<SummMon[]>;
+    private monsters: Observable<SummMon[]>;
     private searchTerms = new Subject<string>();
 
     constructor(
         private monsterSearchService: MonsterSearchService,
-        private router: Router) { }
+        private router: Router) {
+            console.log('[monster search comp] constructor');
+    };
 
     // NOTE: Push a search term into the observable stream
     search(term: string): void {
@@ -35,6 +37,7 @@ export class MonsterSearchComponent implements OnInit {
     };
 
     ngOnInit(): void {
+        console.log('[monster search comp] ngOnInit');
         this.monsters = this.searchTerms
             // NOTE: wait 300ms after each keystroke before considering the term
             .debounceTime(300)
@@ -46,7 +49,7 @@ export class MonsterSearchComponent implements OnInit {
                     // NOTE: return the http search observable
                     return this.monsterSearchService.search(term);
                 }
-                // NOTE: or the observable of empty monsters if there was no search term
+                // NOTE: or an observable of an empty collection if there was no search term
                 return Observable.of<SummMon[]>([]);
             })
             .catch(error => {
@@ -57,9 +60,10 @@ export class MonsterSearchComponent implements OnInit {
     };
 
     gotoDetail(monster: SummMon): void {
-        let link = ['/monsters/detail', monster.id];
+        let link = ['/monster/detail', monster.id];
         this.router.navigate(link);
     };
+
     getMonsterClasses(mon: SummMon): string[] {
         return [`mon-type-${ mon.type }`];
     };
