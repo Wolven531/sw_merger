@@ -72,31 +72,64 @@ const MonsterMgr = function() {
         }
         return results;
     };
+    const addMonster = (newMon) => {
+        // TODO: awill: add proper validation of monster here before adding
+
+        if (String(newMon.id).length < 1) {
+            console.warn(`Could not add monster, no ID in monster. newMon.id=${ newMon.id } newMon=${ newMon }`);
+            return null;
+        }
+        const existingMon = getMonster(newMon.id);
+
+        if (existingMon) {
+            // console.warn(`Attempted to add monster that already exists (id=${ existingMon.id }, name=${ existingMon.name }). Use update instead of add.`);
+            // return null;
+            console.warn(`Attempted to add monster that already exists, using update instead (id=${ existingMon.id }, name=${ existingMon.name }).`);
+            return updateMonster(newMon.id, newMon);
+        }
+
+        internalMap[newMon.id] = newMon;
+
+        return internalMap[newMon.id];
+    };
     const removeMonster = (monId) => {
         if (!monId) {
-            return;
+            console.warn('Could not remove monster, no ID provided.');
+            return null;
         }
         if (typeof monId !== 'string') {
             monId = String(monId);
         }
-        if (!getMonster(monId)) {
-            return;
+
+        const targetMon = getMonster(monId);
+
+        if (!targetMon) {
+            console.warn(`Could not remove monster because it could not be found (id=${ monId }).`);
+            return null;
         }
 
         delete internalMap[monId];
+
+        return targetMon;
     };
     const updateMonster = (monId, monster) => {
         if (!monId) {
+            console.warn('Could not update monster, no ID provided.');
             return null;
         }
         if (!monster) {
+            console.warn('Could not remove monster, no monster provided.');
             return null;
         }
         if (typeof monId !== 'string') {
             monId = String(monId);
         }
+
+        const existingMon = getMonster(monId);
+
         // NOTE: this forces any monster that did not already exist to fail an update attempt
-        if (!getMonster(monId)) {
+        if (!existingMon) {
+            console.warn(`Could not update monster because it could not be found (id=${ monId }).`);
             return null;
         }
         internalMap[monId] = monster;
@@ -162,6 +195,7 @@ const MonsterMgr = function() {
     this.getMonsterArray = getMonsterArray;
     this.updateMonster = updateMonster;
     this.removeMonster = removeMonster;
+    this.addMonster = addMonster;
 };
 
 module.exports = MonsterMgr;

@@ -7,12 +7,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const rp = require('minimal-request-promise');
+const MonsterMgr = require('./lib/managers/MonsterManager');
 
-const routeIndex = require('./routes/index');
-const routeMonsters = require('./routes/monsters');
-const routeGenerator = require('./routes/generator');
+const monMgr = new MonsterMgr();
+monMgr.init();
 
 const app = express();
+
+const routeIndex = require('./routes/index');
+const routeMonsters = require('./routes/monsters')(monMgr);
+const routeGenerator = require('./routes/generator')(monMgr);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

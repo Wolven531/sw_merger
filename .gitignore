@@ -61,8 +61,8 @@ typings/
 .DS_Store
 
 # data directory
-SummSim/data/dark/*.json
-SummSim/data/fire/*.json
-SummSim/data/light/*.json
-SummSim/data/water/*.json
-SummSim/data/wind/*.json
+API/data/dark/*.json
+API/data/fire/*.json
+API/data/light/*.json
+API/data/water/*.json
+API/data/wind/*.json
