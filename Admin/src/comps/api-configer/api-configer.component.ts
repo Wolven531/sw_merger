@@ -20,13 +20,13 @@ export class ApiConfigerComponent implements OnInit {
             .toPromise()
             .then(resp => {
                 if (resp.status !== 200) {
-                    alert('API is not running locally. To start it, run this from the same dir:\n\n cd ../../SummSim/ && npm install && npm start');
+                    alert('API is not running locally. To start it, run start.sh in the API directory.');
                     return;
                 }
                 this.BASE_URL = resp.json().base;
             })
             .catch(err => {
-                alert('API is not running locally. To start it, run this from the same dir:\n\n cd ../../SummSim/ && npm install && npm start');
+                alert('API is not running locally. To start it, run start.sh in the API directory.');
             });
     };
     goToServer(): void {
