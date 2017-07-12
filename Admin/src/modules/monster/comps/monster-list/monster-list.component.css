@@ -36,3 +36,15 @@
     min-width: 1.5em;
     text-align: right;
 }
+
+.selected-info {
+    background-color: #363;
+    border-radius: .3em;
+    margin: 0 auto 2em auto;
+    padding: 1em;
+    width: 20em;
+}
+
+.selected-info .mon-name {
+    color: #FFF;
+}
