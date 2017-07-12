@@ -23,6 +23,11 @@ import { MonsterSearchService } from '../../services/monster-search.service';
         MonsterSearchComponent,
         MonsterListComponent,
     ],
+    exports: [
+        MonsterDetailComponent,
+        MonsterSearchComponent,
+        MonsterListComponent,
+    ],
 })
 export class MonsterModule {
     static forRoot(): ModuleWithProviders {

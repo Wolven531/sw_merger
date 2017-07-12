@@ -36,6 +36,7 @@
     "eslint": "^4.2.0",
     "jasmine-core": "~2.6.4",
     "jasmine-spec-reporter": "~4.1.1",
+    "jshint": "^2.9.5",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-cli": "~1.0.1",

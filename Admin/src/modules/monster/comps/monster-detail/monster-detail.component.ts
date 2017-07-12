@@ -17,7 +17,7 @@ import { MonsterService } from '../../../../services/monster.service';
     styleUrls: ['./monster-detail.component.css'],
 })
 export class MonsterDetailComponent implements OnInit {
-    @Input() private monster: SummMon;
+    @Input() monster: SummMon;
 
     constructor(
         private monsterService: MonsterService,
@@ -25,13 +25,17 @@ export class MonsterDetailComponent implements OnInit {
         private location: Location){ };
 
     ngOnInit(): void {
+        // NOTE: this component is being supplied with a monster already
+        if (this.monster) {
+            return;
+        }
         this.route.paramMap
             .switchMap((params: ParamMap) => {
                 const id = parseInt(params.get('id'), 10);
 
                 return this.monsterService.getMonster(id);
             })
-            .subscribe(monster => {
+            .subscribe((monster: SummMon) => {
                 this.monster = monster;
             });
     };

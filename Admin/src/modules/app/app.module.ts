@@ -9,6 +9,7 @@ import { AppComponent } from '../app/app.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { GeneratorModule } from '../generator/generator.module';
 import { MonsterModule } from '../monster/monster.module';
 
 import { MonsterService } from '../../services/monster.service';
@@ -24,6 +25,7 @@ import { MonsterSearchService } from '../../services/monster-search.service';
         HttpModule,
         AppRoutingModule,
         DashboardModule.forRoot(),
+        GeneratorModule.forRoot(),
         MonsterModule.forRoot(),
     ],
     providers: [MonsterService, MonsterSearchService],

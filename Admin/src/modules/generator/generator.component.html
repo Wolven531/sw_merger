@@ -1,0 +1,16 @@
+<div class="generator-cont">
+    <h2>Generator</h2>
+    <div *ngIf="simulatedMon">
+        <h3>Simulation Result ({{simTypeDisp}}):</h3>
+        <monster-detail [monster]="simulatedMon"></monster-detail>
+    </div>
+    <div>
+        <button (click)="simulateSummon('mystical')">Simulate Mystical Summon</button>
+    </div>
+    <div>
+      <button (click)="simulateSummon('legendary')">Simulate Legendary Summon</button>
+    </div>
+    <div>
+      <button (click)="simulateSummon('lightndark')">Simulate Light and Dark Summon</button>
+    </div>
+</div>
