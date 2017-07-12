@@ -58,7 +58,7 @@ namespace awillInc {
         IEnumerator HandleLocalLoad(string localPath, string targetURL, GameObject target)
         {
     #if UNITY_EDITOR
-                targetURL = "file:///" + localPath;
+                targetURL = "file://" + localPath;
     #elif UNITY_ANDROID
                 targetURL = "file://" + localPath;
     #endif
@@ -163,18 +163,6 @@ namespace awillInc {
             sr.sprite = sprite;
             sr.drawMode = SpriteDrawMode.Sliced;
             sr.size = new Vector2(r.width, r.height);
-
-            target.transform.localScale = Vector3.one;
-            target.transform.localPosition = Vector3.zero;
-            target.transform.position = Vector3.zero;
-
-            rt.position = Vector3.zero;
-            rt.localPosition = Vector3.zero;
-            rt.localScale = Vector3.one;
-
-            // NOTE: awill: make SURE to let the parent transform know it needs
-            // to refresh after the image is done
-            LayoutRebuilder.MarkLayoutForRebuild(target.transform.parent.GetComponent<RectTransform>());
         }
     }
 }

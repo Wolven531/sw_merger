@@ -1,56 +1,51 @@
-﻿using System.Collections;
+﻿using awillInc;
+using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using Newtonsoft.Json;
-using awillInc;
 
 public class Main : MonoBehaviour
 {
-    public string address;
     public MonsterUIDisplay MonsterPrefab;
     public Transform monsterContainer;
-    // Use this for initialization
+
     void Start()
     {
-        //hit endpoint
-        //get json result
-        //make result into a class
-        //first pass of UI for monster
-
+        // NOTE: approach:
+        // 1) hit endpoint
+        // 2) get json result
+        // 3) make result into a class
+        // 4) first pass of UI for monster
         StartCoroutine(GetMonsters());
     }
 
     IEnumerator GetMonsters()
     {
-        WWW www = new WWW(string.Format("{0}monsters?output=all", address));
+        string address = "https://8032c10a.ngrok.io";
+        WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
         yield return www;
-        //Get monsters from JSON
-        Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
-        List<Monster> monsters;
-        data.TryGetValue("monsters",out monsters);
-        
-        //Get errors from JSON
-        // Dictionary<string, string> err = JsonConvert.DeserializeObject<Dictionary<string, string>>(www.text);
-        // string errs;
-        // err.TryGetValue("err",out errs);
-        //Display errors here if they exist
 
-        foreach (Monster mon in monsters)
-        //Monster mon = monsters[0];
-        {
-            //Debug.LogFormat("Name:{0}", mon.Name);
-            MonsterUIDisplay monUI = Instantiate(MonsterPrefab, Vector3.zero, Quaternion.identity, monsterContainer);
-            monUI.SetMonster(mon);
+        // NOTE: bail out if there was an error
+        if (!string.IsNullOrEmpty(www.error)) {
+
+            yield return null;
         }
-    }
 
-    
+        // NOTE: Get monsters from JSON
+        Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
+        List<Monster> monsters = new List<Monster>();
+        
+        if (data.ContainsKey("monsters")) {
+            data.TryGetValue("monsters", out monsters);
 
-    // Update is called once per frame
-    void Update()
-    {
-
+            // Monster mon = monsters[0];
+            foreach(Monster mon in monsters)
+            {
+                MonsterUIDisplay muid = Instantiate(MonsterPrefab, Vector3.zero, Quaternion.identity, monsterContainer);
+                muid.SetMonster(mon);
+            }
+        }
     }
 }
