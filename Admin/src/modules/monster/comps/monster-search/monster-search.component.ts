@@ -1,3 +1,5 @@
+'use strict';
+
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -23,31 +25,29 @@ import { MonsterSearchService } from '../../../../services/monster-search.servic
 })
 export class MonsterSearchComponent implements OnInit {
     private monsters: Observable<SummMon[]>;
-    private searchTerms = new Subject<string>();
+    private searchName = new Subject<string>();
 
     constructor(
         private monsterSearchService: MonsterSearchService,
         private router: Router) {
-            console.log('[monster search comp] constructor');
     };
 
     // NOTE: Push a search term into the observable stream
     search(term: string): void {
-        this.searchTerms.next(term);
+        this.searchName.next(term);
     };
 
     ngOnInit(): void {
-        console.log('[monster search comp] ngOnInit');
-        this.monsters = this.searchTerms
+        this.monsters = this.searchName
             // NOTE: wait 300ms after each keystroke before considering the term
             .debounceTime(300)
             // NOTE: ignore if next search term is same as previous
             .distinctUntilChanged()
             // NOTE: switch to new observable each time the term changes
-            .switchMap(term => {
-                if (term && (String(term).length > 2)) {
+            .switchMap((term:string) => {
+                if (term && (term.length > 2)) {
                     // NOTE: return the http search observable
-                    return this.monsterSearchService.search(term);
+                    return this.monsterSearchService.searchByName(term);
                 }
                 // NOTE: or an observable of an empty collection if there was no search term
                 return Observable.of<SummMon[]>([]);

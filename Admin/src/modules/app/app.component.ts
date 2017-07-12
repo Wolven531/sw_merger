@@ -1,3 +1,5 @@
+'use strict';
+
 import { Component } from '@angular/core';
 
 @Component({

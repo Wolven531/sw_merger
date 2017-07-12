@@ -1,3 +1,5 @@
+'use strict';
+
 export class SummMon {
     constructor() { }
     id: number;

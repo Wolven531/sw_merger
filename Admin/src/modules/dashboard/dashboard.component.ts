@@ -1,3 +1,5 @@
+'use strict';
+
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -16,14 +18,14 @@ export class DashboardComponent implements OnInit {
     private serverLoc: string = '';
 
     constructor(private monsterService: MonsterService, private router: Router) { };
-    
+
     ngOnInit(): void {
         this.monsterService.getMonsters().then(monsters => {
             this.monsters = monsters.slice(0, 4);
             this.serverLoc = this.monsterService.base_url;
         });
     };
-    
+
     goToServer(): void {
         window.open(this.serverLoc, '_blank');
     };

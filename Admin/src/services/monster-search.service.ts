@@ -1,3 +1,5 @@
+'use strict';
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
@@ -9,7 +11,7 @@ import { SummMon } from '../models/monster';
 
 @Injectable()
 export class MonsterSearchService {
-    public base_url:string = '';
+    public base_url: string = '';
     private servicePrefix = 'srv_monster-search | ';
 
     private getURLProm(): Promise<string> {
@@ -35,32 +37,28 @@ export class MonsterSearchService {
     };
 
     constructor(private http: Http) { }
-    
-    searchP(term: string): Promise<SummMon[]> {
-        return this.getURLObs().toPromise()
+
+    searchByName(term: string): Observable<SummMon[]> {
+        // NOTE: awill: courtesy of https://stackoverflow.com/questions/39319279/convert-promise-to-observable
+        return Observable.from(
+            this.getURLObs().toPromise()
                 .then((newURL: string) => {
-                    console.log(`Setting URL to: ${ newURL }`);
-                    const searchUrl = `${ this.base_url }/monsters/search`;
+                    console.log(`Setting URL to: ${newURL}`);
+                    const searchUrl = `${this.base_url}/monsters/search`;
 
-                    console.log(`${ this.servicePrefix } searching at ${ searchUrl }`);
-                    console.time(`${ this.servicePrefix }search`)
+                    console.log(`${this.servicePrefix} searching at ${searchUrl}`);
+                    console.time(`${this.servicePrefix}search`)
 
-                    return this.http.get(`${ searchUrl }/?name=${ term }`).toPromise();
+                    return this.http.get(`${searchUrl}/?name=${term}`).toPromise();
                 })
                 .then(resp => {
                     return resp.json().monsters as SummMon[];
-                });
+                })
+        );
     };
 
-    search(term: string): Observable<SummMon[]> {
-        let proms = this.searchP(term);
-
-        // NOTE: awill: courtesy of https://stackoverflow.com/questions/39319279/convert-promise-to-observable
-        return Observable.from(proms);
-    }
-
     private handleError(error: any): Promise<any> {
-        console.error(`An error occurred: err=${ error } err.message=${ error.message }`);
+        console.error(`An error occurred: err=${error} err.message=${error.message}`);
         return Promise.reject(error.message || error);
     };
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 import { BrowserModule } from '@angular/platform-browser';
 // NOTE: NgModel lives in FormsModule
 import { FormsModule } from '@angular/forms';

@@ -1,21 +1,23 @@
+'use strict';
+
 module.exports = {
-    "extends": "google",
-    "parserOptions": {
-        "ecmaVersion": 6,
+    'extends': 'google',
+    'parserOptions': {
+        'ecmaVersion': 6,
     },
-    "env": {
-        "es6": true,
-        // "shared-node-browser": true,
-        "node": true,
-        "browser": true,
+    'env': {
+        'es6': true,
+        // 'shared-node-browser': true,
+        'node': true,
+        'browser': true,
     },
-    "globals": {
-        "module": false,
+    'globals': {
+        'module': false,
     },
-    "rules": {
-        "max-len": "off",
-        "new-cap": "off",
-        "object-curly-spacing": ["error", "always"],
-        "indent": ["error", 4],
+    'rules': {
+        'max-len': 'off',
+        'new-cap': 'off',
+        'object-curly-spacing': ['error', 'always'],
+        'indent': ['error', 4],
     },
 };

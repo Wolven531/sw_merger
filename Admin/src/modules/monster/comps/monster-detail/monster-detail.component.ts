@@ -1,3 +1,5 @@
+'use strict';
+
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import { OnInit } from '@angular/core';
