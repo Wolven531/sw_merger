@@ -29,29 +29,22 @@ const MonsterMgr = function() {
             }
             return false;
         };
-        const containsType = (tester) => {
-            tester = String(tester || '').trim().toLowerCase();
-
-            // NOTE: shortest type is four chars
-            if (tester.length < 4) {
-                return false;
-            }
-            const matchingTypes = SummMon.MONSTER_ELEMENT.asArray().filter((curr, ind, arr) => {
-                return tester.indexOf(curr) > -1;
-            });
-            return matchingTypes.length > 0;
-        };
         const getTypesInName = (tester) => {
-            tester = String(tester || '').trim().toLowerCase();
+            let matchingTypes = [];
 
+            tester = String(tester || '').trim().toLowerCase();
             // NOTE: shortest type is four chars
             if (tester.length < 4) {
-                return false;
+                return matchingTypes;
             }
-            const matchingTypes = SummMon.MONSTER_ELEMENT.asArray().filter((curr, ind, arr) => {
+            matchingTypes = SummMon.MONSTER_ELEMENT.asArray().filter((curr, ind, arr) => {
                 return tester.indexOf(curr) > -1;
             });
             return matchingTypes;
+        };
+        const containsType = (tester) => {
+            const matchingTypes = getTypesInName(tester);
+            return matchingTypes.length > 0;
         };
         const removeTypesFromName = (tester) => {
             const typesInName = getTypesInName(tester);
@@ -66,7 +59,6 @@ const MonsterMgr = function() {
         const useType = (searchType.length > 0) && SummMon.MONSTER_ELEMENT.validate(searchType);
         const useName = searchName.length > 0;
         const nameContainsType = containsType(searchName);
-
 
         if ((useType && useName) || (useName && nameContainsType)) {
             console.info(`[MonsterMgr] [searchMonsters] Considering nameContainsType=${ nameContainsType } searchType=${ searchType } AND searchName=${ searchName }`);
