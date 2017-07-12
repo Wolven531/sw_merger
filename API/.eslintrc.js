@@ -3,6 +3,15 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": 6,
     },
+    "env": {
+        "es6": true,
+        // "shared-node-browser": true,
+        "node": true,
+        "browser": true,
+    },
+    "globals": {
+        "module": false,
+    },
     "rules": {
         "max-len": "off",
         "new-cap": "off",
