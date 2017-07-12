@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const SummMon = require('../models/monster');
 
 const router = express.Router();
 
@@ -54,8 +55,12 @@ router.get('/', (req, res, next) => {
                     name: {
                         type: 'string',
                     },
+                    type: {
+                        type: 'string',
+                        possibleValues: SummMon.MONSTER_ELEMENT.asArray().join('|'),
+                    },
                 },
-                description: 'Try to search for a monster by its name',
+                description: 'Try to search for a monster by its name and/or type. You can search by 1) just name 2) just type 3) name AND type (type is considered first)',
             },
             {
                 path: '/generator/legendary',

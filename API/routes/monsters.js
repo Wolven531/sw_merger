@@ -72,10 +72,11 @@ module.exports = function(monsterMgr) {
 
     // NOTE: this endpoint comes first for specificity
     router.get(['/search'], (req, res, next) => {
-        console.info(`[monsters] [router] [GET] [/search] name=${ req.query.name }`);
-        const searchTermName = String(req.query.name);
+        console.info(`[monsters] [router] [GET] [/search] name=${ req.query.name } type=${ req.query.type }`);
+        const searchTermName = req.query.name;
+        const searchTermType = req.query.type;
         let returnVal = {
-            monsters: monsterMgr.searchMonsters({ name: searchTermName }),
+            monsters: monsterMgr.searchMonsters({ name: searchTermName, type: searchTermType }),
             err: null,
         };
 

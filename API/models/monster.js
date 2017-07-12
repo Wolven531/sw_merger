@@ -216,6 +216,9 @@ SummMon.MONSTER_ELEMENT = {
     asArray: function() {
         return ['dark', 'fire', 'light', 'water', 'wind'];
     },
+    validate: (testElem) => {
+        return SummMon.MONSTER_ELEMENT.asArray().indexOf(testElem) > -1;
+    },
 };
 
 /*
