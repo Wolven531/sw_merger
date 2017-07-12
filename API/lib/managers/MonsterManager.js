@@ -13,30 +13,80 @@ const MonsterMgr = function() {
         if (!searchOpts) {
             return results;
         }
-        const searchName = String(searchOpts.name || '');
-        const searchType = String(searchOpts.type || '');
-        const lowerSearchName = searchName.toLowerCase();
+        let searchName = String(searchOpts.name || '');
+        let searchType = String(searchOpts.type || '');
+        // TODO: awill: move these filters out (so we do not create them on every search)
         const typeFilter = (mon, ind, arr) => {
             return mon.type === searchType;
         };
         const nameFilter = (mon, ind, arr) => {
             if (searchName.length <= mon.name.length) {
                 const lowerFullName = mon.name.toLowerCase();
-                return lowerFullName.indexOf(lowerSearchName) > -1;
+                const lowerSearchName = searchName.toLowerCase();
+                const locInd = lowerFullName.indexOf(lowerSearchName);
+
+                return locInd > -1;
             }
             return false;
         };
+        const containsType = (tester) => {
+            tester = String(tester || '').trim().toLowerCase();
+
+            // NOTE: shortest type is four chars
+            if (tester.length < 4) {
+                return false;
+            }
+            const matchingTypes = SummMon.MONSTER_ELEMENT.asArray().filter((curr, ind, arr) => {
+                return tester.indexOf(curr) > -1;
+            });
+            return matchingTypes.length > 0;
+        };
+        const getTypesInName = (tester) => {
+            tester = String(tester || '').trim().toLowerCase();
+
+            // NOTE: shortest type is four chars
+            if (tester.length < 4) {
+                return false;
+            }
+            const matchingTypes = SummMon.MONSTER_ELEMENT.asArray().filter((curr, ind, arr) => {
+                return tester.indexOf(curr) > -1;
+            });
+            return matchingTypes;
+        };
+        const removeTypesFromName = (tester) => {
+            const typesInName = getTypesInName(tester);
+            typesInName.forEach((curr, ind, arr) => {
+                const startInd = tester.indexOf(curr);
+                const endInd = startInd + curr.length;
+                tester = tester.substring(0, startInd) + tester.substring(endInd);
+            });
+            tester = tester.trim();
+            return tester;
+        };
         const useType = (searchType.length > 0) && SummMon.MONSTER_ELEMENT.validate(searchType);
         const useName = searchName.length > 0;
+        const nameContainsType = containsType(searchName);
 
-        if (useType && useName) {
-            console.info(`[MonsterMgr] [searchMonsters] Considering searchType=${ searchType } AND searchName=${ searchName }`);
+
+        if ((useType && useName) || (useName && nameContainsType)) {
+            console.info(`[MonsterMgr] [searchMonsters] Considering nameContainsType=${ nameContainsType } searchType=${ searchType } AND searchName=${ searchName }`);
+            if (nameContainsType) {
+                const typesInName = getTypesInName(searchName);
+                searchName = removeTypesFromName(searchName);
+
+                if (typesInName.length > 0) {
+                    searchType = typesInName[0];
+                }
+                console.info(`[MonsterMgr] [searchMonsters] UPDATE Considering searchType=${ searchType } AND searchName=${ searchName }`);
+            }
+
             getMonsterArray()
                 .filter(typeFilter)
                 .filter(nameFilter)
                 .forEach((mon, ind, arr) => {
                     results.push(mon);
                 });
+            console.log(`[MonsterMgr] [searchMonsters] Returning search results: ${ results.length }`);
             return results;
         }
 
