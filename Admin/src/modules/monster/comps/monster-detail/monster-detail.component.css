@@ -57,3 +57,19 @@ input[type="text"] {
 .controls {
     margin-top: 2em;
 }
+
+.mon-img {
+    background-color: #333;
+    border-radius: .3em;
+    display: inline-block;
+    margin: 0 auto 2em auto;
+    padding: 1em;
+    width: 12em;
+}
+
+.mon-img .img {
+    border: 1px solid #FFF;
+    height: 9.25em;
+    width: 9.25em;
+    margin-bottom: 1em;
+}

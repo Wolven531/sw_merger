@@ -1,5 +1,15 @@
 <div *ngIf="monster" id="monster-detail">
     <h2>Details for: {{monster.name}}</h2>
+    <div class="mon-img">
+        <img src="{{getImgSrc('base')}}" alt="{{monster.id}}_img_base" class="img" />
+        <br />
+        <input [(ngModel)]="monster.image_base" name="monster.image_base" />
+    </div>
+    <div class="mon-img">
+        <img src="{{getImgSrc('awakened')}}" alt="{{monster.id}}_img_awakened" class="img" />
+        <br />
+        <input [(ngModel)]="monster.image_awakened" name="monster.image_awakened" />
+    </div>
     <div class="mon-stat">
         <div>
             <label for="monster.id">ID:</label>

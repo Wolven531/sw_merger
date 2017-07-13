@@ -42,6 +42,16 @@ export class MonsterDetailComponent implements OnInit {
             });
     };
 
+    getImgSrc(imgType: string) : string {
+        if (imgType === 'awakened') {
+            return this.monster.image_awakened;
+        }
+        if (imgType === 'base') {
+            return this.monster.image_base;
+        }
+        return '';
+    };
+
     // TODO: awill: readup on Angular CanDeactivate page: https://angular.io/api/router/CanDeactivate
     goBack(): void {
         this.location.back();
@@ -56,6 +66,7 @@ export class MonsterDetailComponent implements OnInit {
     };
 
     save(): void {
+        alert('Changes currently will not persist after server restart');
         this.monsterService
             .update(this.monster)
             .then(() => {

@@ -10,7 +10,7 @@ export class SummMon {
     type: string;
     isLegend: boolean;
     star: number;
-    image: string;
+    image_base: string;
     image_awakened: string;
     level: number = 1;
     hp: number = 0;

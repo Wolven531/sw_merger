@@ -115,8 +115,6 @@ export class MonsterService {
             })
             .then(resp => {
                 console.timeEnd(`${ this.servicePrefix }getMonster`)
-                const mons = resp.json().monsters;
-
 
                 return resp.json().monster as SummMon;
             })
