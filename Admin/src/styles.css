@@ -59,6 +59,10 @@ button:disabled {
     background-color: #666;
 }
 
+.small-space-around {
+    margin: .5em 0 .5em 0;
+}
+
 /* everywhere else */
 
 * {
