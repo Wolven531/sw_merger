@@ -1,0 +1,32 @@
+{
+    "omnisharp.useMono": true,
+    "omnisharp.projectLoadTimeout": 600,
+    "editor.formatOnSave": false,
+    "editor.wordWrap": "off",
+    "editor.minimap.maxColumn": 80,
+    "editor.detectIndentation": false,
+    "csharpfixformat.sort.usings.systemFirst": false,
+    "csharpfixformat.style.indent.regionIgnored": true,
+    "csharpfixformat.style.braces.onSameLine": false,
+    "csharpfixformat.style.spaces.beforeParenthesis": false,
+    "csharpfixformat.style.spaces.afterParenthesis": false,
+    "csharpfixformat.style.spaces.beforeIndexerBracket": false,
+    "csharpfixformat.style.spaces.afterBracket": false,
+    "csharpfixformat.style.spaces.insideEmptyBraces": false,
+    "workbench.startupEditor": "none",
+    "jshint.options": {
+        "esversion": 7,
+        "globalstrict": true,
+        "globals": {
+            "console": false,
+            "module": false,
+            "require": false
+        }
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "html.format.endWithNewline": true,
+    "files.insertFinalNewline": true
+}
