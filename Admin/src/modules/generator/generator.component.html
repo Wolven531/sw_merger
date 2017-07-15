@@ -2,7 +2,7 @@
     <h2>Generator</h2>
     <div *ngIf="simulatedMon">
         <h3>Simulation Result ({{simTypeDisp}}):</h3>
-        <monster-detail [monster]="simulatedMon"></monster-detail>
+        <app-monster-detail [monster]="simulatedMon"></app-monster-detail>
     </div>
     <div>
         <button (click)="simulateSummon('mystical')">Simulate Mystical Summon</button>
