@@ -9,14 +9,26 @@ import * as zlib from 'zlib';
 import * as unescape from 'unescape';
 
 import { MonsterManager } from '../lib/managers/MonsterManager';
+import { CrawlerManager } from '../lib/managers/CrawlerManager';
 import { SummMon } from '../models/monster';
 
-const API_ENDPOINT_SIMULATE: string = '';
-const API_BASE: string = '';
-const router = express.Router();
+export default class CrawlerRouter {
+    public router_express: any;
 
-module.exports = (monsterMgr:MonsterManager) => {
-    const convertBrotliBodyToHtml = (bodyBuffer: Buffer) => {
+    // private API_ENDPOINT_SIMULATE: string = 'get_random';
+    // private API_BASE: string = 'http://www.swfr.tv/simulator/';
+    private SCROLL_TYPES = {
+        Legendary: 0,
+        LightAndDark: 1,
+        Mystical: 2,
+    };
+
+    constructor(private monMgr: MonsterManager, private crawlerMgr: CrawlerManager) {
+        this.router_express = express.Router();
+        this.router_express.get('/', this.handleRoot.bind(this));
+    }
+
+    private convertBrotliBodyToHtml(bodyBuffer): any {
         console.info('[convertBrotliBodyToHtml] decoding brotli...');
         const intArr = brotli.decompress(bodyBuffer);
         let html = '';
@@ -26,17 +38,20 @@ module.exports = (monsterMgr:MonsterManager) => {
         });
 
         const $ = cheerio.load(unescape(html, null));
-
         return $;
     };
 
-    const convertGzipBodyToHtml = (bodyBuffer: Buffer) => {
+    private convertGzipBodyToHtml(bodyBuffer): any {
         console.info('[convertGzipBodyToHtml] decoding gzip...');
-        const bodyText = zlib.gunzipSync(bodyBuffer, { }).toString('utf8');
+        const bodyText = zlib.gunzipSync(bodyBuffer, {}).toString('utf8');
         const $ = cheerio.load(unescape(bodyText, null));
 
         return $;
     };
 
-    return router;
-};
+    private handleRoot(req, res, next): any {
+        res.json({ success: true });
+    };
+}
+
+export { CrawlerRouter };

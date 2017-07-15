@@ -8,18 +8,24 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as request from 'request';
 
-import { HomeRouter } from './routes/';
-import { MonsterRouter } from './routes/monsters';
-import { GeneratorRouter } from './routes/generator';
 import { MonsterManager } from './lib/managers/MonsterManager';
+import { CrawlerManager } from './lib/managers/CrawlerManager';
+
+import { HomeRouter } from './routes/';
+import { CrawlerRouter } from './routes/crawler';
+import { GeneratorRouter } from './routes/generator';
+import { MonsterRouter } from './routes/monsters';
 
 const app = express();
 const monMgr = new MonsterManager();
 monMgr.init();
+const crawlerMgr = new CrawlerManager();
+crawlerMgr.init();
 
 const homeRouter = new HomeRouter(monMgr);
-const monRouter = new MonsterRouter(monMgr);
+const crawlerRouter = new CrawlerRouter(monMgr, crawlerMgr);
 const generatorRouter = new GeneratorRouter(monMgr);
+const monRouter = new MonsterRouter(monMgr);
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -46,9 +52,10 @@ app.use('/*', (req, res, next) => {
     next();
 });
 
-app.use('/', homeRouter.router);
+app.use('/', homeRouter.router_express);
+app.use('/crawler', crawlerRouter.router_express);
 app.use('/monsters', monRouter.router_express);
-app.use('/generator/', generatorRouter.router);
+app.use('/generator', generatorRouter.router_express);
 
 app.get('/heartbeat/', (req, res, next) => {
     const webApiUrl = 'http://127.0.0.1:4040/api/tunnels';

@@ -6,8 +6,8 @@ import { MonsterManager } from '../lib/managers/MonsterManager';
 import { SummMon } from '../models/monster';
 
 export default class HomeRouter {
-    public router: any;
-    private mgr: MonsterManager;
+    public router_express: any;
+
     private endpoints = [
         {
             path: '/monsters',
@@ -19,7 +19,7 @@ export default class HomeRouter {
             method: 'get',
             params: {
                 id: {
-                    type: 'string',
+                    type: 'number',
                 },
             },
             description: 'Try to retrieve a monster by id; will 404 is id is not found',
@@ -29,7 +29,7 @@ export default class HomeRouter {
             method: 'put',
             params: {
                 id: {
-                    type: 'string',
+                    type: 'number',
                 },
                 body: {
                     type: 'SummMon',
@@ -42,7 +42,7 @@ export default class HomeRouter {
             method: 'delete',
             params: {
                 id: {
-                    type: 'string',
+                    type: 'number',
                 },
             },
             description: 'Try to delete a monster by id',
@@ -76,12 +76,21 @@ export default class HomeRouter {
             method: 'get',
             description: 'Simulate the results of a summon using a mystical scroll',
         },
+        {
+            path: '/crawler/status/:id',
+            method: 'get',
+            params: {
+                id: {
+                    type: 'number',
+                },
+            },
+            description: 'Get the status of a crawler',
+        },
     ];
 
     constructor(private monMgr:MonsterManager) {
-        this.mgr = monMgr;
-        this.router = express.Router();
-        this.router.get('/', this.handleHomePage.bind(this));
+        this.router_express = express.Router();
+        this.router_express.get('/', this.handleHomePage.bind(this));
     }
 
     private handleHomePage(req, res, next): any {

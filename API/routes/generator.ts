@@ -12,8 +12,8 @@ import { MonsterManager } from '../lib/managers/MonsterManager';
 import { SummMon } from '../models/monster';
 
 export default class GeneratorRouter {
-    public router: any;
-    private mgr: MonsterManager;
+    public router_express: any;
+
     private API_ENDPOINT_SIMULATE: string = 'get_random';
     private API_BASE: string = 'http://www.swfr.tv/simulator/';
     private SCROLL_TYPES = {
@@ -80,11 +80,10 @@ export default class GeneratorRouter {
     };
 
     constructor(private monMgr:MonsterManager) {
-        this.mgr = monMgr;
-        this.router = express.Router();
-        this.router.get('/legendary', this.handleGenerateLegendary);
-        this.router.get('/lightndark', this.handleGenerateLightNDark);
-        this.router.get('/mystical', this.handleGenerateMystical);
+        this.router_express = express.Router();
+        this.router_express.get('/legendary', this.handleGenerateLegendary.bind(this));
+        this.router_express.get('/lightndark', this.handleGenerateLightNDark.bind(this));
+        this.router_express.get('/mystical', this.handleGenerateMystical.bind(this));
     }
 
     private convertBrotliBodyToHtml(bodyBuffer): any {
@@ -239,7 +238,7 @@ export default class GeneratorRouter {
             const body = resp.body;
             // NOTE: memOnly === false forces a save to disk
             const newMon = new SummMon(body, { memOnly: false });
-            const newMonVerified = this.mgr.addMonster(newMon);
+            const newMonVerified = this.monMgr.addMonster(newMon);
             returnVal.urls.searchNameUsed = newMon.name;
             returnVal['monster'] = newMonVerified;
 

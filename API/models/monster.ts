@@ -4,13 +4,6 @@ import * as fs from 'fs';
 import * as moment from 'moment';
 import * as path from 'path';
 
-/*
-    @summary This is the constructor for the SummMon model
-    @constructor
-    @param data object - The map/object to use to populate this model
-    @param opts object - See properties below
-    @param opts.memOnly bool - Whether or not this model should save to file after initilization
-*/
 export default class SummMon {
     public id: number;
     public _tsCreation: number;
@@ -58,6 +51,13 @@ export default class SummMon {
         return `[PROPERTY_MISSING_TAG] data was missing "${ propExpression }" property`;
     };
 
+    /*
+        @summary This is the constructor for the SummMon model
+        @constructor
+        @param data object - The map/object to use to populate this model
+        @param opts object - See properties below
+        @param opts.memOnly bool - Whether or not this model should save to file after initilization
+    */
     constructor(private data:any = null, private opts:any = null) {
         if (!opts) {
             opts = {
@@ -66,7 +66,7 @@ export default class SummMon {
         }
 
         if (!data) {
-            console.warn(`[${ this.getModelName() }] [cosntructor] data was missing or null`);
+            console.warn(`[${ this.getModelName() }] [constructor] data was missing or null`);
             return;
         }
         if (typeof data === 'string') {
