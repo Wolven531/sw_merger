@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "outDir": "./built",
+        "allowJs": false,
+        "target": "es2017",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["es2015", "dom"],
+        "baseUrl": "./",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "types": [
+            "node"
+        ],
+        "paths": {
+        }
+    },
+    "include": [
+        "./app.ts",
+        "./lib/**/*",
+        "./models/**/*",
+        "./routes/**/*"
+    ]
+}

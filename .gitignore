@@ -66,3 +66,6 @@ API/data/fire/*.json
 API/data/light/*.json
 API/data/water/*.json
 API/data/wind/*.json
+
+# built directory
+API/built/*

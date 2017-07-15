@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./built",
+        "target": "es2017",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["es2015", "dom"],
+        "baseUrl": "./",
+        "paths": {
+        }
+    },
+    "include": [
+        "./app.ts",
+        "./lib/**/*",
+        "./models/**/*",
+        "./routes/**/*"
+    ]
+}
