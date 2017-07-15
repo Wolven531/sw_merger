@@ -14,7 +14,7 @@ import { SummMon } from '../../../../models/monster';
 import { MonsterService } from '../../../../services/monster.service';
 
 @Component({
-    selector: 'monster-detail',
+    selector: 'app-monster-detail',
     templateUrl: './monster-detail.component.html',
     styleUrls: ['./monster-detail.component.css'],
 })
@@ -24,7 +24,7 @@ export class MonsterDetailComponent implements OnInit {
     constructor(
         private monsterService: MonsterService,
         private route: ActivatedRoute,
-        private location: Location){ };
+        private location: Location) { };
 
     ngOnInit(): void {
         // NOTE: this component is being supplied with a monster already
@@ -42,7 +42,7 @@ export class MonsterDetailComponent implements OnInit {
             });
     };
 
-    getImgSrc(imgType: string) : string {
+    getImgSrc(imgType: string): string {
         if (imgType === 'awakened') {
             return this.monster.image_awakened;
         }

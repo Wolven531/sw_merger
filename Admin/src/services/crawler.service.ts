@@ -13,7 +13,7 @@ import { SummMon } from '../models/monster';
 
 @Injectable()
 export class CrawlerService {
-    public base_url: string = '';
+    public base_url = '';
     private headers = new Headers({ 'Content-Type': 'application/json' });
     private servicePrefix = 'srv_crawler | ';
 
@@ -31,7 +31,7 @@ export class CrawlerService {
         if (this.base_url !== '') {
             return Observable.of(this.base_url);
         }
-        let testURL = 'http://127.0.0.1:5555';
+        const testURL = 'http://127.0.0.1:5555';
 
         return this.http.get(testURL)
             .map(data => {
@@ -42,7 +42,7 @@ export class CrawlerService {
     };
 
     private handleError(error: any): Promise<any> {
-        console.error(`An error occurred: err=${ error } err.message=${ error.message }`);
+        console.error(`An error occurred: err=${error} err.message=${error.message}`);
         return Promise.reject(error.message || error);
     };
 };

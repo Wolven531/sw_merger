@@ -10,12 +10,12 @@ import { CrawlerService } from '../../services/crawler.service';
 import { MonsterService } from '../../services/monster.service';
 
 @Component({
-    selector: 'crawler-root',
+    selector: 'app-crawler',
     templateUrl: './crawler.component.html',
     styleUrls: ['./crawler.component.css'],
 })
 export class CrawlerComponent implements OnInit {
-    private crawlerStatus: string = '';
+    private crawlerStatus = '';
 
     constructor(
         private crawlerService: CrawlerService,
@@ -37,23 +37,23 @@ export class CrawlerComponent implements OnInit {
     };
 
     private getMonsterClasses(mon: SummMon): string[] {
-        return [`mon-type-${ mon.type }`];
+        return [`mon-type-${mon.type}`];
     };
 
     private getSimTypeDisplay(simType: string): string {
-        let disp: string = '';
+        let disp = '';
 
-        switch(simType) {
+        switch (simType) {
             case 'legendary':
                 disp = 'Legendary Scroll';
-            break;
+                break;
             case 'lightndark':
                 disp = 'Light / Dark Scroll';
-            break;
+                break;
             case 'mystical':
             default:
                 disp = 'Mystical Scroll';
-            break;
+                break;
         }
 
         return disp;

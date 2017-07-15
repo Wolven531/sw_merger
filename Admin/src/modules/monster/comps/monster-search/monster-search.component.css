@@ -3,7 +3,7 @@
     width: 15.5em;
 }
 
-#search-component {
+.app-monster-search {
     background-color: #333;
     margin: 0 auto;
     padding: 1em 0 2em 0;

@@ -1,7 +1,6 @@
 'use strict';
 
 export class SummMon {
-    constructor() { }
     id: number;
     name: string;
     isMissingRequiredProp: boolean;
@@ -12,15 +11,17 @@ export class SummMon {
     star: number;
     image_base: string;
     image_awakened: string;
-    level: number = 1;
-    hp: number = 0;
-    attack: number = 0;
-    defense: number = 0;
-    speed: number = 0;
-    crit_rate: number = 0;
-    crit_damage: number = 0;
-    resist: number = 0;
-    accuracy: number = 0;
-    _tsCreation: number = 0;
-    _tsSerialize: number = 0;
+    level = 1;
+    hp = 0;
+    attack = 0;
+    defense = 0;
+    speed = 0;
+    crit_rate = 0;
+    crit_damage = 0;
+    resist = 0;
+    accuracy = 0;
+    _tsCreation = 0;
+    _tsSerialize = 0;
+
+    constructor() { }
 }

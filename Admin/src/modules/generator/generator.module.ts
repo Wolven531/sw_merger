@@ -1,7 +1,7 @@
 'use strict';
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders } from '@angular/core';
 
 import { GeneratorRouting } from './generator.routing';

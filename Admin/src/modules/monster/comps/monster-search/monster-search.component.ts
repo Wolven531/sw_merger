@@ -18,7 +18,7 @@ import { SummMon } from '../../../../models/monster';
 import { MonsterSearchService } from '../../../../services/monster-search.service';
 
 @Component({
-    selector: 'monster-search',
+    selector: 'app-monster-search',
     templateUrl: './monster-search.component.html',
     styleUrls: ['./monster-search.component.css'],
     providers: [MonsterSearchService],
@@ -44,7 +44,7 @@ export class MonsterSearchComponent implements OnInit {
             // NOTE: ignore if next search term is same as previous
             .distinctUntilChanged()
             // NOTE: switch to new observable each time the term changes
-            .switchMap((term:string) => {
+            .switchMap((term: string) => {
                 if (term && (term.length > 2)) {
                     // NOTE: return the http search observable
                     return this.monsterSearchService.searchByName(term);
@@ -60,11 +60,11 @@ export class MonsterSearchComponent implements OnInit {
     };
 
     gotoDetail(monster: SummMon): void {
-        let link = ['/monster/detail', monster.id];
+        const link = ['/monster/detail', monster.id];
         this.router.navigate(link);
     };
 
     getMonsterClasses(mon: SummMon): string[] {
-        return [`mon-type-${ mon.type }`];
+        return [`mon-type-${mon.type}`];
     };
 }

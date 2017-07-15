@@ -9,12 +9,12 @@ import { SummMon } from '../../models/monster';
 import { MonsterService } from '../../services/monster.service';
 
 @Component({
-    selector: 'generator-root',
+    selector: 'app-generator',
     templateUrl: './generator.component.html',
     styleUrls: ['./generator.component.css'],
 })
 export class GeneratorComponent implements OnInit {
-    private simTypeDisp: string = '';
+    private simTypeDisp = '';
     private simulatedMon: SummMon = null;
 
     constructor(private monsterService: MonsterService, private router: Router) { };
@@ -24,7 +24,7 @@ export class GeneratorComponent implements OnInit {
     };
 
     private getMonsterClasses(mon: SummMon): string[] {
-        return [`mon-type-${ mon.type }`];
+        return [`mon-type-${mon.type}`];
     };
 
     private simulateSummon(simType: string): void {
@@ -39,19 +39,19 @@ export class GeneratorComponent implements OnInit {
     };
 
     private getSimTypeDisplay(simType: string): string {
-        let disp: string = '';
+        let disp = '';
 
-        switch(simType) {
+        switch (simType) {
             case 'legendary':
                 disp = 'Legendary Scroll';
-            break;
+                break;
             case 'lightndark':
                 disp = 'Light / Dark Scroll';
-            break;
+                break;
             case 'mystical':
             default:
                 disp = 'Mystical Scroll';
-            break;
+                break;
         }
 
         return disp;

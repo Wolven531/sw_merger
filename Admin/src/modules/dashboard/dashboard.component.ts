@@ -9,13 +9,13 @@ import { SummMon } from '../../models/monster';
 import { MonsterService } from '../../services/monster.service';
 
 @Component({
-    selector: 'dashboard-root',
+    selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
     private monsters: SummMon[] = [];
-    private serverLoc: string = '';
+    private serverLoc = '';
 
     constructor(private monsterService: MonsterService, private router: Router) { };
 
@@ -31,6 +31,6 @@ export class DashboardComponent implements OnInit {
     };
 
     getMonsterClasses(mon: SummMon): string[] {
-        return [`mon-type-${ mon.type }`];
+        return [`mon-type-${mon.type}`];
     };
 };

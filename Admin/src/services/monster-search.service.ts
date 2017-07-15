@@ -11,8 +11,30 @@ import { SummMon } from '../models/monster';
 
 @Injectable()
 export class MonsterSearchService {
-    public base_url: string = '';
+    public base_url = '';
     private servicePrefix = 'srv_monster-search | ';
+
+    constructor(private http: Http) { }
+
+    public searchByName(term: string): Observable<SummMon[]> {
+        // NOTE: awill: courtesy of https://stackoverflow.com/questions/39319279/convert-promise-to-observable
+        return Observable.from(
+            this.getURLObs().toPromise()
+                .then((newURL: string) => {
+                    console.log(`Setting URL to: ${newURL}`);
+                    const searchUrl = `${this.base_url}/monsters/search`;
+
+                    console.log(`${this.servicePrefix} searching at ${searchUrl}`);
+                    console.time(`${this.servicePrefix}search`);
+
+                    return this.http.get(`${searchUrl}/?name=${term}`).toPromise();
+                })
+                .then(resp => {
+                    console.timeEnd(`${this.servicePrefix}search`);
+                    return resp.json().monsters as SummMon[];
+                })
+        );
+    };
 
     private getURLProm(): Promise<string> {
         return this.getURLObs()
@@ -26,7 +48,7 @@ export class MonsterSearchService {
         if (this.base_url !== '') {
             return Observable.of(this.base_url);
         }
-        let testURL = 'http://127.0.0.1:5555';
+        const testURL = 'http://127.0.0.1:5555';
 
         return this.http.get(testURL)
             .map(data => {
@@ -34,27 +56,6 @@ export class MonsterSearchService {
 
                 return this.base_url;
             });
-    };
-
-    constructor(private http: Http) { }
-
-    searchByName(term: string): Observable<SummMon[]> {
-        // NOTE: awill: courtesy of https://stackoverflow.com/questions/39319279/convert-promise-to-observable
-        return Observable.from(
-            this.getURLObs().toPromise()
-                .then((newURL: string) => {
-                    console.log(`Setting URL to: ${newURL}`);
-                    const searchUrl = `${this.base_url}/monsters/search`;
-
-                    console.log(`${this.servicePrefix} searching at ${searchUrl}`);
-                    console.time(`${this.servicePrefix}search`)
-
-                    return this.http.get(`${searchUrl}/?name=${term}`).toPromise();
-                })
-                .then(resp => {
-                    return resp.json().monsters as SummMon[];
-                })
-        );
     };
 
     private handleError(error: any): Promise<any> {

@@ -9,7 +9,7 @@ import { SummMon } from '../../../../models/monster';
 import { MonsterService } from '../../../../services/monster.service';
 
 @Component({
-    selector: 'monsters-root',
+    selector: 'app-monster-list',
     templateUrl: './monster-list.component.html',
     styleUrls: ['./monster-list.component.css'],
 })
@@ -34,6 +34,6 @@ export class MonsterListComponent implements OnInit {
     };
 
     getMonsterClasses(mon: SummMon): string[] {
-        return [`mon-type-${ mon.type }`];
+        return [`mon-type-${mon.type}`];
     };
 };
