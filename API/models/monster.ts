@@ -5,6 +5,20 @@ import * as moment from 'moment';
 import * as path from 'path';
 
 export default class SummMon {
+    public static MONSTER_ELEMENT = {
+        Dark: 'dark',
+        Fire: 'fire',
+        Light: 'light',
+        Water: 'water',
+        Wind: 'wind',
+        asArray: (): string[] => {
+            return ['dark', 'fire', 'light', 'water', 'wind'];
+        },
+        validate: (testElem: string): boolean => {
+            return SummMon.MONSTER_ELEMENT.asArray().indexOf(testElem) > -1;
+        },
+    };
+
     public id: number;
     public _tsCreation: number;
     public _tsSerialize: number;
@@ -27,30 +41,6 @@ export default class SummMon {
     public base_resistance: number;
     public base_accuracy: number;
 
-    public static MONSTER_ELEMENT = {
-        Dark: 'dark',
-        Fire: 'fire',
-        Light: 'light',
-        Water: 'water',
-        Wind: 'wind',
-        asArray: (): string[] => {
-            return ['dark', 'fire', 'light', 'water', 'wind'];
-        },
-        validate: (testElem: string): boolean => {
-            return SummMon.MONSTER_ELEMENT.asArray().indexOf(testElem) > -1;
-        },
-    };
-
-    /*
-        @summary This method is an ES6 tagged template literal
-        @param string[] strings - An array representing parts of the string (substrings) surrounding the tag expression
-        @param string propExp - The property name that is missing (likely from SummMon.MONSTER_PROPERTIES)
-        @return string
-    */
-    private PROPERTY_MISSING_TAG = (strings: any, propExpression:any = null): string => {
-        return `[PROPERTY_MISSING_TAG] data was missing "${ propExpression }" property`;
-    };
-
     /*
         @summary This is the constructor for the SummMon model
         @constructor
@@ -58,7 +48,7 @@ export default class SummMon {
         @param opts object - See properties below
         @param opts.memOnly bool - Whether or not this model should save to file after initilization
     */
-    constructor(private data:any = null, private opts:any = null) {
+    constructor(private data: any = null, private opts: any = null) {
         if (!opts) {
             opts = {
                 memOnly: true,
@@ -66,7 +56,7 @@ export default class SummMon {
         }
 
         if (!data) {
-            console.warn(`[${ this.getModelName() }] [constructor] data was missing or null`);
+            console.warn(`[${this.getModelName()}] [constructor] data was missing or null`);
             return;
         }
         if (typeof data === 'string') {
@@ -216,7 +206,6 @@ export default class SummMon {
         if (!opts.memOnly) {
             this.saveToFile();
         }
-
     }
 
     /*
@@ -255,70 +244,11 @@ export default class SummMon {
     };
 
     /*
-        @summary This method returns a file name to use when serializing this model
-        @return string - If a required property is missing (`id`, `type`), the method will issue a warning and return null
-    */
-    private getFileName(): string {
-        if (!this.id) {
-            console.warn(`[${ this.getModelName() }] [getFileName] Missing id property, unable to generate file name`);
-            return null;
-        }
-        if (!this.type) {
-            console.warn(`[${ this.getModelName() }] [getFileName] Missing type property, unable to generate file name`);
-            return null;
-        }
-
-        let fp = path.join(
-            path.resolve(__dirname, `..${ path.sep }..${ path.sep }data${ path.sep }${ this.type }`)+ `${ path.sep }${ this.id }.json`
-        );
-
-        console.info(`getFileName is using fp=${ fp }`);
-
-        return fp;
-    };
-
-    /*
-        @summary This method supports an options object with the following properties available:
-        @param opts object - See properties below
-        @param opts.force bool - Whether or not to force the method to overwrite the last save file
-    */
-    private saveToFile = (opts:any = null): void => {
-        const path = this.getFileName();
-
-        if (!opts) {
-            opts = {
-                force: false,
-            };
-        }
-
-        if (!path) {
-            console.warn(`[${ this.getModelName() }] [saveToFile] No path, unable to save to file`);
-            return;
-        }
-
-        // NOTE: if the file does not exist, create it now
-        if (!fs.existsSync(path)) {
-            fs.writeFileSync(path, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
-        } else {
-            // NOTE: if the file exists, check if it has been updated recently enough
-            const stats = fs.statSync(path);
-            const now = moment();
-            const oneDayAgo = now.subtract(1, 'days');
-            const fileModifiedTime = moment(stats.mtime.getMilliseconds());
-            const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
-
-            if (opts.force || !isLessThanOneDay) {
-                fs.writeFileSync(path, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
-            }
-        }
-    };
-
-    /*
         @summary This method converts this model into a string (for persistence)
         @return string - The JSON-safe string version of this model
     */
     public serialize(): string {
-        let returnVal = {};
+        const returnVal = {};
         returnVal['id'] = this.id;
         returnVal['name'] = this.name;
         returnVal['type'] = this.type;
@@ -349,28 +279,97 @@ export default class SummMon {
         @toString
     */
     public toString(): string {
-        return `[${ this.getModelName() }]
-            isMissingRequiredProp: ${ this.isMissingRequiredProp() }
-            isMissingProp: ${ this.isMissingProp() }
-            missingFields: ${ this.missingFields.join(',') }
-            _tsCreation: ${ this._tsCreation }
-            _tsSerialize: ${ this._tsSerialize }
-            id: ${ this.id }
-            name: ${ this.name }
-            type: ${ this.type }
-            isLegend: ${ this.isLegendary }
-            star level: ${ this.star_level }
-            img: ${ this.image_base }
-            img awake: ${ this.image_awakened }
-            level: ${ this.level }
-            hp: ${ this.base_hp }
-            attack: ${ this.base_attack }
-            def: ${ this.base_defense }
-            speed: ${ this.base_speed }
-            crit %: ${ this.base_crit_rate }
-            crit dmg: ${ this.base_crit_damage }
-            resist: ${ this.base_resistance }
-            accuracy: ${ this.base_accuracy }`;
+        return `[${this.getModelName()}]
+            isMissingRequiredProp: ${ this.isMissingRequiredProp()}
+            isMissingProp: ${ this.isMissingProp()}
+            missingFields: ${ this.missingFields.join(',')}
+            _tsCreation: ${ this._tsCreation}
+            _tsSerialize: ${ this._tsSerialize}
+            id: ${ this.id}
+            name: ${ this.name}
+            type: ${ this.type}
+            isLegend: ${ this.isLegendary}
+            star level: ${ this.star_level}
+            img: ${ this.image_base}
+            img awake: ${ this.image_awakened}
+            level: ${ this.level}
+            hp: ${ this.base_hp}
+            attack: ${ this.base_attack}
+            def: ${ this.base_defense}
+            speed: ${ this.base_speed}
+            crit %: ${ this.base_crit_rate}
+            crit dmg: ${ this.base_crit_damage}
+            resist: ${ this.base_resistance}
+            accuracy: ${ this.base_accuracy}`;
+    };
+
+    /*
+        @summary This method is an ES6 tagged template literal
+        @param string[] strings - An array representing parts of the string (substrings) surrounding the tag expression
+        @param string propExp - The property name that is missing (likely from SummMon.MONSTER_PROPERTIES)
+        @return string
+    */
+    private PROPERTY_MISSING_TAG = (strings: any, propExpression: any = null): string => {
+        return `[PROPERTY_MISSING_TAG] data was missing "${propExpression}" property`;
+    };
+
+    /*
+        @summary This method returns a file name to use when serializing this model
+        @return string - If a required property is missing (`id`, `type`), the method will issue a warning and return null
+    */
+    private getFileName(): string {
+        if (!this.id) {
+            console.warn(`[${this.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
+            return null;
+        }
+        if (!this.type) {
+            console.warn(`[${this.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
+            return null;
+        }
+
+        const fp = path.join(
+            path.resolve(__dirname, `..${path.sep}..${path.sep}data${path.sep}${this.type}`) + `${path.sep}${this.id}.json`
+        );
+
+        console.info(`getFileName is using fp=${fp}`);
+
+        return fp;
+    };
+
+    /*
+        @summary This method supports an options object with the following properties available:
+        @param opts object - See properties below
+        @param opts.force bool - Whether or not to force the method to overwrite the last save file
+    */
+    private saveToFile = (opts: any = null): void => {
+        const pathStr = this.getFileName();
+
+        if (!opts) {
+            opts = {
+                force: false,
+            };
+        }
+
+        if (!path) {
+            console.warn(`[${this.getModelName()}] [saveToFile] No path, unable to save to file`);
+            return;
+        }
+
+        // NOTE: if the file does not exist, create it now
+        if (!fs.existsSync(pathStr)) {
+            fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
+        } else {
+            // NOTE: if the file exists, check if it has been updated recently enough
+            const stats = fs.statSync(pathStr);
+            const now = moment();
+            const oneDayAgo = now.subtract(1, 'days');
+            const fileModifiedTime = moment(stats.mtime.getMilliseconds());
+            const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
+
+            if (opts.force || !isLessThanOneDay) {
+                fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
+            }
+        }
     };
 };
 

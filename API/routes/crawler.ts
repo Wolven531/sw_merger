@@ -21,7 +21,7 @@ export default class CrawlerRouter {
         this.router_express.delete('/:id', this.handleRemove.bind(this));
         this.router_express.post('/', this.handleAdd.bind(this));
         this.router_express.put('/:id', this.handleUpdate.bind(this));
-    
+
         this.router_express.get('/:id', this.handleLookupById.bind(this));
         this.router_express.get('/', this.handleList.bind(this));
     }
@@ -50,7 +50,7 @@ export default class CrawlerRouter {
     private handleLookupById(req, res, next): any {
         const id = parseInt(req.params.id, 10);
         console.info(`[crawler] [router] [GET] [/:id] id=${ id }`);
-        let returnVal = {
+        const returnVal = {
             crawler: this.crawlerMgr.getCrawler(id),
             err: null,
         };
@@ -69,11 +69,11 @@ export default class CrawlerRouter {
 
     private handleAdd(req, res, next): any {
         console.info(`[crawler] [handleAdd]`);
-        let returnVal = {
+        const returnVal = {
             crawler: null,
             err: null,
         };
-        let newCrawlerData = req.body || null;
+        const newCrawlerData = req.body || null;
 
         if (!newCrawlerData) {
             res.statusCode = 400;
@@ -97,11 +97,11 @@ export default class CrawlerRouter {
     private handleRemove(req, res, next): any {
         const id = parseInt(req.query.id, 10);
         console.info(`[crawler] [handleRemove] id=${ id }`);
-        let returnVal = {
+        const returnVal = {
             removedCrawler: null,
             err: null,
         };
-        let existingCrawler = this.crawlerMgr.getCrawler(id);
+        const existingCrawler = this.crawlerMgr.getCrawler(id);
 
         if (!existingCrawler) {
             res.statusCode = 404;
@@ -125,13 +125,13 @@ export default class CrawlerRouter {
     private handleUpdate(req, res, next): any {
         const id = parseInt(req.params.id, 10);
         console.info(`[crawler] [router] [PUT] [/:id] id=${ id }`);
-        let returnVal = {
+        const returnVal = {
             staleCrawler: null,
             updatedCrawler: null,
             err: null,
         };
-        let staleCrawler = this.crawlerMgr.getCrawler(id);
-        let updatedCrawlerData = req.body || null;
+        const staleCrawler = this.crawlerMgr.getCrawler(id);
+        const updatedCrawlerData = req.body || null;
         let resultOfUpdate = null;
 
         if (!staleCrawler) {
@@ -162,4 +162,4 @@ export default class CrawlerRouter {
     };
 }
 
-export { CrawlerRouter };
+export { CrawlerRouter as CrawlerRouter };

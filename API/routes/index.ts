@@ -35,7 +35,8 @@ export default class HomeRouter {
                     type: 'SummMon',
                 },
             },
-            description: 'Try to update a monster by id; the payload (or body) of the put request should be the JSON serialized version of the updated monster',
+            description: 'Try to update a monster by id;'
+                + ' the payload (or body) of the put request should be the JSON serialized version of the updated monster',
         },
         {
             path: '/monsters/:id',
@@ -59,7 +60,8 @@ export default class HomeRouter {
                     possibleValues: SummMon.MONSTER_ELEMENT.asArray().join('|'),
                 },
             },
-            description: 'Try to search for a monster by its name and/or type. You can search by 1) just name 2) just type 3) name AND type (type is considered first)',
+            description: 'Try to search for a monster by its name and/or type. '
+                + 'You can search by 1) just name 2) just type 3) name AND type (type is considered first)',
         },
         {
             path: '/generator/legendary',
@@ -93,7 +95,7 @@ export default class HomeRouter {
         },
     ];
 
-    constructor(private monMgr:MonsterManager) {
+    constructor(private monMgr: MonsterManager) {
         this.router_express = express.Router();
         this.router_express.get('/', this.handleHomePage.bind(this));
     }
@@ -119,4 +121,4 @@ export default class HomeRouter {
     };
 }
 
-export { HomeRouter };
+export { HomeRouter as HomeRouter };

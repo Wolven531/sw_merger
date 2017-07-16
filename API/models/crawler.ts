@@ -24,7 +24,7 @@ export default class Crawler {
         }
 
         if (!data) {
-            console.warn(`[${ this.getModelName() }] [constructor] data was missing or null`);
+            console.warn(`[${this.getModelName()}] [constructor] data was missing or null`);
             return;
         }
         if (typeof data === 'string') {
@@ -52,7 +52,7 @@ export default class Crawler {
         @return string - The JSON-safe string version of this model
     */
     public serialize(): string {
-        let returnVal = {};
+        const returnVal = {};
         returnVal['id'] = this.id;
         returnVal['name'] = this.name;
 
@@ -66,11 +66,11 @@ export default class Crawler {
         @toString
     */
     public toString(): string {
-        return `[${ this.getModelName() }]
-            _tsCreation: ${ this._tsCreation }
-            _tsSerialize: ${ this._tsSerialize }
-            id: ${ this.id }
-            name: ${ this.name }`;
+        return `[${this.getModelName()}]
+            _tsCreation: ${ this._tsCreation}
+            _tsSerialize: ${ this._tsSerialize}
+            id: ${ this.id}
+            name: ${ this.name}`;
     };
 };
 

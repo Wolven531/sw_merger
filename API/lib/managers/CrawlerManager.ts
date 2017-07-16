@@ -6,19 +6,18 @@ import * as path from 'path';
 import { Crawler } from '../../models/crawler';
 
 export default class CrawlerManager {
-    private internalMap: any = { };
-    private compName: string = '[CrawlerManager]';
+    private internalMap: any = {};
+    private compName = '[CrawlerManager]';
 
     constructor() {
-        console.info(`${ this.compName } [constructor]`);
-        
+        console.info(`${this.compName} [constructor]`);
     }
 
-    public init (): void {
-        console.info(`${ this.compName } [init]`);
+    public init(): void {
+        console.info(`${this.compName} [init]`);
     };
 
-    public getCrawler(id:number): Crawler {
+    public getCrawler(id: number): Crawler {
         if (!id) {
             return null;
         }
@@ -30,13 +29,13 @@ export default class CrawlerManager {
         // TODO: awill: add proper validation of monster here before adding
 
         if (String(newCrawler.id).length < 1) {
-            console.warn(`Could not add crawler, no ID in crawler. newCrawler.id=${ newCrawler.id } newCrawler=${ newCrawler }`);
+            console.warn(`Could not add crawler, no ID in crawler. newCrawler.id=${newCrawler.id} newCrawler=${newCrawler}`);
             return null;
         }
         const existingCrawler = this.getCrawler(newCrawler.id);
 
         if (existingCrawler) {
-            console.warn(`Attempted to add crawler that already exists (id=${ existingCrawler.id }, name=${ existingCrawler.name }). Bailing.`);
+            console.warn(`Attempted to add crawler that already exists (id=${existingCrawler.id}, name=${existingCrawler.name}). Bailing.`);
             return null;
         }
 
@@ -45,7 +44,7 @@ export default class CrawlerManager {
         return this.internalMap[newCrawler.id];
     };
 
-    public removeCrawler(id:number): Crawler {
+    public removeCrawler(id: number): Crawler {
         if (!id) {
             console.warn('Could not remove crawler, no ID provided.');
             return null;
@@ -54,7 +53,7 @@ export default class CrawlerManager {
         const targetCrawler = this.getCrawler(id);
 
         if (!targetCrawler) {
-            console.warn(`Could not remove crawler because it could not be found (id=${ id }).`);
+            console.warn(`Could not remove crawler because it could not be found (id=${id}).`);
             return null;
         }
 
@@ -77,7 +76,7 @@ export default class CrawlerManager {
 
         // NOTE: this forces any crwaler that did not already exist to fail an update attempt
         if (!existingCrawler) {
-            console.warn(`Could not update crawler because it could not be found (id=${ id }).`);
+            console.warn(`Could not update crawler because it could not be found (id=${id}).`);
             return null;
         }
         this.internalMap[crawlKey] = crawler;
@@ -86,9 +85,9 @@ export default class CrawlerManager {
     };
 
     public getCrawlerArray(): Crawler[] {
-        console.info(`${ this.compName } [getCrawlerArray]`);
-        let results = new Array<Crawler>();
-        let keys = Object.keys(this.internalMap || {});
+        console.info(`${this.compName} [getCrawlerArray]`);
+        const results = new Array<Crawler>();
+        const keys = Object.keys(this.internalMap || {});
 
         // NOTE: each validation case is handled separately for explicity
         if (!this.internalMap) {
@@ -105,7 +104,7 @@ export default class CrawlerManager {
     };
 
     private getCrawlerMap(forceRefresh: boolean): any {
-        console.info(`${ this.compName } [getCrawlerMap] params: forceRefresh=${ forceRefresh }`);
+        console.info(`${this.compName} [getCrawlerMap] params: forceRefresh=${forceRefresh}`);
         // NOTE: this adds explicit type safety for the optional param
         forceRefresh = forceRefresh ? true : false;
         if (forceRefresh) {

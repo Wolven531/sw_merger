@@ -60,7 +60,7 @@ app.use('/generator', generatorRouter.router_express);
 app.get('/heartbeat/', (req, res, next) => {
     const webApiUrl = 'http://127.0.0.1:4040/api/tunnels';
     const ngrokUrl = app.get('ngrokUrl');
-    let returnVal = {
+    const returnVal = {
         webApi: webApiUrl,
         ngrokUrl: ngrokUrl,
         ngrokTunnelInfo: null,
@@ -73,7 +73,7 @@ app.get('/heartbeat/', (req, res, next) => {
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'X-CSRF-Token': 'dmFPXLuems+XoeJWiMreQUlhJmtaeH7RTnklQ3u/1qbGTaKxgF5cgaRiIgkpNQVDzdxpHf/HGpIPzS1Cm3CaIw==',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36',
+            'User-Agent': '',
             'X-Requested-With': 'XMLHttpRequest',
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.8',
@@ -105,7 +105,7 @@ app.get('/heartbeat/', (req, res, next) => {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-    let err = new Error('Not Found');
+    const err = new Error('Not Found');
     res.locals.status = 404;
     next(err);
 });

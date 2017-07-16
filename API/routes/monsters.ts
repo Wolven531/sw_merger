@@ -8,7 +8,7 @@ import { SummMon } from '../models/monster';
 export default class MonsterRouter {
     public router_express: any;
 
-    constructor(private monMgr:MonsterManager) {
+    constructor(private monMgr: MonsterManager) {
         this.router_express = express.Router();
 
         this.router_express.delete(['/:mon_id'], this.handleDelete.bind(this));
@@ -23,11 +23,11 @@ export default class MonsterRouter {
     private handleDelete(req, res, next): any {
         const monId = parseInt(req.params.mon_id, 10);
         console.info(`[monsters] [router] [DELETE] [/:mon_id] mon_id=${ monId }`);
-        let returnVal = {
+        const returnVal = {
             staleMonster: null,
             err: null,
         };
-        let staleMonster = this.monMgr.getMonster(monId);
+        const staleMonster = this.monMgr.getMonster(monId);
 
         if (!staleMonster) {
             res.statusCode = 404;
@@ -45,13 +45,13 @@ export default class MonsterRouter {
     private handleUpdate(req, res, next): any {
         const monId = parseInt(req.params.mon_id, 10);
         console.info(`[monsters] [router] [PUT] [/:mon_id] mon_id=${ monId }`);
-        let returnVal = {
+        const returnVal = {
             staleMonster: null,
             updatedMonster: null,
             err: null,
         };
-        let staleMonster = this.monMgr.getMonster(monId);
-        let updatedMonData = req.body || null;
+        const staleMonster = this.monMgr.getMonster(monId);
+        const updatedMonData = req.body || null;
         let resultOfUpdate = null;
 
         if (!staleMonster) {
@@ -89,7 +89,7 @@ export default class MonsterRouter {
         const searchTermName = req.query.name;
         const searchTermType = req.query.type;
         console.info(`[monsters] [router] [GET] [/search] name=${ searchTermName } type=${ searchTermType }`);
-        let returnVal = {
+        const returnVal = {
             monsters: this.monMgr.searchMonsters({ name: searchTermName, type: searchTermType }),
             err: null,
         };
@@ -100,7 +100,7 @@ export default class MonsterRouter {
     private handleLookupById(req, res, next): any {
         const monId = parseInt(req.params.mon_id, 10);
         console.info(`[monsters] [router] [GET] [/:mon_id] mon_id=${ monId }`);
-        let returnVal = {
+        const returnVal = {
             monster: this.monMgr.getMonster(monId),
             err: null,
         };
@@ -111,15 +111,15 @@ export default class MonsterRouter {
     private handleList(req, res, next): any {
         console.info('[monsters] [router] [/]');
         const output = (req.query.output || '');
-        let outputArr: string[] = output
+        const outputArr: string[] = output
             .split(',')
-            .filter((curr: string, ind: number, arr: string[]) : boolean => {
+            .filter((curr: string, ind: number, arr: string[]): boolean => {
                 // NOTE: awill: this filters out badly formatted fields
                 return String(curr).trim().length > 0;
             });
-        const shouldCompress : boolean = output !== 'all';
+        const shouldCompress: boolean = output !== 'all';
         const tmpMons = this.monMgr.getMonsterArray();
-        let returnVal = {
+        const returnVal = {
             monsters: new Array<any>(),
             err: null,
         };
@@ -128,15 +128,15 @@ export default class MonsterRouter {
         if (shouldCompress) {
             console.log('compressing...');
             returnVal.monsters = tmpMons.map((mon: SummMon, ind: number, arr: SummMon[]): any => {
-                let result = {
+                const result = {
                     _tsCreation: mon._tsCreation,
                     _tsSerialize: mon._tsSerialize,
                     id: mon.id,
                     name: mon.name,
                 };
 
-                outputArr.forEach((prop: string, ind: number, arr : string[]) : void => {
-                    switch(prop) {
+                outputArr.forEach((prop: string, outputInd: number, outputArrArr: string[]): void => {
+                    switch (prop) {
                         case 'level':
                         result[prop] = mon.level;
                         break;

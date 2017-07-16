@@ -14,8 +14,8 @@ import { SummMon } from '../models/monster';
 export default class GeneratorRouter {
     public router_express: any;
 
-    private API_ENDPOINT_SIMULATE: string = 'get_random';
-    private API_BASE: string = 'http://www.swfr.tv/simulator/';
+    private API_ENDPOINT_SIMULATE = 'get_random';
+    private API_BASE = 'http://www.swfr.tv/simulator/';
     private SCROLL_TYPES = {
         Legendary: 0,
         LightAndDark: 1,
@@ -29,7 +29,7 @@ export default class GeneratorRouter {
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'X-CSRF-Token': 'dmFPXLuems+XoeJWiMreQUlhJmtaeH7RTnklQ3u/1qbGTaKxgF5cgaRiIgkpNQVDzdxpHf/HGpIPzS1Cm3CaIw==',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36',
+            'User-Agent': this.getUserAgent(),
             'X-Requested-With': 'XMLHttpRequest',
             'Referer': 'http://www.swfr.tv/summon-simulator',
             'Accept-Encoding': 'gzip, deflate',
@@ -50,7 +50,7 @@ export default class GeneratorRouter {
             'referer': 'https://summonerswar.co/',
             'accept': 'text/plain, */*; q=0.01',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36',
+            'user-agent': this.getUserAgent(),
             'accept-language': 'en-US,en;q=0.8',
             'x-requested-with': 'XMLHttpRequest',
             'accept-encoding': 'gzip, deflate, br',
@@ -70,7 +70,7 @@ export default class GeneratorRouter {
             'referer': 'https://summonerswar.co/',
             'accept': 'text/plain, */*; q=0.01',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36',
+            'user-agent': this.getUserAgent(),
             'accept-language': 'en-US,en;q=0.8',
             'x-requested-with': 'XMLHttpRequest',
             'accept-encoding': 'gzip, deflate, br',
@@ -79,11 +79,15 @@ export default class GeneratorRouter {
         body: null,
     };
 
-    constructor(private monMgr:MonsterManager) {
+    constructor(private monMgr: MonsterManager) {
         this.router_express = express.Router();
         this.router_express.get('/legendary', this.handleGenerateLegendary.bind(this));
         this.router_express.get('/lightndark', this.handleGenerateLightNDark.bind(this));
         this.router_express.get('/mystical', this.handleGenerateMystical.bind(this));
+    }
+
+    private getUserAgent(): string {
+        return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36';
     }
 
     private convertBrotliBodyToHtml(bodyBuffer): any {
@@ -109,8 +113,8 @@ export default class GeneratorRouter {
 
     private handleGenerateMystical(req, res, next): any {
         console.info('[generator] [router] [/mystical] Launching request...');
-        let asyncFuncs = [];
-        let returnVal = {
+        const asyncFuncs = [];
+        const returnVal = {
             data: null,
             err: null,
         };
@@ -137,8 +141,8 @@ export default class GeneratorRouter {
 
     private handleGenerateLightNDark(req, res, next): any {
         console.info('[generator] [router] [/lightndark] Launching request...');
-        let asyncFuncs = [];
-        let returnVal = {
+        const asyncFuncs = [];
+        const returnVal = {
             data: null,
             err: null,
         };
@@ -165,8 +169,8 @@ export default class GeneratorRouter {
 
     private handleGenerateLegendary(req, res, next): any {
         console.info('[generator] [router] [/legendary] Launching request...');
-        let asyncFuncs = [];
-        let returnVal = {
+        const asyncFuncs = [];
+        const returnVal = {
             data: null,
             err: null,
         };
@@ -231,7 +235,7 @@ export default class GeneratorRouter {
         return this.API_BASE + this.API_ENDPOINT_SIMULATE + '?type=' + scrollType;
     };
 
-    private async lookupSim(url:string, returnVal: any): Promise<any> {
+    private async lookupSim(url: string, returnVal: any): Promise<any> {
         console.info('Launching sim request...');
         this.optsSimReq.uri = url;
         return request(this.optsSimReq, (error, resp, bodyBuffer) => {
@@ -249,13 +253,18 @@ export default class GeneratorRouter {
             return Promise.resolve(returnVal);
         });
     };
-    
+
     private async lookupName(returnVal: any): Promise<any> {
         console.info('[lookupName] Launching summ co request...');
         this.opts.body = 'action=ajaxsearchpro_search&aspp='
             + returnVal.urls.searchNameUsed
-            + '&asid=2&asp_inst_id=2_1&options=current_page_id%3D1816%26qtranslate_lang%3D0%26set_intitle%3DNone%26set_incontent%3DNone%26customset%255B%255D%3Dpost%26customset%255B%255D%3Dpage%26termset%255Bcategory%255D%255B%255D%3D72%26termset%255Bcategory%255D%255B%255D%3D80%26termset%255Bcategory%255D%255B%255D%3D74%26termset%255Bcategory%255D%255B%255D%3D76%26termset%255Bcategory%255D%255B%255D%3D75%26termset%255Bcategory%255D%255B%255D%3D93%26termset%255Bcategory%255D%255B%255D%3D94%26termset%255Bcategory%255D%255B%255D%3D91%26termset%255Bcategory%255D%255B%255D%3D90';
-        return request(this.opts, (error, resp, bodyBuffer:Buffer) => {
+            + '&asid=2&asp_inst_id=2_1&options=current_page_id%3D1816%26qtranslate_lang%3D0%26set_intitle%3DNone%26set_incontent%3DNone'
+            + '%26customset%255B%255D%3Dpost%26customset%255B%255D%3Dpage%26termset%255Bcategory%255D%255B%255D%3D72%26termset%255B'
+            + 'category%255D%255B%255D%3D80%26termset%255Bcategory%255D%255B%255D%3D74%26termset%255Bcategory%255D%255B%255D%3D76%26'
+            + 'termset%255Bcategory%255D%255B%255D%3D75%26termset%255Bcategory%255D%255B%255D%3D93%26termset%255B'
+            + 'category%255D%255B%255D%3D94%26termset%255Bcategory%255D%255B%255D%3D91%26termset%255Bcategory%255D%255B%255D%3D90';
+
+        return request(this.opts, (error, resp, bodyBuffer: Buffer) => {
             if (error) {
                 console.error(`[lookupName] Error: ${ error }`);
             }
@@ -336,4 +345,4 @@ export default class GeneratorRouter {
     };
 }
 
-export { GeneratorRouter };
+export { GeneratorRouter as GeneratorRouter };
