@@ -11,6 +11,7 @@ export default class CrawlerManager {
 
     constructor() {
         console.info(`${this.compName} [constructor]`);
+        this.internalMap = this.loadFromDisk();
     }
 
     public init(): void {
@@ -114,6 +115,47 @@ export default class CrawlerManager {
             this.internalMap = {};
         }
         return this.internalMap;
+    };
+
+    private loadFromDisk(): any {
+        console.info(`${this.compName} [loadFromDisk] About to load from disk...`);
+        const CrawlerMap = {};
+        let fp = '';
+        let filename = '';
+        let mapKey = '';
+        let crawlerCount = 0;
+        let data = null;
+        let newObj: Crawler = null;
+        const crawlerDir = path.resolve(`${__dirname}${path.sep}..${path.sep}..${path.sep}..${path.sep}crawlers${path.sep}`);
+
+        fp = crawlerDir;
+
+        if (!fs.fs.existsSync(fp)) {
+            console.warn(`Crawler dir was missing: ${fp} | __dirname = ${__dirname}`);
+            return;
+        }
+
+        const jsonFiles = fs.fs.readdirSync(fp).filter((currFileName, jsonInd, jsonArr) => {
+            return path.extname(currFileName) === '.json';
+        });
+
+        console.info(`Dir ${fp} had ${jsonFiles.length} files`);
+        for (let i = 0; i < jsonFiles.length; i++) {
+            filename = jsonFiles[i];
+            fp = path.resolve(`${crawlerDir}${path.sep}${filename}`);
+
+            console.info(`About to read file, fp = ${fp}`);
+            data = fs.fs.readFileSync(fp, { encoding: 'utf8', flag: 'r' });
+
+            newObj = new Crawler(data);
+            mapKey = String(newObj.id);
+
+            CrawlerMap[mapKey] = newObj;
+            crawlerCount++;
+        }
+        console.info(`Total crawler count: ${crawlerCount}`);
+
+        return CrawlerMap;
     };
 };
 

@@ -83,7 +83,8 @@ export default class CrawlerRouter {
             return res.json(returnVal);
         }
 
-        const newCrawler = new Crawler(newCrawlerData);
+        // NOTE: memOnly === false forces a save to disk
+        const newCrawler = new Crawler(newCrawlerData, { memOnly: false });
         const resultOfAdd = this.crawlerMgr.addCrawler(newCrawler);
 
         if (!resultOfAdd) {

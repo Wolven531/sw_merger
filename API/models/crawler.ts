@@ -3,6 +3,7 @@
 import * as fs from 'fs';
 import * as moment from 'moment';
 import * as path from 'path';
+
 export default class Crawler {
     private static counter = 0;
 
@@ -27,10 +28,13 @@ export default class Crawler {
         @constructor
         @param data object - The map/object to use to populate this model
         @param opts object - See properties below
+        @param opts.memOnly bool - Whether or not this model should save to file after initilization
     */
     constructor(private data: any = null, private opts: any = null) {
         if (!opts) {
-            opts = { };
+            opts = {
+                memOnly: true,
+            };
         }
 
         if (!data) {
@@ -51,6 +55,10 @@ export default class Crawler {
         this.name = String(data.name);
         this.url = String(data.url);
         this.domSelector = String(data.domSelector);
+
+        if (!opts.memOnly) {
+            this.saveToFile();
+        }
 
         Crawler.counter++;
     }
@@ -83,6 +91,65 @@ export default class Crawler {
             name: ${ this.name}
             url: ${ this.url}
             domSelector: ${ this.domSelector}`;
+    };
+
+    /*
+        @summary This method returns a file name to use when serializing this model
+        @return string - If a required property is missing (`id`, `type`), the method will issue a warning and return null
+    */
+    private getFileName(): string {
+        if (!this.id && (this.id !== 0)) {
+            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
+            return null;
+        }
+        if (!this.name) {
+            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
+            return null;
+        }
+
+        const fp = path.join(
+            path.resolve(__dirname, `..${path.sep}..${path.sep}crawlers${path.sep}${this.id}.json`)
+        );
+
+        console.info(`getFileName is using fp=${fp}`);
+
+        return fp;
+    };
+
+    /*
+        @summary This method supports an options object with the following properties available:
+        @param opts object - See properties below
+        @param opts.force bool - Whether or not to force the method to overwrite the last save file
+    */
+    private saveToFile = (opts: any = null): void => {
+        const pathStr = this.getFileName();
+
+        if (!opts) {
+            opts = {
+                force: false,
+            };
+        }
+
+        if (!path) {
+            console.warn(`[${Crawler.getModelName()}] [saveToFile] No path, unable to save to file`);
+            return;
+        }
+
+        // NOTE: if the file does not exist, create it now
+        if (!fs.existsSync(pathStr)) {
+            fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
+        } else {
+            // NOTE: if the file exists, check if it has been updated recently enough
+            const stats = fs.statSync(pathStr);
+            const now = moment();
+            const oneDayAgo = now.subtract(1, 'days');
+            const fileModifiedTime = moment(stats.mtime.getMilliseconds());
+            const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
+
+            if (opts.force || !isLessThanOneDay) {
+                fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
+            }
+        }
     };
 };
 

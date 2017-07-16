@@ -11,11 +11,20 @@ npm install -g @angular/cli babel-cli bower depcheck express nodemon requirejs
 echo "Running 'npm install'..."
 npm install
 
+echo "Checking for 'crawlers' dir in %cd%..."
+if [ -e "%cd%/crawlers" ]; then
+	echo "'crawlers' dir exists"
+else
+	echo "'crawlers' dir was missing; creating 'crawlers' dir..."
+    mkdir "%cd%/crawlers"
+    echo "'crawlers' dir created successfully"
+fi
+
 echo "Checking for 'data' dir in %cd%..."
 if [ -e "%cd%/data" ]; then
 	echo "'data' dir exists"
 else
-	echo "'data' dir was missing; creating data dir..."
+	echo "'data' dir was missing; creating 'data' dir..."
     mkdir "%cd%/data"
     echo "'data' dir created successfully"
 fi

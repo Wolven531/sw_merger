@@ -19,6 +19,14 @@ export default class SummMon {
         },
     };
 
+    /*
+        @summary This method is used to ensure each model has a unique name (maintenance)
+        @return string
+    */
+    public static getModelName(): string {
+        return 'SummMon';
+    };
+
     public id: number;
     public _tsCreation: number;
     public _tsSerialize: number;
@@ -56,7 +64,7 @@ export default class SummMon {
         }
 
         if (!data) {
-            console.warn(`[${this.getModelName()}] [constructor] data was missing or null`);
+            console.warn(`[${SummMon.getModelName()}] [constructor] data was missing or null`);
             return;
         }
         if (typeof data === 'string') {
@@ -209,14 +217,6 @@ export default class SummMon {
     }
 
     /*
-        @summary This method is used to ensure each model has a unique name (maintenance)
-        @return string
-    */
-    public getModelName(): string {
-        return 'SummMon';
-    };
-
-    /*
         @summary This method determines wheter or not this model is missing a property
         @return bool - true if a property is missing from the model, false otherwise
     */
@@ -279,7 +279,7 @@ export default class SummMon {
         @toString
     */
     public toString(): string {
-        return `[${this.getModelName()}]
+        return `[${SummMon.getModelName()}]
             isMissingRequiredProp: ${ this.isMissingRequiredProp()}
             isMissingProp: ${ this.isMissingProp()}
             missingFields: ${ this.missingFields.join(',')}
@@ -319,11 +319,11 @@ export default class SummMon {
     */
     private getFileName(): string {
         if (!this.id) {
-            console.warn(`[${this.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
+            console.warn(`[${SummMon.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
             return null;
         }
         if (!this.type) {
-            console.warn(`[${this.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
+            console.warn(`[${SummMon.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
             return null;
         }
 
@@ -351,7 +351,7 @@ export default class SummMon {
         }
 
         if (!path) {
-            console.warn(`[${this.getModelName()}] [saveToFile] No path, unable to save to file`);
+            console.warn(`[${SummMon.getModelName()}] [saveToFile] No path, unable to save to file`);
             return;
         }
 

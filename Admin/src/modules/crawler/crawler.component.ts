@@ -80,7 +80,7 @@ export class CrawlerComponent implements OnInit {
         let remainDisabled = true;
 
         if (!this.newCrawlerUrl || (this.newCrawlerUrl.length < 3)) {
-        } else if (!webReg.test(this.newCrawlerUrl)) {
+        // } else if (!webReg.test(this.newCrawlerUrl)) {
         } else if (!this.newCrawlerName || (this.newCrawlerName.length < 3)) {
         } else if (!this.newCrawlerDomSelector || (this.newCrawlerDomSelector.length < 1)) {
         } else {
