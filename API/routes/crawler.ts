@@ -99,7 +99,7 @@ export default class CrawlerRouter {
 
     private handleRemove(req, res, next): any {
         const id = parseInt(req.params.id, 10);
-        console.info(`[crawler] [handleRemove]  id=${ id }`);
+        console.info(`[crawler] [handleRemove] id=${ id }`);
         const returnVal = {
             removedCrawler: null,
             err: null,

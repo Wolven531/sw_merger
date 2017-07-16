@@ -43,3 +43,12 @@
 .app-crawler .crawler .delete:hover {
     background-color: #0FF;
 }
+
+.ng-pristine.ng-invalid {
+    background-color: #FFF;
+    color: #333;
+}
+.ng-invalid {
+    background-color: #FCC;
+    color: #F00;
+}

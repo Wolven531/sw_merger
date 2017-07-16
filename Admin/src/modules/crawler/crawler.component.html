@@ -48,17 +48,35 @@
         <div>
             <div>
                 <label for="newCrawlerName">Crawler name:</label>
-                <input [(ngModel)]="newCrawlerName" type="text" name="newCrawlerName" />
+                <input
+                    #newCrawlerNameInput
+                    [(ngModel)]="newCrawlerName"
+                    type="text"
+                    name="newCrawlerName"
+                    required
+                    (ngModelChange)="validateNewCrawler()" />
             </div>
             <div>
                 <label for="newCrawlerUrl">Crawler URL:</label>
-                <input [(ngModel)]="newCrawlerUrl" type="text" name="newCrawlerUrl" />
+                <input
+                    #newCrawlerUrlInput
+                    [(ngModel)]="newCrawlerUrl"
+                    type="text"
+                    name="newCrawlerUrl"
+                    required
+                    (ngModelChange)="validateNewCrawler()">
             </div>
             <div>
                 <label for="newCrawlerDomSelector">Crawler DOM Selector:</label>
-                <input [(ngModel)]="newCrawlerDomSelector" type="text" name="newCrawlerDomSelector" />
+                <input
+                    #newCrawlerDomSelectorInput
+                    [(ngModel)]="newCrawlerDomSelector"
+                    type="text"
+                    name="newCrawlerDomSelector"
+                    required
+                    (ngModelChange)="validateNewCrawler()">
             </div>
-            <button (click)="addCrawler()">Add Crawler</button>
+            <button #addBtn (click)="addCrawler()" disabled="disabled">Add Crawler</button>
         </div>
         <!-- <button (click)="stopCrawler()">Stop Crawler</button> -->
     </div>

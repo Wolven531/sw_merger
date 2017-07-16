@@ -2,6 +2,7 @@
 
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Crawler } from '../../models/crawler';
@@ -16,6 +17,11 @@ import { MonsterService } from '../../services/monster.service';
     styleUrls: ['./crawler.component.css'],
 })
 export class CrawlerComponent implements OnInit {
+    @ViewChild('addBtn') addBtn;
+    @ViewChild('newCrawlerNameInput') newCrawlerNameInput;
+    @ViewChild('newCrawlerUrlInput') newCrawlerUrlInput;
+    @ViewChild('newCrawlerDomSelectorInput') newCrawlerDomSelectorInput;
+
     private crawlers: Crawler[] = new Array<Crawler>();
     private newCrawlerName = '';
     private newCrawlerUrl = '';
@@ -48,6 +54,7 @@ export class CrawlerComponent implements OnInit {
         const newCrawler = new Crawler(newCrawlerData);
         this.crawlerService.addCrawler(newCrawler).then(updatedCrawler => {
             this.crawlers.push(updatedCrawler);
+
             this.newCrawlerName = '';
             this.newCrawlerUrl = '';
             this.newCrawlerDomSelector = '';
@@ -65,6 +72,26 @@ export class CrawlerComponent implements OnInit {
                         return curr !== targetCrawler;
                     });
                 });
+        }
+    };
+
+    private validateNewCrawler(): void {
+        const webReg = new RegExp(/^www\..+\.(com|net|org).*$/gi);
+        let remainDisabled = true;
+
+        if (!this.newCrawlerUrl || (this.newCrawlerUrl.length < 3)) {
+        } else if (!webReg.test(this.newCrawlerUrl)) {
+        } else if (!this.newCrawlerName || (this.newCrawlerName.length < 3)) {
+        } else if (!this.newCrawlerDomSelector || (this.newCrawlerDomSelector.length < 1)) {
+        } else {
+            remainDisabled = false;
+        }
+
+        // NOTE: use DOM Node API
+        if (remainDisabled) {
+            this.addBtn.nativeElement.setAttribute('disabled', 'disabled');
+        } else {
+            this.addBtn.nativeElement.removeAttribute('disabled');
         }
     };
 
