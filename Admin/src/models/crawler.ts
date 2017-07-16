@@ -1,11 +1,8 @@
 'use strict';
 
-import * as fs from 'fs';
 import * as moment from 'moment';
-import * as path from 'path';
-export default class Crawler {
-    private static counter = 0;
 
+export default class Crawler {
     /*
         @summary This method is used to ensure each model has a unique name (maintenance)
         @return string
@@ -46,13 +43,11 @@ export default class Crawler {
             this._tsSerialize = data._tsSerialize;
         }
 
-        this.id = Crawler.counter;
+        this.id = parseInt(data.id, 10);
         this._tsCreation = moment.utc().valueOf();
         this.name = String(data.name);
         this.url = String(data.url);
         this.domSelector = String(data.domSelector);
-
-        Crawler.counter++;
     }
 
     /*

@@ -10,6 +10,8 @@ import * as unescape from 'unescape';
 
 import { MonsterManager } from '../lib/managers/MonsterManager';
 import { CrawlerManager } from '../lib/managers/CrawlerManager';
+
+import { Crawler } from '../models/crawler';
 import { SummMon } from '../models/monster';
 
 export default class CrawlerRouter {
@@ -81,10 +83,11 @@ export default class CrawlerRouter {
             return res.json(returnVal);
         }
 
-        const resultOfAdd = this.crawlerMgr.addCrawler(newCrawlerData);
+        const newCrawler = new Crawler(newCrawlerData);
+        const resultOfAdd = this.crawlerMgr.addCrawler(newCrawler);
 
         if (!resultOfAdd) {
-            res.statusCode = 500;
+            res.statusCode = 400;
             returnVal.err = 'crawlerNotAdded';
             return res.json(returnVal);
         }
@@ -95,8 +98,8 @@ export default class CrawlerRouter {
     };
 
     private handleRemove(req, res, next): any {
-        const id = parseInt(req.query.id, 10);
-        console.info(`[crawler] [handleRemove] id=${ id }`);
+        const id = parseInt(req.params.id, 10);
+        console.info(`[crawler] [handleRemove]  id=${ id }`);
         const returnVal = {
             removedCrawler: null,
             err: null,

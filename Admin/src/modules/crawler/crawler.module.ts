@@ -2,6 +2,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ModuleWithProviders } from '@angular/core';
 
 import { CrawlerRouting } from './crawler.routing';
@@ -14,6 +15,7 @@ import { MonsterService } from '../../services/monster.service';
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         CrawlerRouting,
     ],
     declarations: [

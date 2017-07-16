@@ -61,7 +61,11 @@ export class MonsterDetailComponent implements OnInit {
         evt.stopPropagation();
 
         if (confirm('Delete?') && confirm('Are you sure?')) {
-            this.delete(mon);
+            this.monsterService
+                .delete(mon.id)
+                .then(() => {
+                    this.goBack();
+                });
         }
     };
 
@@ -69,14 +73,6 @@ export class MonsterDetailComponent implements OnInit {
         alert('Changes currently will not persist after server restart');
         this.monsterService
             .update(this.monster)
-            .then(() => {
-                this.goBack();
-            });
-    };
-
-    delete(mon: SummMon): void {
-        this.monsterService
-            .delete(mon.id)
             .then(() => {
                 this.goBack();
             });

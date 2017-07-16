@@ -1,16 +1,65 @@
 <div class="app-crawler">
-    <h2>Crawler</h2>
-    <div class="crawler">
-        <h3 *ngIf="crawlerStatus.length > 0;else no_status_disp">Status: {{crawlerStatus}}</h3>
-        <ng-template #no_status_disp>
-            <div class="small-space-around">
-                Unable to retreive crawler status
-            </div>
-        </ng-template>
-        <div class="small-space-around">
-            <button (click)="startCrawler()">Start Crawler</button>
-            <br/>
-            <button (click)="stopCrawler()">Stop Crawler</button>
+    <h2>Crawler Control</h2>
+    <h3 *ngIf="crawlers.length > 0;else no_crawler_disp">Status: {{ crawlers.length | i18nPlural:crawlerMapping }}</h3>
+    <div class="small-space-around">
+        <div *ngFor="let currCrawl of crawlers" class="crawler">
+            <table>
+                <tr>
+                    <th>
+                        <label>ID</label>
+                    </th>
+                    <td>
+                        {{currCrawl.id}} <div (click)="onDelete(currCrawl, $event)" class="delete">X</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>Name</label>
+                    </th>
+                    <td>
+                        {{currCrawl.name}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>URL</label>
+                    </th>
+                    <td>
+                        <a href="{{getCrawlerUrl(currCrawl)}}" target="_blank">{{currCrawl.url}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>DOM Selector</label>
+                    </th>
+                    <td>
+                        {{currCrawl.domSelector}}
+                    </td>
+                </tr>
+            </table>
         </div>
+    </div>
+    <ng-template #no_crawler_disp>
+        <div class="small-space-around">
+            No crawlers to display
+        </div>
+    </ng-template>
+    <div class="small-space-around">
+        <div>
+            <div>
+                <label for="newCrawlerName">Crawler name:</label>
+                <input [(ngModel)]="newCrawlerName" type="text" name="newCrawlerName" />
+            </div>
+            <div>
+                <label for="newCrawlerUrl">Crawler URL:</label>
+                <input [(ngModel)]="newCrawlerUrl" type="text" name="newCrawlerUrl" />
+            </div>
+            <div>
+                <label for="newCrawlerDomSelector">Crawler DOM Selector:</label>
+                <input [(ngModel)]="newCrawlerDomSelector" type="text" name="newCrawlerDomSelector" />
+            </div>
+            <button (click)="addCrawler()">Add Crawler</button>
+        </div>
+        <!-- <button (click)="stopCrawler()">Stop Crawler</button> -->
     </div>
 </div>

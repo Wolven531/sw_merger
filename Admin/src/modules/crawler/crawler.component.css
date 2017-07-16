@@ -1,0 +1,45 @@
+.app-crawler table {
+    background-color: #333;
+    border-radius: .3em;
+    margin: 1em auto;
+    padding: .5em;
+}
+
+.app-crawler table th {
+    border-radius: .3em;
+    padding: .5em;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.app-crawler table td {
+    background-color: #666;
+    border-radius: .3em;
+    margin-left: 1em;
+    padding: .5em;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.app-crawler .crawler {
+    display: block;
+    position: relative;
+}
+
+.app-crawler .crawler .delete {
+    background-color: #F00;
+    border-radius: .3em;
+    color: #FF0;
+    cursor: pointer;
+    display: block;
+    height: 1em;
+    line-height: 100%;
+    float: right;
+    padding: .3em .3em .3em .3em;
+    text-align: center;
+    width: 1em;
+}
+
+.app-crawler .crawler .delete:hover {
+    background-color: #0FF;
+}

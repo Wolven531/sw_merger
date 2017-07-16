@@ -18,7 +18,7 @@ export default class CrawlerManager {
     };
 
     public getCrawler(id: number): Crawler {
-        if (!id) {
+        if (!id && (id !== 0)) {
             return null;
         }
 
@@ -28,7 +28,8 @@ export default class CrawlerManager {
     public addCrawler(newCrawler: Crawler): Crawler {
         // TODO: awill: add proper validation of monster here before adding
 
-        if (String(newCrawler.id).length < 1) {
+        const crawlKey = (!isNaN(newCrawler.id) && (newCrawler.id !== undefined)) ? String(newCrawler.id) : '';
+        if (crawlKey.length < 1) {
             console.warn(`Could not add crawler, no ID in crawler. newCrawler.id=${newCrawler.id} newCrawler=${newCrawler}`);
             return null;
         }
@@ -39,13 +40,15 @@ export default class CrawlerManager {
             return null;
         }
 
-        this.internalMap[newCrawler.id] = newCrawler;
+        this.internalMap[crawlKey] = newCrawler;
 
-        return this.internalMap[newCrawler.id];
+        console.info(`Added successfully with id: ${ crawlKey }; returning crawler...`);
+
+        return this.internalMap[crawlKey];
     };
 
     public removeCrawler(id: number): Crawler {
-        if (!id) {
+        if (!id && (id !== 0)) {
             console.warn('Could not remove crawler, no ID provided.');
             return null;
         }
@@ -62,7 +65,7 @@ export default class CrawlerManager {
     };
 
     public updateCrawler(id: number, crawler: Crawler = null): Crawler {
-        if (!id) {
+        if (!id && (id !== 0)) {
             console.warn('Could not update crawler, no ID provided.');
             return null;
         }
@@ -74,7 +77,7 @@ export default class CrawlerManager {
         const existingCrawler = this.getCrawler(id);
         const crawlKey = String(id);
 
-        // NOTE: this forces any crwaler that did not already exist to fail an update attempt
+        // NOTE: this forces any crawler that did not already exist to fail an update attempt
         if (!existingCrawler) {
             console.warn(`Could not update crawler because it could not be found (id=${id}).`);
             return null;
