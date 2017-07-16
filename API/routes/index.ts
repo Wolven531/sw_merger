@@ -77,7 +77,12 @@ export default class HomeRouter {
             description: 'Simulate the results of a summon using a mystical scroll',
         },
         {
-            path: '/crawler/status/:id',
+            path: '/crawler/',
+            method: 'get',
+            description: 'Get a list of all crawlers',
+        },
+        {
+            path: '/crawler/:id',
             method: 'get',
             params: {
                 id: {

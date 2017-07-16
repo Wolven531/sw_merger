@@ -15,17 +15,15 @@ import { SummMon } from '../models/monster';
 export default class CrawlerRouter {
     public router_express: any;
 
-    // private API_ENDPOINT_SIMULATE: string = 'get_random';
-    // private API_BASE: string = 'http://www.swfr.tv/simulator/';
-    private SCROLL_TYPES = {
-        Legendary: 0,
-        LightAndDark: 1,
-        Mystical: 2,
-    };
-
     constructor(private monMgr: MonsterManager, private crawlerMgr: CrawlerManager) {
         this.router_express = express.Router();
-        this.router_express.get('/', this.handleRoot.bind(this));
+
+        this.router_express.delete('/:id', this.handleRemove.bind(this));
+        this.router_express.post('/', this.handleAdd.bind(this));
+        this.router_express.put('/:id', this.handleUpdate.bind(this));
+    
+        this.router_express.get('/:id', this.handleLookupById.bind(this));
+        this.router_express.get('/', this.handleList.bind(this));
     }
 
     private convertBrotliBodyToHtml(bodyBuffer): any {
@@ -49,8 +47,118 @@ export default class CrawlerRouter {
         return $;
     };
 
-    private handleRoot(req, res, next): any {
-        res.json({ success: true });
+    private handleLookupById(req, res, next): any {
+        const id = parseInt(req.params.id, 10);
+        console.info(`[crawler] [router] [GET] [/:id] id=${ id }`);
+        let returnVal = {
+            crawler: this.crawlerMgr.getCrawler(id),
+            err: null,
+        };
+
+        res.json(returnVal);
+    };
+
+    private handleList(req, res, next): any {
+        const returnVal = {
+            crawlers: this.crawlerMgr.getCrawlerArray(),
+            err: null,
+        }
+
+        res.json(returnVal);
+    };
+
+    private handleAdd(req, res, next): any {
+        console.info(`[crawler] [handleAdd]`);
+        let returnVal = {
+            crawler: null,
+            err: null,
+        };
+        let newCrawlerData = req.body || null;
+
+        if (!newCrawlerData) {
+            res.statusCode = 400;
+            returnVal.err = 'noCrawlerData';
+            return res.json(returnVal);
+        }
+
+        const resultOfAdd = this.crawlerMgr.addCrawler(newCrawlerData);
+
+        if (!resultOfAdd) {
+            res.statusCode = 500;
+            returnVal.err = 'crawlerNotAdded';
+            return res.json(returnVal);
+        }
+
+        returnVal.crawler = resultOfAdd;
+
+        return res.json(returnVal);
+    };
+
+    private handleRemove(req, res, next): any {
+        const id = parseInt(req.query.id, 10);
+        console.info(`[crawler] [handleRemove] id=${ id }`);
+        let returnVal = {
+            removedCrawler: null,
+            err: null,
+        };
+        let existingCrawler = this.crawlerMgr.getCrawler(id);
+
+        if (!existingCrawler) {
+            res.statusCode = 404;
+            returnVal.err = 'noCrawlerData';
+            return res.json(returnVal);
+        }
+
+        const resultOfRemove = this.crawlerMgr.removeCrawler(id);
+
+        if (!resultOfRemove) {
+            res.statusCode = 500;
+            returnVal.err = 'crawlerNotRemoved';
+            return res.json(returnVal);
+        }
+
+        returnVal.removedCrawler = resultOfRemove;
+
+        return res.json(returnVal);
+    };
+
+    private handleUpdate(req, res, next): any {
+        const id = parseInt(req.params.id, 10);
+        console.info(`[crawler] [router] [PUT] [/:id] id=${ id }`);
+        let returnVal = {
+            staleCrawler: null,
+            updatedCrawler: null,
+            err: null,
+        };
+        let staleCrawler = this.crawlerMgr.getCrawler(id);
+        let updatedCrawlerData = req.body || null;
+        let resultOfUpdate = null;
+
+        if (!staleCrawler) {
+            res.statusCode = 404;
+            returnVal.err = 'noCrawler';
+            return res.json(returnVal);
+        }
+        if (!updatedCrawlerData) {
+            res.statusCode = 400;
+            returnVal.err = 'noCrawlerData';
+            return res.json(returnVal);
+        }
+
+        resultOfUpdate = this.crawlerMgr.updateCrawler(
+            staleCrawler.id,
+            updatedCrawlerData
+        );
+
+        if (!resultOfUpdate) {
+            res.statusCode = 500;
+            returnVal.err = 'crawlerNotUpdated';
+            return res.json(returnVal);
+        }
+
+        returnVal.updatedCrawler = resultOfUpdate;
+
+        return res.json(returnVal);
     };
 }
 
