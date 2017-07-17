@@ -41,6 +41,29 @@ export class CrawlerService {
             .catch(this.handleError);
     };
 
+    public updateCrawler(updatedCrawler: Crawler): Promise<Crawler> {
+        const updatedCrawlerAsJSON = JSON.stringify(updatedCrawler);
+        const putOpts = { headers: this.headers };
+
+        return this.getURLObs().toPromise()
+            .then(newURL => {
+                const updateCrawlerUrl = `${newURL}/crawler/${ updatedCrawler.id }`;
+                console.log(`Setting URL to: ${updateCrawlerUrl}`);
+
+                console.log(`${this.servicePrefix} updated crawler from ${updateCrawlerUrl}`);
+                console.time(`${this.servicePrefix}updateCrawler`)
+                return this.http.put(updateCrawlerUrl, updatedCrawlerAsJSON, putOpts).toPromise();
+            })
+            .then(resp => {
+                console.timeEnd(`${this.servicePrefix}updateCrawler`)
+                const respAsJson = resp.json();
+                const crawler = respAsJson.updatedCrawler;
+
+                return crawler as Crawler;
+            })
+            .catch(this.handleError);
+    };
+
     public addCrawler(newCrawler: Crawler): Promise<Crawler> {
         const newCrawlerAsJSON = JSON.stringify(newCrawler);
         const postOpts = { headers: this.headers };

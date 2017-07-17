@@ -16,7 +16,7 @@ export default class Crawler {
     };
 
     public _tsCreation: number;
-    public _tsSerialize: number;
+    public _tsLastUpdate: number;
     public id: number;
 
     public name: string;
@@ -45,13 +45,26 @@ export default class Crawler {
             data = JSON.parse(data);
         }
 
-        // NOTE: for now carry forward the serialize time
-        if (data.hasOwnProperty('_tsSerialize')) {
-            this._tsSerialize = data._tsSerialize;
+        // NOTE: carry forward the ID
+        if (data.hasOwnProperty('id')) {
+            this.id = data.id;
+        } else {
+            this.id = Crawler.counter;
+            Crawler.counter++;
+        }
+        // NOTE: carry forward the creation time
+        if (data.hasOwnProperty('_tsCreation')) {
+            this._tsCreation = data._tsCreation;
+        } else {
+            this._tsCreation = moment.utc().valueOf();
+        }
+        // NOTE: carry forward the last update time
+        if (data.hasOwnProperty('_tsLastUpdate')) {
+            this._tsLastUpdate = data._tsLastUpdate;
+        } else {
+            this._tsLastUpdate = this._tsCreation;
         }
 
-        this.id = Crawler.counter;
-        this._tsCreation = moment.utc().valueOf();
         this.name = String(data.name);
         this.url = String(data.url);
         this.domSelector = String(data.domSelector);
@@ -59,8 +72,6 @@ export default class Crawler {
         if (!opts.memOnly) {
             this.saveToFile();
         }
-
-        Crawler.counter++;
     }
 
     /*
@@ -74,7 +85,7 @@ export default class Crawler {
             url: this.url,
             domSelector: this.domSelector,
             _tsCreation: this._tsCreation,
-            _tsSerialize: moment.utc().valueOf()
+            _tsLastUpdate: this._tsLastUpdate,
         };
 
         return JSON.stringify(returnVal);
@@ -86,7 +97,7 @@ export default class Crawler {
     public toString(): string {
         return `[${Crawler.getModelName()}]
             _tsCreation: ${ this._tsCreation}
-            _tsSerialize: ${ this._tsSerialize}
+            _tsLastUpdate: ${ this._tsLastUpdate}
             id: ${ this.id}
             name: ${ this.name}
             url: ${ this.url}
@@ -94,34 +105,11 @@ export default class Crawler {
     };
 
     /*
-        @summary This method returns a file name to use when serializing this model
-        @return string - If a required property is missing (`id`, `type`), the method will issue a warning and return null
-    */
-    private getFileName(): string {
-        if (!this.id && (this.id !== 0)) {
-            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
-            return null;
-        }
-        if (!this.name) {
-            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
-            return null;
-        }
-
-        const fp = path.join(
-            path.resolve(__dirname, `..${path.sep}..${path.sep}crawlers${path.sep}${this.id}.json`)
-        );
-
-        console.info(`getFileName is using fp=${fp}`);
-
-        return fp;
-    };
-
-    /*
         @summary This method supports an options object with the following properties available:
         @param opts object - See properties below
         @param opts.force bool - Whether or not to force the method to overwrite the last save file
     */
-    private saveToFile = (opts: any = null): void => {
+    public saveToFile = (opts: any = null): void => {
         const pathStr = this.getFileName();
 
         if (!opts) {
@@ -147,9 +135,34 @@ export default class Crawler {
             const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
 
             if (opts.force || !isLessThanOneDay) {
+                // NOTE: update the last update property
+                this._tsLastUpdate = moment.utc().valueOf();
                 fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
             }
         }
+    };
+
+    /*
+        @summary This method returns a file name to use when serializing this model
+        @return string - If a required property is missing (`id`, `type`), the method will issue a warning and return null
+    */
+    private getFileName(): string {
+        if (!this.id && (this.id !== 0)) {
+            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing id property, unable to generate file name`);
+            return null;
+        }
+        if (!this.name) {
+            console.warn(`[${Crawler.getModelName()}] [getFileName] Missing type property, unable to generate file name`);
+            return null;
+        }
+
+        const fp = path.join(
+            path.resolve(__dirname, `..${path.sep}..${path.sep}crawlers${path.sep}${this.id}.json`)
+        );
+
+        console.info(`getFileName is using fp=${fp}`);
+
+        return fp;
     };
 };
 

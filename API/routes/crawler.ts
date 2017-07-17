@@ -158,11 +158,11 @@ export default class CrawlerRouter {
             updatedCrawler: null,
             err: null,
         };
-        const staleCrawler = this.crawlerMgr.getCrawler(id);
+        returnVal.staleCrawler = this.crawlerMgr.getCrawler(id);
         const updatedCrawlerData = req.body || null;
         let resultOfUpdate = null;
 
-        if (!staleCrawler) {
+        if (!returnVal.staleCrawler) {
             res.statusCode = 404;
             returnVal.err = 'noCrawler';
             return res.json(returnVal);
@@ -174,7 +174,7 @@ export default class CrawlerRouter {
         }
 
         resultOfUpdate = this.crawlerMgr.updateCrawler(
-            staleCrawler.id,
+            returnVal.staleCrawler.id,
             updatedCrawlerData
         );
 

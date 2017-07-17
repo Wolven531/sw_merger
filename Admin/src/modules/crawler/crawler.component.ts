@@ -31,6 +31,8 @@ export class CrawlerComponent implements OnInit {
         '=1': 'One (1) crawler',
         'other': '# crawlers'
     };
+    private editCrawl = -1;
+    private editMode = '';
 
     constructor(
         private crawlerService: CrawlerService,
@@ -44,6 +46,28 @@ export class CrawlerComponent implements OnInit {
             this.crawlers = crawlers;
         });
     };
+
+    private updateCrawler(updatedCrawler: Crawler): void {
+        this.crawlerService.updateCrawler(updatedCrawler).then(respCrawler => {
+            this.crawlers.forEach((curr, ind, arr) => {
+                if (curr.id === respCrawler.id) {
+                    this.crawlers[ind] = respCrawler;
+                }
+            });
+            this.toggleEditMode(this.editCrawl, '');
+        })
+    }
+
+    private toggleEditMode(id: number, prop: string): void {
+        if (this.editCrawl !== id) {
+            this.editCrawl = id;
+            this.editMode = prop;
+        } else {
+            this.editCrawl = -1;
+            this.editMode = '';
+        }
+
+    }
 
     private addCrawler(): void {
         const newCrawlerData = {

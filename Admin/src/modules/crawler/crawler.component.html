@@ -17,7 +17,18 @@
                         <label>Name</label>
                     </th>
                     <td>
-                        {{currCrawl.name}}
+                        <div>
+                            <div *ngIf="editCrawl === currCrawl.id && editMode === 'name';else crawler_name_disp">
+                                <input [(ngModel)]="currCrawl.name" />
+                                <br />
+                                <button (click)="updateCrawler(currCrawl)">Update</button>
+                            </div>
+                            <ng-template #crawler_name_disp>
+                                <div class="small-space-around" (click)="toggleEditMode(currCrawl.id, 'name')">
+                                    {{currCrawl.name}}
+                                </div>
+                            </ng-template>
+                        </div>
                     </td>
                 </tr>
                 <tr>

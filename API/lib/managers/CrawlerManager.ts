@@ -1,6 +1,7 @@
 'use strict';
 
 import * as fs from 'file-system';
+import * as moment from 'moment';
 import * as path from 'path';
 
 import { Crawler } from '../../models/crawler';
@@ -83,6 +84,8 @@ export default class CrawlerManager {
             console.warn(`Could not update crawler because it could not be found (id=${id}).`);
             return null;
         }
+        crawler._tsLastUpdate = moment.utc().valueOf();
+        crawler.saveToFile({ force: true });
         this.internalMap[crawlKey] = crawler;
 
         return this.internalMap[crawlKey];
