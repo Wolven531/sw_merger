@@ -14,37 +14,62 @@
                 </tr>
                 <tr>
                     <th>
-                        <label>Name</label>
+                        <label (click)="toggleEditMode(currCrawl.id, 'name')">
+                            Name
+                        </label>
                     </th>
                     <td>
-                        <div>
-                            <div *ngIf="editCrawl === currCrawl.id && editMode === 'name';else crawler_name_disp">
-                                <input [(ngModel)]="currCrawl.name" />
-                                <br />
-                                <button (click)="updateCrawler(currCrawl)">Update</button>
-                            </div>
-                            <ng-template #crawler_name_disp>
-                                <div class="small-space-around" (click)="toggleEditMode(currCrawl.id, 'name')">
-                                    {{currCrawl.name}}
-                                </div>
-                            </ng-template>
+                        <div *ngIf="editCrawl === currCrawl.id && editMode === 'name';else crawler_name_disp">
+                            <input [(ngModel)]="currCrawl.name" />
+                            <br />
+                            <button (click)="updateCrawler(currCrawl)">Update</button>
+                            <button (click)="toggleEditMode(currCrawl.id, 'name')">Cancel</button>
                         </div>
+                        <ng-template #crawler_name_disp>
+                            <div class="small-space-around">
+                                {{currCrawl.name}}
+                            </div>
+                        </ng-template>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <label>URL</label>
+                        <label (click)="toggleEditMode(currCrawl.id, 'url')">
+                            URL
+                        </label>
                     </th>
                     <td>
-                        <a href="{{getCrawlerUrl(currCrawl)}}" target="_blank">{{currCrawl.url}}</a>
+                        <div *ngIf="editCrawl === currCrawl.id && editMode === 'url';else crawler_url_disp">
+                            <input [(ngModel)]="currCrawl.url" />
+                            <br />
+                            <button (click)="updateCrawler(currCrawl)">Update</button>
+                            <button (click)="toggleEditMode(currCrawl.id, 'url')">Cancel</button>
+                        </div>
+                        <ng-template #crawler_url_disp>
+                            <div class="small-space-around">
+                                <a href="{{getCrawlerUrl(currCrawl)}}" target="_blank">{{currCrawl.url}}</a>
+                            </div>
+                        </ng-template>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <label>DOM Selector</label>
+                        <label (click)="toggleEditMode(currCrawl.id, 'domSelector')">
+                            DOM Selector
+                        </label>
                     </th>
                     <td>
-                        {{currCrawl.domSelector}}
+                        <div *ngIf="editCrawl === currCrawl.id && editMode === 'domSelector';else crawler_domSelector_disp">
+                            <input [(ngModel)]="currCrawl.domSelector" />
+                            <br />
+                            <button (click)="updateCrawler(currCrawl)">Update</button>
+                            <button (click)="toggleEditMode(currCrawl.id, 'domSelector')">Cancel</button>
+                        </div>
+                        <ng-template #crawler_domSelector_disp>
+                            <div class="small-space-around">
+                                {{currCrawl.domSelector}}
+                            </div>
+                        </ng-template>
                     </td>
                 </tr>
             </table>

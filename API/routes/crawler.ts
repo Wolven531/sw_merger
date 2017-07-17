@@ -152,31 +152,25 @@ export default class CrawlerRouter {
 
     private handleUpdate(req, res, next): any {
         const id = parseInt(req.params.id, 10);
-        console.info(`[crawler] [router] [PUT] [/:id] id=${ id }`);
+        const updatedCrawlerData = req.body || null;
+        console.info(`[crawler] [router] [PUT] [/:id] id=${ id } body=${ updatedCrawlerData }`);
         const returnVal = {
-            staleCrawler: null,
+            staleCrawler: this.crawlerMgr.getCrawler(id),
             updatedCrawler: null,
             err: null,
         };
-        returnVal.staleCrawler = this.crawlerMgr.getCrawler(id);
-        const updatedCrawlerData = req.body || null;
-        let resultOfUpdate = null;
-
-        if (!returnVal.staleCrawler) {
-            res.statusCode = 404;
-            returnVal.err = 'noCrawler';
-            return res.json(returnVal);
-        }
         if (!updatedCrawlerData) {
             res.statusCode = 400;
             returnVal.err = 'noCrawlerData';
             return res.json(returnVal);
         }
-
-        resultOfUpdate = this.crawlerMgr.updateCrawler(
-            returnVal.staleCrawler.id,
-            updatedCrawlerData
-        );
+        if (!returnVal.staleCrawler) {
+            res.statusCode = 404;
+            returnVal.err = 'noCrawler';
+            return res.json(returnVal);
+        }
+        const tmpCrawler = new Crawler(updatedCrawlerData);
+        const resultOfUpdate = this.crawlerMgr.updateCrawler(returnVal.staleCrawler.id, tmpCrawler);
 
         if (!resultOfUpdate) {
             res.statusCode = 500;

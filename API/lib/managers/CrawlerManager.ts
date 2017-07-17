@@ -11,7 +11,6 @@ export default class CrawlerManager {
     private compName = '[CrawlerManager]';
 
     constructor() {
-        console.info(`${this.compName} [constructor]`);
         this.internalMap = this.loadFromDisk();
     }
 
