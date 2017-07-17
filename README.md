@@ -71,8 +71,8 @@
 
 ![Angular 4.2.5][logoAngular] ![Babel][logoBabel] ![Node v6.11.0][logoNode] ![NPM 3.10.10][logoNpm] ![Visual Studio Code 1.13.1][logoVsc] 
 
-[logoAngular]: ./SummSim/public/img/logo_angular.png "AngularJS"
-[logoBabel]: ./SummSim/public/img/logo_babel.png "Babel"
-[logoNode]: ./SummSim/public/img/logo_node.png "NodeJS"
-[logoNpm]: ./SummSim/public/img/logo_npm.png "NPM"
-[logoVsc]: ./SummSim/public/img/logo_vsc.png "Visual Studio Code [logo has MIT license]"
+[logoAngular]: ./API/public/img/logo_angular.png "AngularJS"
+[logoBabel]: ./API/public/img/logo_babel.png "Babel"
+[logoNode]: ./API/public/img/logo_node.png "NodeJS"
+[logoNpm]: ./API/public/img/logo_npm.png "NPM"
+[logoVsc]: ./API/public/img/logo_vsc.png "Visual Studio Code [logo has MIT license]"
