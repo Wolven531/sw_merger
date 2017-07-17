@@ -1,13 +1,10 @@
 'use strict';
 
 import * as async from 'async';
-import * as brotli from 'brotli';
-import * as cheerio from 'cheerio';
 import * as express from 'express';
 import * as request from 'request';
-import * as zlib from 'zlib';
-import * as unescape from 'unescape';
 
+import { RequestManager } from '../lib/managers/RequestManager';
 import { MonsterManager } from '../lib/managers/MonsterManager';
 import { SummMon } from '../models/monster';
 
@@ -29,7 +26,7 @@ export default class GeneratorRouter {
             'Connection': 'keep-alive',
             'Accept': '*/*',
             'X-CSRF-Token': 'dmFPXLuems+XoeJWiMreQUlhJmtaeH7RTnklQ3u/1qbGTaKxgF5cgaRiIgkpNQVDzdxpHf/HGpIPzS1Cm3CaIw==',
-            'User-Agent': this.getUserAgent(),
+            'User-Agent': RequestManager.getUserAgent(),
             'X-Requested-With': 'XMLHttpRequest',
             'Referer': 'http://www.swfr.tv/summon-simulator',
             'Accept-Encoding': 'gzip, deflate',
@@ -37,25 +34,6 @@ export default class GeneratorRouter {
             /* 'content-type': 'application/x-www-form-urlencoded' */ // Is set automatically
         },
         uri: undefined,
-    };
-
-    private optsSummCoInfoReq = {
-        method: 'GET',
-        port: 8080,
-        // NOTE: encoding=null ensures a buffer returns as the response
-        encoding: null,
-        headers: {
-            'cache-control': 'no-cache',
-            'authority': 'summonerswar.co',
-            'referer': 'https://summonerswar.co/',
-            'accept': 'text/plain, */*; q=0.01',
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'user-agent': this.getUserAgent(),
-            'accept-language': 'en-US,en;q=0.8',
-            'x-requested-with': 'XMLHttpRequest',
-            'accept-encoding': 'gzip, deflate, br',
-            'origin': 'https://summonerswar.co',
-        },
     };
 
     private opts = {
@@ -70,7 +48,7 @@ export default class GeneratorRouter {
             'referer': 'https://summonerswar.co/',
             'accept': 'text/plain, */*; q=0.01',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'user-agent': this.getUserAgent(),
+            'user-agent': RequestManager.getUserAgent(),
             'accept-language': 'en-US,en;q=0.8',
             'x-requested-with': 'XMLHttpRequest',
             'accept-encoding': 'gzip, deflate, br',
@@ -85,31 +63,6 @@ export default class GeneratorRouter {
         this.router_express.get('/lightndark', this.handleGenerateLightNDark.bind(this));
         this.router_express.get('/mystical', this.handleGenerateMystical.bind(this));
     }
-
-    private getUserAgent(): string {
-        return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3137.0 Safari/537.36';
-    }
-
-    private convertBrotliBodyToHtml(bodyBuffer): any {
-        console.info('[convertBrotliBodyToHtml] decoding brotli...');
-        const intArr = brotli.decompress(bodyBuffer);
-        let html = '';
-
-        intArr.forEach((elem, ind, arr) => {
-            html += String.fromCharCode(elem);
-        });
-
-        const $ = cheerio.load(unescape(html, null));
-        return $;
-    };
-
-    private convertGzipBodyToHtml(bodyBuffer): any {
-        console.info('[convertGzipBodyToHtml] decoding gzip...');
-        const bodyText = zlib.gunzipSync(bodyBuffer, { }).toString('utf8');
-        const $ = cheerio.load(unescape(bodyText, null));
-
-        return $;
-    };
 
     private handleGenerateMystical(req, res, next): any {
         console.info('[generator] [router] [/mystical] Launching request...');
@@ -268,26 +221,7 @@ export default class GeneratorRouter {
             if (error) {
                 console.error(`[lookupName] Error: ${ error }`);
             }
-            const acceptEncoding = String(resp.headers['accept-encoding']);
-            const contentEncoding = String(resp.headers['content-encoding']);
-            const xType = String(resp.headers['x-type']);
-            const vary = String(resp.headers.vary);
-            const canUseGzip = contentEncoding === 'gzip';
-            const canUseBrotli = (acceptEncoding.indexOf('br') > -1) || (vary === 'Accept-Encoding' && xType === 'default');
-
-            if (!canUseBrotli && !canUseGzip) {
-                console.info('[lookupName] in weird state');
-                return Promise.resolve(returnVal);
-            }
-
-            let $ = null;
-
-            if (canUseGzip) {
-                $ = this.convertGzipBodyToHtml(bodyBuffer);
-            } else if (canUseBrotli) {
-                $ = this.convertBrotliBodyToHtml(bodyBuffer);
-            }
-
+            const $ = RequestManager.reqTo$(resp, bodyBuffer);
             const numLinks = $('a').length;
             const infoPageURL = $('a.asp_res_url').attr('href');
 
@@ -303,7 +237,7 @@ export default class GeneratorRouter {
     private async lookupInfo(returnVal: any): Promise<any> {
         console.info('Launching summ co info request...');
         if (!this.optsSimReq.uri || (this.optsSimReq.uri.length < 1)) {
-            console.error(`[lookupInfo] Failed to find URI... optsSummCoInfoReq = ${ JSON.stringify(this.optsSummCoInfoReq) }`);
+            console.error(`[lookupInfo] Failed to find URI... this.optsSimReq=${ JSON.stringify(this.optsSimReq) }`);
             return Promise.resolve(returnVal);
         }
 
@@ -311,18 +245,14 @@ export default class GeneratorRouter {
             if (error) {
                 console.error(`[lookupInfo] Error: ${ error }`);
             }
-            if (response.headers && ('br' === response.headers['content-encoding'])) {
-                const $ = this.convertBrotliBodyToHtml(bodyBuffer);
-                const htmlMeter = $(
-                    '#rating-anchor .total-info .total-rating-value.large-meter'
-                );
+            const $ = RequestManager.reqTo$(response, bodyBuffer);
+            const htmlMeter = $('#rating-anchor .total-info .total-rating-value.large-meter');
 
-                returnVal.scores = {};
-                returnVal.scores.editor = htmlMeter
-                    .find('.editor_rating .number')
-                    .text();
-                returnVal.scores.user = htmlMeter.find('.user_rating .number').text();
-            }
+            returnVal.scores = {};
+            returnVal.scores.editor = htmlMeter
+                .find('.editor_rating .number')
+                .text();
+            returnVal.scores.user = htmlMeter.find('.user_rating .number').text();
 
             return Promise.resolve(returnVal);
         });

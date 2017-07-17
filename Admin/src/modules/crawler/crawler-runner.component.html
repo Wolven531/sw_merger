@@ -1,0 +1,18 @@
+<div class="app-crawler-runner">
+    <h3>Running: {{isRunning}}</h3>
+    <div>
+        <button #runBtn (click)="runCrawler()">Run "{{crawler.name}}" (ID {{crawler.id}})</button>
+    </div>
+    <div *ngIf="resultText.length > 0">
+        <h4>Result as Text</h4>
+        <textarea>
+            {{resultText}}
+        </textarea>
+    </div>
+    <div *ngIf="resultHtml.length > 0">
+        <h4>Result as HTML</h4>
+        <textarea>
+            {{resultHtml}}
+        </textarea>
+    </div>
+</div>

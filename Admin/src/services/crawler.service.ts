@@ -20,6 +20,27 @@ export class CrawlerService {
 
     constructor(private http: Http) { };
 
+    public runCrawler(id: number): Promise<any> {
+        const postOpts = { headers: this.headers };
+
+        return this.getURLObs().toPromise()
+            .then(newURL => {
+                const runCrawlerUrl = `${newURL}/crawler/run/${id}`;
+                console.log(`Setting URL to: ${runCrawlerUrl}`);
+
+                console.log(`${this.servicePrefix} run crawler from ${runCrawlerUrl}`);
+                console.time(`${this.servicePrefix}runCrawler`)
+                return this.http.post(runCrawlerUrl, postOpts).toPromise();
+            })
+            .then(resp => {
+                console.timeEnd(`${this.servicePrefix}runCrawler`)
+                const resultJson = resp.json();
+
+                return resultJson;
+            })
+            .catch(this.handleError);
+    };
+
     public addCrawler(newCrawler: Crawler): Promise<Crawler> {
         const newCrawlerAsJSON = JSON.stringify(newCrawler);
         const postOpts = { headers: this.headers };
