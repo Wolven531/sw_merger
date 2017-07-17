@@ -1,7 +1,4 @@
-.app-monster-detail h2,
-.mon-stat {
-    background-color: #090;
-    color: #FFF;
+.app-monster-detail h2 {
     border-radius: .3em;
     font-weight: bolder;
     margin: 1em auto;
@@ -10,29 +7,27 @@
     width: 33%;
 }
 
-label {
-    color: #FFF;
-    font-weight: bold;
-    height: 2em;
-    text-align: left;
-    width: 7em;
+.app-monster-detail table {
+    border-radius: .3em;
+    margin: 1em auto;
+    min-width: 30em;
+    padding: .5em;
 }
 
-.mon-stat {
-    background-color: rgba(0, 0, 0, .7);
-    width: 40%;
-}
-
-input,
-label,
-.mon-stat .val {
-    display: inline-block;
-}
-
-.mon-stat .val {
-    height: 2em;
+.app-monster-detail table th {
+    border-radius: .3em;
+    padding: .5em;
     text-align: right;
-    width: 9em;
+    vertical-align: middle;
+    width: 30%;
+}
+
+.app-monster-detail table td {
+    border-radius: .3em;
+    margin-left: 1em;
+    padding: .5em;
+    text-align: left;
+    vertical-align: middle;
 }
 
 input[type="checkbox"] {
@@ -46,23 +41,33 @@ input[type="text"] {
     width: 7em;
 }
 
-.delete {
+.app-monster-detail .delete {
     background-color: #F00;
+    border-radius: .3em;
     color: #FF0;
-    font-weight: bolder;
-    overflow: hidden;
+    cursor: pointer;
+    display: block;
+    line-height: 100%;
+    min-height: 3em;
     min-width: 2em;
+    float: right;
+    padding: .3em .3em .3em .3em;
+    text-align: center;
+}
+
+.app-monster-detail .delete:hover {
+    background-color: #0FF;
 }
 
 .controls {
-    margin-top: 2em;
+    margin: 0 auto;
+    width: 15em;
 }
 
 .mon-img {
-    background-color: #333;
     border-radius: .3em;
     display: inline-block;
-    margin: 0 auto 2em auto;
+    margin: 0 auto;
     padding: 1em;
     width: 12em;
 }
@@ -72,4 +77,8 @@ input[type="text"] {
     height: 9.25em;
     width: 9.25em;
     margin-bottom: 1em;
+}
+
+.mon-type-wind.mon-img .img {
+    border: 1px solid #333;
 }

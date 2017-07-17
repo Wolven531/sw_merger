@@ -21,6 +21,9 @@ import { MonsterService } from '../../../../services/monster.service';
 export class MonsterDetailComponent implements OnInit {
     @Input() monster: SummMon;
 
+    private editMon = -1;
+    private editMode = '';
+
     constructor(
         private monsterService: MonsterService,
         private route: ActivatedRoute,
@@ -42,7 +45,17 @@ export class MonsterDetailComponent implements OnInit {
             });
     };
 
-    getImgSrc(imgType: string): string {
+    private toggleEditMode(id: number, prop: string): void {
+        if (this.editMon !== id) {
+            this.editMon = id;
+            this.editMode = prop;
+        } else {
+            this.editMon = -1;
+            this.editMode = '';
+        }
+    }
+
+    private getImgSrc(imgType: string): string {
         if (imgType === 'awakened') {
             return this.monster.image_awakened;
         }
@@ -53,11 +66,11 @@ export class MonsterDetailComponent implements OnInit {
     };
 
     // TODO: awill: readup on Angular CanDeactivate page: https://angular.io/api/router/CanDeactivate
-    goBack(): void {
+    private goBack(): void {
         this.location.back();
     };
 
-    onDelete(mon: SummMon, evt: Event): void {
+    private onDelete(mon: SummMon, evt: Event): void {
         evt.stopPropagation();
 
         if (confirm('Delete?') && confirm('Are you sure?')) {
@@ -69,12 +82,18 @@ export class MonsterDetailComponent implements OnInit {
         }
     };
 
-    save(): void {
-        alert('Changes currently will not persist after server restart');
+    private updateMonster(monUpdateToSend: SummMon): void {
         this.monsterService
-            .update(this.monster)
-            .then(() => {
-                this.goBack();
+            .update(monUpdateToSend)
+            .then(updatedMon => {
+                // NOTE: updated the local version
+                this.monster = updatedMon;
+                // NOTE: clear the edit field
+                this.toggleEditMode(this.editMon, '');
             });
+    };
+
+    private getMonsterClasses(mon: SummMon): string[] {
+        return [`mon-type-${mon.type}`];
     };
 };

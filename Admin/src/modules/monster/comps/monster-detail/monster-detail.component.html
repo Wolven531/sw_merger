@@ -1,53 +1,110 @@
 <div *ngIf="monster" id="app-monster-detail" class="app-monster-detail">
-    <h2>Details for: {{monster.name}}</h2>
-    <div class="mon-img">
+    <h2 class="{{getMonsterClasses(monster)}}">Details for: {{monster.name}}</h2>
+    <div class="mon-img {{getMonsterClasses(monster)}}">
         <img src="{{getImgSrc('base')}}" alt="{{monster.id}}_img_base" class="img" />
         <br />
         <input [(ngModel)]="monster.image_base" name="monster.image_base" />
     </div>
-    <div class="mon-img">
+    <div class="mon-img {{getMonsterClasses(monster)}}">
         <img src="{{getImgSrc('awakened')}}" alt="{{monster.id}}_img_awakened" class="img" />
         <br />
         <input [(ngModel)]="monster.image_awakened" name="monster.image_awakened" />
     </div>
     <div class="mon-stat">
-        <div>
-            <label for="monster.id">ID:</label>
-            <span class="val">{{monster.id}}</span>
-        </div>
-        <div>
-            <label for="monster.isLegendary">Is Legendary: </label>
-            <span class="val">
-                <input [(ngModel)]="monster.isLegendary" type="checkbox" name="monster.isLegendary" />
-            </span>
-        </div>
-        <div>
-            <label for="monster.name">Name: </label>
-            <span class="val">
-                <input [(ngModel)]="monster.name" type="text" name="monster.name" placeholder="Name" />
-            </span>
-        </div>
-        <div>
-            <label for="monster.type">Type: </label>
-            <span class="val">
-                <input [(ngModel)]="monster.type" type="text" name="monster.type" placeholder="Type" />
-            </span>
-        </div>
-        <div>
-            <label for="monster.star_level">Star Level: </label>
-            <span class="val">
-                <input [(ngModel)]="monster.star_level" type="text" name="monster.star_level" placeholder="Star Level" />
-            </span>
-        </div>
-        <div>
-            <label for="monster.delete">Delete</label>
-            <span class="val">
-                <button class="delete" (click)="onDelete(monster, $event)" name="monster.delete">x</button>
-            </span>
-        </div>
+        <table class="{{getMonsterClasses(monster)}}">
+            <tr>
+                <th>
+                    <label for="monster.id">ID</label>
+                </th>
+                <td>
+                    {{monster.id}}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="monster.isLegendary" (click)="toggleEditMode(monster.id, 'isLegendary')">Is Legendary</label>
+                </th>
+                <td>
+                    <div *ngIf="editMon === monster.id && editMode === 'isLegendary';else monster_isLegendary_disp">
+                        <input [(ngModel)]="monster.isLegendary" type="checkbox" name="monster.isLegendary" />
+                        <br />
+                        <button (click)="updateMonster(monster)">Update</button>
+                        <button (click)="toggleEditMode(monster.id, 'isLegendary')">Cancel</button>
+                    </div>
+                    <ng-template #monster_isLegendary_disp>
+                        <div class="small-space-around">
+                            <div *ngIf="monster.isLegendary; else monster_isLegendary_true_disp">
+                                True
+                            </div>
+                            <ng-template #monster_isLegendary_true_disp>
+                                <div>
+                                    False
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="monster.name" (click)="toggleEditMode(monster.id, 'name')">Name</label>
+                </th>
+                <td>
+                    <div *ngIf="editMon === monster.id && editMode === 'name';else monster_name_disp">
+                        <input [(ngModel)]="monster.name" type="text" name="monster.name" placeholder="Name" />
+                        <br />
+                        <button (click)="updateMonster(monster)">Update</button>
+                        <button (click)="toggleEditMode(monster.id, 'name')">Cancel</button>
+                    </div>
+                    <ng-template #monster_name_disp>
+                        {{monster.name}}
+                    </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="monster.type" (click)="toggleEditMode(monster.id, 'type')">Type</label>
+                </th>
+                <td>
+                    <div *ngIf="editMon === monster.id && editMode === 'type';else monster_type_disp">
+                        <input [(ngModel)]="monster.type" type="text" name="monster.type" placeholder="Type" />
+                        <br />
+                        <button (click)="updateMonster(monster)">Update</button>
+                        <button (click)="toggleEditMode(monster.id, 'type')">Cancel</button>
+                    </div>
+                    <ng-template #monster_type_disp>
+                        {{monster.type}}
+                    </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="monster.star_level" (click)="toggleEditMode(monster.id, 'star_level')">Stars</label>
+                </th>
+                <td>
+                    <div *ngIf="editMon === monster.id && editMode === 'star_level';else monster_star_level_disp">
+                        <input [(ngModel)]="monster.star_level" type="text" name="monster.star_level" placeholder="Stars" />
+                        <br />
+                        <button (click)="updateMonster(monster)">Update</button>
+                        <button (click)="toggleEditMode(monster.id, 'star_level')">Cancel</button>
+                    </div>
+                    <ng-template #monster_star_level_disp>
+                        {{monster.star_level}}
+                    </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="monster.delete">Delete</label>
+                </th>
+                <td>
+                    <button class="delete" (click)="onDelete(monster, $event)" name="monster.delete">x</button>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="controls">
-        <button (click)="save()">Save</button>
+        <button (click)="updateMonster(monster)">Save</button>
         <button (click)="goBack()">Back</button>
     </div>
 </div>

@@ -24,20 +24,36 @@ h2, h3 {
     background-color: #444;
     color: #FFF;
 }
+.mon-type-dark td {
+    background-color: #222;
+}
 .mon-type-fire {
     background-color: #A00;
     color: #FFF;
+}
+.mon-type-fire td {
+    background-color: #600;
 }
 .mon-type-light {
     background-color: #EEE;
     color: #333;
 }
+.mon-type-light td {
+    background-color: #BBB;
+}
 .mon-type-water {
     background-color: #00A;
     color: #FFF;
 }
+.mon-type-water td {
+    background-color: #006;
+}
 .mon-type-wind {
-    background-color: #AA0;
+    background-color: #FF0;
+    color: #333;
+}
+.mon-type-wind td {
+    background-color: #660;
     color: #FFF;
 }
 

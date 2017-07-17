@@ -66,7 +66,6 @@ export class CrawlerComponent implements OnInit {
             this.editCrawl = -1;
             this.editMode = '';
         }
-
     }
 
     private addCrawler(): void {
