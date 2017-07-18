@@ -65,12 +65,12 @@ export default class CrawlerManager {
         return targetCrawler;
     };
 
-    public updateCrawler(id: number, crawler: Crawler = null): Crawler {
+    public updateCrawler(id: number, updatedCrawler: Crawler = null): Crawler {
         if (!id && (id !== 0)) {
             console.warn('Could not update crawler, no ID provided.');
             return null;
         }
-        if (!crawler) {
+        if (!updatedCrawler) {
             console.warn('Could not remove crawler, no crawler provided.');
             return null;
         }
@@ -83,9 +83,9 @@ export default class CrawlerManager {
             console.warn(`Could not update crawler because it could not be found (id=${id}).`);
             return null;
         }
-        crawler._tsLastUpdate = moment.utc().valueOf();
-        crawler.saveToFile({ force: true });
-        this.internalMap[crawlKey] = crawler;
+        updatedCrawler._tsLastUpdate = moment.utc().valueOf();
+        updatedCrawler.saveToFile({ force: true });
+        this.internalMap[crawlKey] = updatedCrawler;
 
         return this.internalMap[crawlKey];
     };

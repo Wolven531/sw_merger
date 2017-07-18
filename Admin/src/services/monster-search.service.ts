@@ -21,10 +21,10 @@ export class MonsterSearchService {
         return Observable.from(
             this.getURLObs().toPromise()
                 .then((newURL: string) => {
-                    console.log(`Setting URL to: ${newURL}`);
+                    console.info(`Setting URL to: ${newURL}`);
                     const searchUrl = `${this.base_url}/monsters/search`;
 
-                    console.log(`${this.servicePrefix} searching at ${searchUrl}`);
+                    console.info(`${this.servicePrefix} searching at ${searchUrl}`);
                     console.time(`${this.servicePrefix}search`);
 
                     return this.http.get(`${searchUrl}/?name=${term}`).toPromise();

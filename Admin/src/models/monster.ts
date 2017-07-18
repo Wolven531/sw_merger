@@ -7,7 +7,7 @@ export class SummMon {
     isMissingProp: boolean;
     missingFields: Array<string>;
     type: string;
-    isLegend: boolean;
+    isLegendary: boolean;
     star: number;
     image_base: string;
     image_awakened: string;
@@ -21,7 +21,7 @@ export class SummMon {
     resist = 0;
     accuracy = 0;
     _tsCreation = 0;
-    _tsSerialize = 0;
+    _tsLastUpdate = 0;
 
     constructor() { }
 }

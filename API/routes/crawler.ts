@@ -74,13 +74,18 @@ export default class CrawlerRouter {
         const opts = RequestManager.getSummCoOpts(returnVal.crawler.url);
 
         request(opts, (error, resp, bodyBuffer: Buffer) => {
-            const $ = RequestManager.reqTo$(resp, bodyBuffer);
-
-            returnVal.resultText = $(returnVal.crawler.domSelector).text();
-            returnVal.resultHtml = $(returnVal.crawler.domSelector).html();
             returnVal.err = error;
+            RequestManager.reqTo$(resp, bodyBuffer).then($ => {
+                if (!$) {
+                    returnVal.err += '\n$ was null...';
+                    res.json(returnVal);
+                    return;
+                }
+                returnVal.resultText = $(returnVal.crawler.domSelector).text();
+                returnVal.resultHtml = $(returnVal.crawler.domSelector).html();
 
-            res.json(returnVal);
+                res.json(returnVal);
+            });
         });
     };
 

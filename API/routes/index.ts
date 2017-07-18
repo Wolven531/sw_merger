@@ -101,7 +101,7 @@ export default class HomeRouter {
     }
 
     private handleHomePage(req, res, next): any {
-        console.log('[handleHomePage]');
+        console.info('[handleHomePage]');
 
         const ngrokUrl = req.app.get('ngrokUrl') || '';
         const returnVal = {

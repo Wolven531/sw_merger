@@ -113,7 +113,7 @@ app.use((req, res, next) => {
 // NOTE: error handler
 app.use((err, req, res, next) => {
     if (res.locals.status !== 404) {
-        console.log('Some error ocurred during processing...');
+        console.error('Some error ocurred during processing...');
     }
     res.locals.message = err.message;
     res.locals.error =  err;

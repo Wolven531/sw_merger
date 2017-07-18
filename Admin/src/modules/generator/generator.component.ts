@@ -33,7 +33,9 @@ export class GeneratorComponent implements OnInit {
                 this.simulatedMon = mon;
                 this.simTypeDisp = this.getSimTypeDisplay(simType);
             } else {
-                console.log('NO MON FOR YOU =[');
+                this.simulatedMon = null;
+                this.simTypeDisp = '';
+                alert('Simulation was missing data, NO MON FOR YOU =[');
             }
         });
     };

@@ -23,10 +23,10 @@ export class MonsterService {
     public getMonsters(): Promise<SummMon[]> {
         return this.getURLObs().toPromise()
             .then(newURL => {
-                console.log(`Setting URL to: ${newURL}`);
+                console.info(`Setting URL to: ${newURL}`);
                 const allMonsUrl = `${newURL}/monsters?output=id,name,type`;
 
-                console.log(`${this.servicePrefix} getMonsters from ${allMonsUrl}`);
+                console.info(`${this.servicePrefix} getMonsters from ${allMonsUrl}`);
                 console.time(`${this.servicePrefix}getMonsters`)
                 return this.http.get(allMonsUrl).toPromise();
             })
@@ -34,7 +34,7 @@ export class MonsterService {
                 console.timeEnd(`${this.servicePrefix}getMonsters`)
                 const mons = resp.json().monsters;
 
-                console.log(`${this.servicePrefix} returning ${mons.length} monsters...`);
+                console.info(`${this.servicePrefix} returning ${mons.length} monsters...`);
 
                 return mons as SummMon[];
             })
@@ -44,10 +44,10 @@ export class MonsterService {
     public getMonster(id: number): Promise<SummMon> {
         return this.getURLObs().toPromise()
             .then(newURL => {
-                console.log(`Setting URL to: ${newURL}`);
+                console.info(`Setting URL to: ${newURL}`);
                 const singleMonUrl = `${newURL}/monsters/${id}`;
 
-                console.log(`${this.servicePrefix} getMonster`);
+                console.info(`${this.servicePrefix} getMonster`);
                 console.time(`${this.servicePrefix}getMonster`)
 
                 return this.http.get(singleMonUrl).toPromise();
@@ -63,12 +63,12 @@ export class MonsterService {
     public update(monster: SummMon): Promise<SummMon> {
         return this.getURLObs().toPromise()
             .then(newURL => {
-                console.log(`Setting URL to: ${newURL}`);
+                console.info(`Setting URL to: ${newURL}`);
                 const updateMonUrl = `${newURL}/monsters/${monster.id}`;
                 const putOpts = { headers: this.headers };
                 const monAsJson = JSON.stringify(monster);
 
-                console.log(`${this.servicePrefix} update`);
+                console.info(`${this.servicePrefix} update`);
                 console.time(`${this.servicePrefix}update`)
 
                 return this.http.put(updateMonUrl, monAsJson, putOpts).toPromise();
@@ -84,10 +84,10 @@ export class MonsterService {
     public delete(id: number): Promise<void> {
         return this.getURLObs().toPromise()
             .then(newURL => {
-                console.log(`Setting URL to: ${newURL}`);
+                console.info(`Setting URL to: ${newURL}`);
                 const deleteMonUrl = `${newURL}/monsters/${id}`;
 
-                console.log(`${this.servicePrefix} delete`);
+                console.info(`${this.servicePrefix} delete`);
                 console.time(`${this.servicePrefix}delete`)
 
                 return this.http.delete(deleteMonUrl).toPromise();
@@ -107,10 +107,10 @@ export class MonsterService {
 
         return this.getURLObs().toPromise()
             .then(newURL => {
-                console.log(`Setting URL to: ${newURL}`);
+                console.info(`Setting URL to: ${newURL}`);
                 const simUrl = `${newURL}/generator/${summType}`;
 
-                console.log(`${this.servicePrefix} simulateSummon from ${simUrl}`);
+                console.info(`${this.servicePrefix} simulateSummon from ${simUrl}`);
                 console.time(`${this.servicePrefix}simulateSummon`)
                 return this.http.get(simUrl).toPromise();
             })
@@ -118,7 +118,7 @@ export class MonsterService {
                 console.timeEnd(`${this.servicePrefix}simulateSummon`);
 
                 const respJSON = resp.json();
-                const mon = respJSON.data && respJSON.data.monster;
+                const mon = respJSON.monster;
                 const err = respJSON.err;
                 const newMon = mon as SummMon;
 
@@ -132,7 +132,10 @@ export class MonsterService {
                 }
                 return newMon;
             })
-            .catch(this.handleError);
+            .catch((reason: any) => {
+                console.log(`${this.servicePrefix} [simulateSummon] error: ${ reason }`);
+                return null;
+            });
     };
 
     private getURLProm(): Promise<string> {

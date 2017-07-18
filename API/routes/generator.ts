@@ -3,12 +3,15 @@
 import * as async from 'async';
 import * as express from 'express';
 import * as request from 'request';
+import 'rxjs/add/operator/toPromise';
 
 import { RequestManager } from '../lib/managers/RequestManager';
 import { MonsterManager } from '../lib/managers/MonsterManager';
 import { SummMon } from '../models/monster';
 
 export default class GeneratorRouter {
+    private static compName = '[GeneratorRouter]';
+
     public router_express: any;
 
     private API_ENDPOINT_SIMULATE = 'get_random';
@@ -19,44 +22,6 @@ export default class GeneratorRouter {
         Mystical: 2,
     };
 
-    private optsSimReq = {
-        method: 'GET',
-        json: true,
-        headers: {
-            'Connection': 'keep-alive',
-            'Accept': '*/*',
-            'X-CSRF-Token': 'dmFPXLuems+XoeJWiMreQUlhJmtaeH7RTnklQ3u/1qbGTaKxgF5cgaRiIgkpNQVDzdxpHf/HGpIPzS1Cm3CaIw==',
-            'User-Agent': RequestManager.getUserAgent(),
-            'X-Requested-With': 'XMLHttpRequest',
-            'Referer': 'http://www.swfr.tv/summon-simulator',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US,en;q=0.8',
-            /* 'content-type': 'application/x-www-form-urlencoded' */ // Is set automatically
-        },
-        uri: undefined,
-    };
-
-    private opts = {
-        method: 'POST',
-        uri: 'https://summonerswar.co/wp-content/plugins/ajax-search-pro/ajax_search.php',
-        port: 8080,
-        // NOTE: encoding=null ensures a buffer returns as the response
-        encoding: null,
-        headers: {
-            'cache-control': 'no-cache',
-            'authority': 'summonerswar.co',
-            'referer': 'https://summonerswar.co/',
-            'accept': 'text/plain, */*; q=0.01',
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'user-agent': RequestManager.getUserAgent(),
-            'accept-language': 'en-US,en;q=0.8',
-            'x-requested-with': 'XMLHttpRequest',
-            'accept-encoding': 'gzip, deflate, br',
-            'origin': 'https://summonerswar.co',
-        },
-        body: null,
-    };
-
     constructor(private monMgr: MonsterManager) {
         this.router_express = express.Router();
         this.router_express.get('/legendary', this.handleGenerateLegendary.bind(this));
@@ -65,87 +30,51 @@ export default class GeneratorRouter {
     }
 
     private handleGenerateMystical(req, res, next): any {
-        console.info('[generator] [router] [/mystical] Launching request...');
-        const asyncFuncs = [];
-        const returnVal = {
+        let returnVal = {
             data: null,
             err: null,
         };
 
-        const genAsyncFunc = () => {
-            const url = this.generateSummonURL(this.SCROLL_TYPES.Mystical);
-            return (asyncCb) => {
-                this.simSummon(url, (err, data) => {
-                    returnVal.err = err;
-                    returnVal.data = data;
-                    asyncCb(err, data);
-                });
-            };
-        };
+        const url = this.generateSummonURL(this.SCROLL_TYPES.Mystical);
+        console.info(`${ GeneratorRouter.compName } [handleGenerateMystical] Launching request at ${ url }`);
+        this.simSummon(url)
+            .then(updatedReturnVal => {
+                returnVal = updatedReturnVal;
 
-        for (let i = 0; i < 1; i++) {
-            asyncFuncs.push(genAsyncFunc());
-        }
-
-        async.series(asyncFuncs, (err, monsterArr) => {
-            res.json(returnVal);
-        });
+                res.json(returnVal);
+            });
     };
 
     private handleGenerateLightNDark(req, res, next): any {
-        console.info('[generator] [router] [/lightndark] Launching request...');
-        const asyncFuncs = [];
-        const returnVal = {
+        let returnVal = {
             data: null,
             err: null,
         };
 
-        const genAsyncFunc = () => {
-            const url = this.generateSummonURL(this.SCROLL_TYPES.LightAndDark);
-            return (asyncCb) => {
-                this.simSummon(url, (err, data) => {
-                    returnVal.err = err;
-                    returnVal.data = data;
-                    asyncCb(err, data);
-                });
-            };
-        };
+        const url = this.generateSummonURL(this.SCROLL_TYPES.LightAndDark);
+        console.info(`${ GeneratorRouter.compName } [/lightndark] Launching request at ${ url }`);
+        this.simSummon(url)
+            .then(updatedReturnVal => {
+                returnVal = updatedReturnVal;
 
-        for (let i = 0; i < 1; i++) {
-            asyncFuncs.push(genAsyncFunc());
-        }
-
-        async.series(asyncFuncs, (err, monsterArr) => {
-            res.json(returnVal);
-        });
+                res.json(returnVal);
+            });
     };
 
     private handleGenerateLegendary(req, res, next): any {
-        console.info('[generator] [router] [/legendary] Launching request...');
-        const asyncFuncs = [];
-        const returnVal = {
+        let returnVal = {
             data: null,
             err: null,
         };
 
-        const genAsyncFunc = () => {
-            const url = this.generateSummonURL(this.SCROLL_TYPES.Legendary);
-            return (asyncCb) => {
-                this.simSummon(url, (err, data) => {
-                    returnVal.err = err;
-                    returnVal.data = data;
-                    asyncCb(err, data);
-                });
-            };
-        };
+        const url = this.generateSummonURL(this.SCROLL_TYPES.Legendary);
+        console.info(`${ GeneratorRouter.compName } [/legendary] Launching request at ${ url }`);
+        this.simSummon(url)
+            .then(updatedReturnVal => {
+                returnVal = updatedReturnVal;
 
-        for (let i = 0; i < 1; i++) {
-            asyncFuncs.push(genAsyncFunc());
-        }
-
-        async.series(asyncFuncs, (err, monsterArr) => {
-            res.json(returnVal);
-        });
+                res.json(returnVal);
+            });
     };
 
     private validateScrollType(scrollType: any): boolean {
@@ -172,14 +101,16 @@ export default class GeneratorRouter {
         return false;
     };
 
-    // Legendary scroll:
-    // http://www.swfr.tv/simulator/get_random?type=0
-    //
-    // Light and Darkness scroll:
-    // http://www.swfr.tv/simulator/get_random?type=1
-    //
-    // Mystical scroll:
-    // http://www.swfr.tv/simulator/get_random?type=2
+    /*
+        // Legendary scroll:
+        // http://www.swfr.tv/simulator/get_random?type=0
+        //
+        // Light and Darkness scroll:
+        // http://www.swfr.tv/simulator/get_random?type=1
+        //
+        // Mystical scroll:
+        // http://www.swfr.tv/simulator/get_random?type=2
+    */
     private generateSummonURL(scrollType): string {
         if (!this.validateScrollType(scrollType)) {
             console.error(`[generator] [router] [generateSummonURL] invalid scrollType = ${ scrollType }`);
@@ -188,91 +119,131 @@ export default class GeneratorRouter {
         return this.API_BASE + this.API_ENDPOINT_SIMULATE + '?type=' + scrollType;
     };
 
-    private async lookupSim(url: string, returnVal: any): Promise<any> {
-        console.info('Launching sim request...');
-        this.optsSimReq.uri = url;
-        return request(this.optsSimReq, (error, resp, bodyBuffer) => {
-            const body = resp.body;
-            // NOTE: memOnly === false forces a save to disk
-            const newMon = new SummMon(body, { memOnly: false });
-            const newMonVerified = this.monMgr.addMonster(newMon);
-            returnVal.urls.searchNameUsed = newMon.name;
-            returnVal['monster'] = newMonVerified;
+    private lookupSim(url: string, returnVal: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const simRandomOpts = RequestManager.getSimRandomOpts(url);
 
-            if (!newMonVerified) {
-                returnVal.err = `Failed to add monster. Check monster data and server log. newMon=${ JSON.stringify(newMon) }`;
-            }
+            console.info(`[lookupSim] Launching sim request at ${ simRandomOpts.uri  }`);
+            request(simRandomOpts, (error, resp, bodyBuffer) => {
+                const body = resp.body;
+                const newMon = new SummMon(body);
+                returnVal.urls.searchNameToUse = newMon.name;
 
-            return Promise.resolve(returnVal);
+                const newMonVerified = this.monMgr.addMonster(newMon);
+                returnVal['monster'] = newMonVerified;
+
+                if (newMonVerified) {
+                    newMonVerified.saveToFile();
+                } else {
+                    returnVal.err = `Failed to add monster. Check monster data and server log. newMon=${ JSON.stringify(newMon) }`;
+                }
+
+                resolve(returnVal);
+            })
         });
     };
 
-    private async lookupName(returnVal: any): Promise<any> {
-        console.info('[lookupName] Launching summ co request...');
-        this.opts.body = 'action=ajaxsearchpro_search&aspp='
-            + returnVal.urls.searchNameUsed
-            + '&asid=2&asp_inst_id=2_1&options=current_page_id%3D1816%26qtranslate_lang%3D0%26set_intitle%3DNone%26set_incontent%3DNone'
-            + '%26customset%255B%255D%3Dpost%26customset%255B%255D%3Dpage%26termset%255Bcategory%255D%255B%255D%3D72%26termset%255B'
-            + 'category%255D%255B%255D%3D80%26termset%255Bcategory%255D%255B%255D%3D74%26termset%255Bcategory%255D%255B%255D%3D76%26'
-            + 'termset%255Bcategory%255D%255B%255D%3D75%26termset%255Bcategory%255D%255B%255D%3D93%26termset%255B'
-            + 'category%255D%255B%255D%3D94%26termset%255Bcategory%255D%255B%255D%3D91%26termset%255Bcategory%255D%255B%255D%3D90';
-
-        return request(this.opts, (error, resp, bodyBuffer: Buffer) => {
-            if (error) {
-                console.error(`[lookupName] Error: ${ error }`);
-            }
-            const $ = RequestManager.reqTo$(resp, bodyBuffer);
-            const numLinks = $('a').length;
-            const infoPageURL = $('a.asp_res_url').attr('href');
-
-            returnVal.urls.numLinksOnSummCoPage = numLinks;
-            returnVal.urls.infoPage = infoPageURL;
-            console.info(`[lookupName] Setting URI for optsSummCoInfoReq: ${ infoPageURL }`);
-            this.optsSimReq.uri = infoPageURL;
-
+    private lookupName(returnVal: any): Promise<any> {
+        if (!returnVal.urls || !returnVal.urls.searchNameToUse) {
+            console.warn(`[lookupName] Missing searchName, returnVal= ${ JSON.stringify(returnVal) }`);
+            returnVal.err = 'missingSearchName';
             return Promise.resolve(returnVal);
+        }
+        return new Promise((resolve, reject) => {
+            const searchOpts = RequestManager.getSummCoSearchOpts(returnVal.urls.searchNameToUse);
+
+            console.info(`[lookupName] Launching summ co request at ${ searchOpts.uri }`);
+            request(searchOpts, (error, resp, bodyBuffer: Buffer) => {
+                if (error) {
+                    console.error(`[lookupName] Error: ${ error }`);
+                    returnVal.err = error;
+                }
+                RequestManager.reqTo$(resp, bodyBuffer).then($ => {
+                    if (!$) {
+                        returnVal.err += '\n$ was null...';
+                        return resolve(returnVal);
+                    }
+                    const numLinks = $('a').length;
+                    const infoPageURL = $('a.asp_res_url').attr('href');
+
+                    console.info(`[lookupName] Setting URI for optsSummCoInfoReq: ${ infoPageURL }`);
+                    returnVal.urls.numLinksOnSummCoPage = numLinks;
+                    returnVal.urls.infoPage = infoPageURL;
+
+                    if (!infoPageURL) {
+                        console.warn(`[lookupName] infoPageURL was missing`);
+                    }
+
+                    resolve(returnVal);
+                });
+            });
         });
     };
 
-    private async lookupInfo(returnVal: any): Promise<any> {
-        console.info('Launching summ co info request...');
-        if (!this.optsSimReq.uri || (this.optsSimReq.uri.length < 1)) {
-            console.error(`[lookupInfo] Failed to find URI... this.optsSimReq=${ JSON.stringify(this.optsSimReq) }`);
+    private lookupInfo(returnVal: any): Promise<any> {
+        if (!returnVal.urls.infoPage) {
+            console.error(`[lookupInfo] Failed to find URI... returnVal.urls=${ JSON.stringify(returnVal.urls) }`);
             return Promise.resolve(returnVal);
         }
 
-        return request(this.optsSimReq, (error, response, bodyBuffer: Buffer) => {
-            if (error) {
-                console.error(`[lookupInfo] Error: ${ error }`);
-            }
-            const $ = RequestManager.reqTo$(response, bodyBuffer);
-            const htmlMeter = $('#rating-anchor .total-info .total-rating-value.large-meter');
+        return new Promise((resolve, reject) => {
+            const infoOpts = RequestManager.getSummCoOpts(returnVal.urls.infoPage);
 
-            returnVal.scores = {};
-            returnVal.scores.editor = htmlMeter
-                .find('.editor_rating .number')
-                .text();
-            returnVal.scores.user = htmlMeter.find('.user_rating .number').text();
+            console.info(`[lookupInfo] Launching summ co info request at ${infoOpts.uri}`);
+            request(infoOpts, (error, resp, bodyBuffer: Buffer) => {
+                if (error) {
+                    console.error(`[lookupInfo] Error: ${ error }`);
+                    returnVal.err = error;
+                }
+                RequestManager.reqTo$(resp, bodyBuffer).then($ => {
+                    if (!$) {
+                        returnVal.err += '\n$ was null...';
+                        return resolve(returnVal);
+                    }
+                    const htmlMeter = $('#rating-anchor .total-info .total-rating-value.large-meter');
 
-            return Promise.resolve(returnVal);
+                    returnVal.scores = {};
+                    returnVal.scores.editor = htmlMeter
+                        .find('.editor_rating .number')
+                        .text();
+                    returnVal.scores.user = htmlMeter.find('.user_rating .number').text();
+
+                    resolve(returnVal);
+                });
+            });
         });
     };
 
-    private async simSummon(url: string, cb): Promise<any> {
-        let returnVal = {
+    private async simSummon(url: string): Promise<any> {
+        const returnVal = {
             urls: {
                 simulation: url,
+                searchNameToUse: '',
             },
+            err: null,
         };
-        console.info('[generator] [router] Starting async series...');
+        return new Promise((resolve, reject) => {
+            this.lookupSim(url, returnVal)
+                .then(updatedReturn => {
+                    return this.lookupName(updatedReturn);
+                })
+                .then(updatedReturn => {
+                    return this.lookupInfo(updatedReturn);
+                })
+                .then(updatedReturn => {
+                    resolve(updatedReturn);
+                })
+                .catch((reason: any) => {
+                    returnVal.err = reason;
 
-        returnVal = await this.lookupSim(url, returnVal);
-        returnVal = await this.lookupName(returnVal);
-        returnVal = await this.lookupInfo(returnVal);
-
-        console.info('[generator] [router] Finished all async, returning to client...');
-        return returnVal;
+                    resolve(returnVal);
+                });
+        });
     };
+
+    private async handleError(err: any): Promise<any> {
+        return Promise.reject(err.message || err);
+    }
 }
 
 export { GeneratorRouter as GeneratorRouter };

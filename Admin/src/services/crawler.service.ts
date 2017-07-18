@@ -26,9 +26,9 @@ export class CrawlerService {
         return this.getURLObs().toPromise()
             .then(newURL => {
                 const runCrawlerUrl = `${newURL}/crawler/run/${id}`;
-                console.log(`Setting URL to: ${runCrawlerUrl}`);
+                console.info(`Setting URL to: ${runCrawlerUrl}`);
 
-                console.log(`${this.servicePrefix} run crawler from ${runCrawlerUrl}`);
+                console.info(`${this.servicePrefix} run crawler from ${runCrawlerUrl}`);
                 console.time(`${this.servicePrefix}runCrawler`)
                 return this.http.post(runCrawlerUrl, postOpts).toPromise();
             })
@@ -48,9 +48,9 @@ export class CrawlerService {
         return this.getURLObs().toPromise()
             .then(newURL => {
                 const updateCrawlerUrl = `${newURL}/crawler/${ updatedCrawler.id }`;
-                console.log(`Setting URL to: ${updateCrawlerUrl}`);
+                console.info(`Setting URL to: ${updateCrawlerUrl}`);
 
-                console.log(`${this.servicePrefix} updated crawler from ${updateCrawlerUrl}`);
+                console.info(`${this.servicePrefix} updated crawler from ${updateCrawlerUrl}`);
                 console.time(`${this.servicePrefix}updateCrawler`)
                 return this.http.put(updateCrawlerUrl, updatedCrawlerAsJSON, putOpts).toPromise();
             })
@@ -71,9 +71,9 @@ export class CrawlerService {
         return this.getURLObs().toPromise()
             .then(newURL => {
                 const addCrawlerUrl = `${newURL}/crawler/`;
-                console.log(`Setting URL to: ${addCrawlerUrl}`);
+                console.info(`Setting URL to: ${addCrawlerUrl}`);
 
-                console.log(`${this.servicePrefix} add crawler from ${addCrawlerUrl}`);
+                console.info(`${this.servicePrefix} add crawler from ${addCrawlerUrl}`);
                 console.time(`${this.servicePrefix}addCrawler`)
                 return this.http.post(addCrawlerUrl, newCrawlerAsJSON, postOpts).toPromise();
             })
@@ -90,9 +90,9 @@ export class CrawlerService {
         return this.getURLObs().toPromise()
             .then(newURL => {
                 const removeUrl = `${newURL}/crawler/${id}`;
-                console.log(`Setting URL to: ${removeUrl}`);
+                console.info(`Setting URL to: ${removeUrl}`);
 
-                console.log(`${this.servicePrefix} delete`);
+                console.info(`${this.servicePrefix} delete`);
                 console.time(`${this.servicePrefix}delete`)
 
                 return this.http.delete(removeUrl).toPromise();
@@ -109,9 +109,9 @@ export class CrawlerService {
         return this.getURLObs().toPromise()
             .then(newURL => {
                 const allCrawlersUrl = `${newURL}/crawler/`;
-                console.log(`Setting URL to: ${allCrawlersUrl}`);
+                console.info(`Setting URL to: ${allCrawlersUrl}`);
 
-                console.log(`${this.servicePrefix} get crawlers from ${allCrawlersUrl}`);
+                console.info(`${this.servicePrefix} get crawlers from ${allCrawlersUrl}`);
                 console.time(`${this.servicePrefix}getCrawlers`)
                 return this.http.get(allCrawlersUrl).toPromise();
             })
@@ -119,7 +119,7 @@ export class CrawlerService {
                 console.timeEnd(`${this.servicePrefix}getCrawlers`)
                 const crawlers = resp.json().crawlers;
 
-                console.log(`${this.servicePrefix} returning ${crawlers.length} crawlers...`);
+                console.info(`${this.servicePrefix} returning ${crawlers.length} crawlers...`);
 
                 return crawlers as Crawler[];
             })

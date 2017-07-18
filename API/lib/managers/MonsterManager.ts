@@ -1,16 +1,17 @@
 'use strict';
 
 import * as fs from 'file-system';
+import * as moment from 'moment';
 import * as path from 'path';
 
 import { SummMon } from '../../models/monster';
 
 export default class MonsterManager {
+    private static compName = '[MonsterManager]';
+
     private internalMap: any = {};
-    private compName = '[MonsterManager]';
 
     constructor() {
-        console.info(`${this.compName} [constructor] Constructing monster manager...`);
         this.internalMap = this.loadFromDisk();
     }
 
@@ -65,7 +66,7 @@ export default class MonsterManager {
                 .forEach((mon, ind, arr) => {
                     results.push(mon);
                 });
-            console.log(`[MonsterManager] [searchMonsters] Returning search results: ${results.length}`);
+            console.info(`[MonsterManager] [searchMonsters] Returning search results: ${results.length}`);
             return results;
         }
 
@@ -87,7 +88,7 @@ export default class MonsterManager {
                 });
         }
 
-        console.log(`[MonsterManager] [searchMonsters] Returning search results: ${results.length}`);
+        console.info(`[MonsterManager] [searchMonsters] Returning search results: ${results.length}`);
         return results;
     };
 
@@ -101,8 +102,7 @@ export default class MonsterManager {
 
     public addMonster(newMon: SummMon): SummMon {
         // TODO: awill: add proper validation of monster here before adding
-
-        if (String(newMon.id).length < 1) {
+        if (!newMon.id || (newMon.id === 0) || (newMon.id === -1)) {
             console.warn(`Could not add monster, no ID in monster. newMon.id=${newMon.id} newMon=${newMon}`);
             return null;
         }
@@ -138,31 +138,34 @@ export default class MonsterManager {
         return targetMon;
     };
 
-    public updateMonster(monId: number, monster: SummMon = null): SummMon {
-        if (!monId) {
+    public updateMonster(id: number, updatedMonster: SummMon = null): SummMon {
+        if (!id && (id !== 0)) {
             console.warn('Could not update monster, no ID provided.');
             return null;
         }
-        if (!monster) {
+        if (!updatedMonster) {
             console.warn('Could not remove monster, no monster provided.');
             return null;
         }
 
-        const existingMon = this.getMonster(monId);
-        const monKey = String(monId);
+        const existingMon = this.getMonster(id);
+        const monKey = String(id);
 
         // NOTE: this forces any monster that did not already exist to fail an update attempt
         if (!existingMon) {
-            console.warn(`Could not update monster because it could not be found (id=${monId}).`);
+            console.warn(`Could not update monster because it could not be found (id=${id}).`);
             return null;
         }
-        this.internalMap[monKey] = monster;
+        updatedMonster._tsLastUpdate = moment.utc().valueOf();
+        updatedMonster.saveToFile({ force: true });
+
+        this.internalMap[monKey] = updatedMonster;
 
         return this.internalMap[monKey];
     };
 
     public getMonsterArray(): SummMon[] {
-        console.info(`${this.compName} [getMonsterArray]`);
+        console.info(`${MonsterManager.compName} [getMonsterArray]`);
         const results = new Array<SummMon>();
         const keys = Object.keys(this.internalMap || {});
 
@@ -211,7 +214,7 @@ export default class MonsterManager {
     };
 
     private getMonsterMap(forceRefresh: boolean): any {
-        console.info(`${this.compName} [getMonsterMap] params: forceRefresh=${forceRefresh}`);
+        console.info(`${MonsterManager.compName} [getMonsterMap] params: forceRefresh=${forceRefresh}`);
         // NOTE: this adds explicit type safety for the optional param
         forceRefresh = forceRefresh ? true : false;
         if (forceRefresh) {
@@ -221,7 +224,7 @@ export default class MonsterManager {
     };
 
     private loadFromDisk(): any {
-        console.info(`${this.compName} [loadFromDisk] About to load from disk...`);
+        console.info(`${MonsterManager.compName} [loadFromDisk] About to load from disk...`);
         const elems = SummMon.MONSTER_ELEMENT.asArray();
         // let mons = [];
         const monMap = {};
@@ -238,7 +241,7 @@ export default class MonsterManager {
             fp = dataDir;
 
             if (!fs.fs.existsSync(fp)) {
-                console.warn(`Data dir was missing: ${fp} | __dirname = ${__dirname}`);
+                console.warn(`${MonsterManager.compName} [loadFromDisk] Data dir was missing: ${fp} | __dirname = ${__dirname}`);
                 return;
             }
 
@@ -252,7 +255,7 @@ export default class MonsterManager {
                 filename = jsonFiles[i];
                 fp = path.resolve(`${dataDir}${path.sep}${filename}`);
 
-                console.info(`About to read file, fp = ${fp}`);
+                console.info(`${MonsterManager.compName} [loadFromDisk] About to read file, fp = ${fp}`);
                 monData = fs.fs.readFileSync(fp, { encoding: 'utf8', flag: 'r' });
 
                 newMon = new SummMon(monData);

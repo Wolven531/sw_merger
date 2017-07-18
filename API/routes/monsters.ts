@@ -43,36 +43,30 @@ export default class MonsterRouter {
     };
 
     private handleUpdate(req, res, next): any {
-        const monId = parseInt(req.params.mon_id, 10);
-        console.info(`[monsters] [router] [PUT] [/:mon_id] mon_id=${ monId }`);
+        const id = parseInt(req.params.mon_id, 10);
+        const updatedMonData = req.body || null;
+        console.info(`[monsters] [router] [PUT] [/:mon_id] id=${ id } updatedMonData=${ updatedMonData }`);
         const returnVal = {
-            staleMonster: null,
+            staleMonster: this.monMgr.getMonster(id),
             updatedMonster: null,
             err: null,
         };
-        const staleMonster = this.monMgr.getMonster(monId);
-        const updatedMonData = req.body || null;
-        let resultOfUpdate = null;
-
-        if (!staleMonster) {
-            res.statusCode = 404;
-            returnVal.err = 'noMonster';
-            return res.json(returnVal);
-        }
         if (!updatedMonData) {
             res.statusCode = 400;
             returnVal.err = 'noMonsterData';
+            return res.json(returnVal);
+        }
+        if (!returnVal.staleMonster) {
+            res.statusCode = 404;
+            returnVal.err = 'noMonster';
             return res.json(returnVal);
         }
 
         // TODO: awill: Add a data validation call here before directly updating monster
         // TODO: awill: Add a validation method in the monster manager
         // TODO: awill: Make this update asynchronous
-
-        resultOfUpdate = this.monMgr.updateMonster(
-            staleMonster.id,
-            updatedMonData
-        );
+        const tmpMon = new SummMon(updatedMonData);
+        const resultOfUpdate = this.monMgr.updateMonster(returnVal.staleMonster.id, tmpMon);
 
         if (!resultOfUpdate) {
             res.statusCode = 500;
@@ -123,14 +117,14 @@ export default class MonsterRouter {
             monsters: new Array<any>(),
             err: null,
         };
-        console.log(`outputArr=${ outputArr.length > 0 ? outputArr : '[]' } shouldCompress=${ shouldCompress }`)
+        console.info(`outputArr=${ outputArr.length > 0 ? outputArr : '[]' } shouldCompress=${ shouldCompress }`)
 
         if (shouldCompress) {
-            console.log('compressing...');
+            console.info('compressing...');
             returnVal.monsters = tmpMons.map((mon: SummMon, ind: number, arr: SummMon[]): any => {
                 const result = {
                     _tsCreation: mon._tsCreation,
-                    _tsSerialize: mon._tsSerialize,
+                    _tsLastUpdate: mon._tsLastUpdate,
                     id: mon.id,
                     name: mon.name,
                 };

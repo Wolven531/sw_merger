@@ -12,7 +12,7 @@ export default class Crawler {
     };
 
     public _tsCreation: number;
-    public _tsSerialize: number;
+    public _tsLastUpdate: number;
     public id: number;
 
     public name: string;
@@ -39,8 +39,8 @@ export default class Crawler {
         }
 
         // NOTE: for now carry forward the serialize time
-        if (data.hasOwnProperty('_tsSerialize')) {
-            this._tsSerialize = data._tsSerialize;
+        if (data.hasOwnProperty('_tsLastUpdate')) {
+            this._tsLastUpdate = data._tsLastUpdate;
         }
 
         this.id = parseInt(data.id, 10);
@@ -61,7 +61,7 @@ export default class Crawler {
             url: this.url,
             domSelector: this.domSelector,
             _tsCreation: this._tsCreation,
-            _tsSerialize: moment.utc().valueOf()
+            _tsLastUpdate: moment.utc().valueOf()
         };
 
         return JSON.stringify(returnVal);
@@ -73,7 +73,7 @@ export default class Crawler {
     public toString(): string {
         return `[${Crawler.getModelName()}]
             _tsCreation: ${ this._tsCreation}
-            _tsSerialize: ${ this._tsSerialize}
+            _tsLastUpdate: ${ this._tsLastUpdate}
             id: ${ this.id}
             name: ${ this.name}
             url: ${ this.url}
