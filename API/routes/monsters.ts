@@ -112,16 +112,15 @@ export default class MonsterRouter {
                 return String(curr).trim().length > 0;
             });
         const shouldCompress: boolean = output !== 'all';
-        const tmpMons = this.monMgr.getMonsterArray();
         const returnVal = {
-            monsters: new Array<any>(),
+            monsters: this.monMgr.getMonsterArray(),
             err: null,
         };
         console.info(`outputArr=${ outputArr.length > 0 ? outputArr : '[]' } shouldCompress=${ shouldCompress }`)
 
         if (shouldCompress) {
             console.info('compressing...');
-            returnVal.monsters = tmpMons.map((mon: SummMon, ind: number, arr: SummMon[]): any => {
+            returnVal.monsters = returnVal.monsters.map((mon: SummMon, ind: number, arr: SummMon[]): any => {
                 const result = {
                     _tsCreation: mon._tsCreation,
                     _tsLastUpdate: mon._tsLastUpdate,
