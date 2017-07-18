@@ -61,6 +61,7 @@ typings/
 .DS_Store
 
 # data directory
+API/data/*
 API/data/dark/*.json
 API/data/fire/*.json
 API/data/light/*.json
