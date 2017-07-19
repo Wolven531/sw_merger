@@ -23,29 +23,37 @@ public class Main : MonoBehaviour
 
     IEnumerator GetMonsters()
     {
-        string address = "https://8032c10a.ngrok.io";
+        string address = "https://6fe2dbe5.ngrok.io";
         WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
         yield return www;
 
         // NOTE: bail out if there was an error
-        if (!string.IsNullOrEmpty(www.error)) {
+        if (!string.IsNullOrEmpty(www.error))
+        {
 
             yield return null;
         }
-
+        APIMonsterResponse response = new APIMonsterResponse();
+        //JsonConvert.DeserializeAnonymousType<APIMonsterResponse>(www.text, response);
+        response = JsonConvert.DeserializeObject<APIMonsterResponse>(www.text);
         // NOTE: Get monsters from JSON
-        Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
-        List<Monster> monsters = new List<Monster>();
-        
-        if (data.ContainsKey("monsters")) {
-            data.TryGetValue("monsters", out monsters);
+        //Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
 
-            // Monster mon = monsters[0];
-            foreach(Monster mon in monsters)
-            {
-                MonsterUIDisplay muid = Instantiate(MonsterPrefab, Vector3.zero, Quaternion.identity, monsterContainer);
-                muid.SetMonster(mon);
-            }
+        //monsters = monsterHash as List<Monster>;
+        // Monster mon = monsters[0];
+        foreach (Monster mon in response.monsters)
+        {
+            MonsterUIDisplay muid = Instantiate(MonsterPrefab, Vector3.zero, Quaternion.identity, monsterContainer);
+            muid.SetMonster(mon);
         }
     }
+}
+
+class APIMonsterResponse
+{
+    [JsonProperty(PropertyName = "monsters")]
+    public List<Monster> monsters = new List<Monster>();
+    [JsonProperty(PropertyName = "err")]
+    public string err = string.Empty;
+
 }

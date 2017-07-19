@@ -2,22 +2,37 @@
 
 public class Monster {
 
+    [JsonProperty(PropertyName = "id")]
     public string id;
 	[JsonProperty(PropertyName = "name")]
     public string Name;
+    [JsonProperty(PropertyName = "type")]
     public string type;
+    [JsonProperty(PropertyName = "isLegendary")]
     public bool isLegendary;
+    [JsonProperty(PropertyName = "star_level")]
     public int star_level;
+    [JsonProperty(PropertyName = "image_base")]
     public string image_base;
+    [JsonProperty(PropertyName = "image_awakened")]
     public string image_awakened;
+    [JsonProperty(PropertyName = "level")]
     public int level;
+    [JsonProperty(PropertyName = "base_hp")]
     public int base_hp;
+    [JsonProperty(PropertyName = "base_attack")]
     public int base_attack;
+    [JsonProperty(PropertyName = "base_speed")]
     public int base_speed;
+    [JsonProperty(PropertyName = "base_defense")]
     public int base_defense;
+    [JsonProperty(PropertyName = "base_crit_rate")]
     public int base_crit_rate;
+    [JsonProperty(PropertyName = "base_crit_damage")]
     public int base_crit_damage;
+    [JsonProperty(PropertyName = "base_resistance")]
     public int base_resistance;
+    [JsonProperty(PropertyName = "base_accuracy")]
     public int base_accuracy;
 
     // "id": 30,
