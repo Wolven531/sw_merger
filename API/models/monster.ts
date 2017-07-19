@@ -29,27 +29,27 @@ export default class SummMon {
 
     public missingFields: string[] = new Array<string>();
 
-    public _tsCreation: number = -1;
-    public _tsLastUpdate: number = -1;
+    public _tsCreation: number;
+    public _tsLastUpdate: number;
 
-    public id: number = -1;
+    public id: number;
 
     public name: string;
     public type: string;
     public image_base: string;
     public image_awakened: string;
     public isLegendary = false;
-    public star_level: number = -1;
-    public level: number = -1;
+    public star_level: number;
+    public level: number;
 
-    public base_hp: number = -1;
-    public base_attack: number = -1;
-    public base_defense: number = -1;
-    public base_speed: number = -1;
-    public base_crit_rate: number = -1;
-    public base_crit_damage: number = -1;
-    public base_resistance: number = -1;
-    public base_accuracy: number = -1;
+    public base_hp: number;
+    public base_attack: number;
+    public base_defense: number;
+    public base_speed: number;
+    public base_crit_rate: number;
+    public base_crit_damage: number;
+    public base_resistance: number;
+    public base_accuracy: number;
 
     /*
         @summary This is the constructor for the SummMon model
@@ -79,7 +79,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('id'));
             this.missingFields.push('id');
-            this.id = -1;
         }
         // NOTE: carry forward the creation time
         if (data.hasOwnProperty('_tsCreation')) {
@@ -127,7 +126,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('star_level'));
             this.missingFields.push('star_level');
-            this.star_level = 1;
         }
 
         if (data.hasOwnProperty('img_base') || data.hasOwnProperty('image_base')) {
@@ -153,7 +151,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('level'));
             this.missingFields.push('level');
-            this.level = 1;
         }
 
         if (data.hasOwnProperty('b_hp') || data.hasOwnProperty('base_hp')) {
@@ -161,7 +158,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base hp'));
             this.missingFields.push('base_hp');
-            this.base_hp = 0;
         }
 
         if (data.hasOwnProperty('b_atk') || data.hasOwnProperty('base_attack')) {
@@ -169,7 +165,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base attack'));
             this.missingFields.push('base_attack');
-            this.base_attack = 0;
         }
 
         if (data.hasOwnProperty('b_def') || data.hasOwnProperty('base_defense')) {
@@ -177,7 +172,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base defense'));
             this.missingFields.push('base_defense');
-            this.base_defense = 0;
         }
 
         if (data.hasOwnProperty('b_spd') || data.hasOwnProperty('base_speed')) {
@@ -185,7 +179,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base speed'));
             this.missingFields.push('base_speed');
-            this.base_speed = 0;
         }
 
         if (data.hasOwnProperty('b_crate') || data.hasOwnProperty('base_crit_rate')) {
@@ -193,7 +186,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base crit rate'));
             this.missingFields.push('base_crit_rate');
-            this.base_crit_rate = 0;
         }
 
         if (data.hasOwnProperty('b_cdmg') || data.hasOwnProperty('base_crit_damage')) {
@@ -201,7 +193,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base crit dmg'));
             this.missingFields.push('base_crit_damage');
-            this.base_crit_damage = 0;
         }
 
         if (data.hasOwnProperty('b_res') || data.hasOwnProperty('base_resistance')) {
@@ -209,7 +200,6 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('base resistance'));
             this.missingFields.push('base_resistance');
-            this.base_resistance = 0;
         }
 
         if (data.hasOwnProperty('b_acc') || data.hasOwnProperty('base_accuracy')) {
@@ -221,6 +211,39 @@ export default class SummMon {
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('b_acc'));
             this.missingFields.push('base_accuracy');
+        }
+
+        if (isNaN(this.id)) {
+            this.id = -1;
+        }
+        if (isNaN(this.star_level)) {
+            this.star_level = 1;
+        }
+        if (isNaN(this.level)) {
+            this.level = 1;
+        }
+        if (isNaN(this.base_hp)) {
+            this.base_hp = 0;
+        }
+        if (isNaN(this.base_attack)) {
+            this.base_attack = 0;
+        }
+        if (isNaN(this.base_defense)) {
+            this.base_defense = 0;
+        }
+        if (isNaN(this.base_speed)) {
+            this.base_speed = 0;
+        }
+        if (isNaN(this.base_crit_rate)) {
+            this.base_crit_rate = 0;
+        }
+        if (isNaN(this.base_crit_damage)) {
+            this.base_crit_damage = 0;
+        }
+        if (isNaN(this.base_resistance)) {
+            this.base_resistance = 0;
+        }
+        if (isNaN(this.base_accuracy)) {
             this.base_accuracy = 0;
         }
 
