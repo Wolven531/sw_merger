@@ -27,27 +27,29 @@ export default class SummMon {
         return 'SummMon';
     };
 
-    public id: number;
-    public _tsCreation: number;
-    public _tsLastUpdate: number;
     public missingFields: string[] = new Array<string>();
+
+    public _tsCreation: number = -1;
+    public _tsLastUpdate: number = -1;
+
+    public id: number = -1;
 
     public name: string;
     public type: string;
-    public isLegendary: boolean;
-    public star_level: number;
     public image_base: string;
     public image_awakened: string;
-    public level: number;
+    public isLegendary = false;
+    public star_level: number = -1;
+    public level: number = -1;
 
-    public base_hp: number;
-    public base_attack: number;
-    public base_defense: number;
-    public base_speed: number;
-    public base_crit_rate: number;
-    public base_crit_damage: number;
-    public base_resistance: number;
-    public base_accuracy: number;
+    public base_hp: number = -1;
+    public base_attack: number = -1;
+    public base_defense: number = -1;
+    public base_speed: number = -1;
+    public base_crit_rate: number = -1;
+    public base_crit_damage: number = -1;
+    public base_resistance: number = -1;
+    public base_accuracy: number = -1;
 
     /*
         @summary This is the constructor for the SummMon model
@@ -211,7 +213,11 @@ export default class SummMon {
         }
 
         if (data.hasOwnProperty('b_acc') || data.hasOwnProperty('base_accuracy')) {
-            this.base_accuracy = parseInt(data['b_acc'] || data['base_accuracy'], 10);
+            if (data.hasOwnProperty('b_acc')) {
+                this.base_accuracy = parseInt(data['b_acc'], 10);
+            } else {
+                this.base_accuracy = parseInt(data['base_accuracy'], 10);
+            }
         } else {
             console.warn(this.PROPERTY_MISSING_TAG('b_acc'));
             this.missingFields.push('base_accuracy');
