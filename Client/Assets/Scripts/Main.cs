@@ -10,50 +10,46 @@ public class Main : MonoBehaviour
 {
     public MonsterUIDisplay MonsterPrefab;
     public Transform monsterContainer;
+    private MonsterManager monsterManager;
 
     void Start()
     {
+        monsterManager = new MonsterManager();
         // NOTE: approach:
         // 1) hit endpoint
         // 2) get json result
         // 3) make result into a class
         // 4) first pass of UI for monster
-        StartCoroutine(GetMonsters());
+        StartCoroutine(monsterManager.GetMonsters());
+        StartCoroutine(LoadMonsterDisplays());
     }
 
-    IEnumerator GetMonsters()
+    void Update()
     {
-        string address = "https://6fe2dbe5.ngrok.io";
-        WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
-        yield return www;
+        RectTransform rect = monsterContainer.GetComponent<RectTransform>();
+        //NOTE: The 50 is for padding at the top on the container
+        int contHeight = 50 + (200 * monsterManager.Monsters.Count);
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, contHeight);
+    }
 
-        // NOTE: bail out if there was an error
-        if (!string.IsNullOrEmpty(www.error))
+    private IEnumerator LoadMonsterDisplays()
+    {
+        while (!monsterManager.IsLoaded)
         {
-
-            yield return null;
+            yield return new WaitForSeconds(1);
         }
-        APIMonsterResponse response = new APIMonsterResponse();
-        //JsonConvert.DeserializeAnonymousType<APIMonsterResponse>(www.text, response);
-        response = JsonConvert.DeserializeObject<APIMonsterResponse>(www.text);
-        // NOTE: Get monsters from JSON
-        //Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
-
         //monsters = monsterHash as List<Monster>;
         // Monster mon = monsters[0];
-        foreach (Monster mon in response.monsters)
+        foreach (Monster mon in monsterManager.Monsters)
         {
             MonsterUIDisplay muid = Instantiate(MonsterPrefab, Vector3.zero, Quaternion.identity, monsterContainer);
             muid.SetMonster(mon);
         }
     }
+
+    public void OnMonsterSelect()
+    {
+        ScreenManager.Instance.LoadScreen("MonsterInfo");
+    }
 }
 
-class APIMonsterResponse
-{
-    [JsonProperty(PropertyName = "monsters")]
-    public List<Monster> monsters = new List<Monster>();
-    [JsonProperty(PropertyName = "err")]
-    public string err = string.Empty;
-
-}
