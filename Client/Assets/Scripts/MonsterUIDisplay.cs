@@ -54,7 +54,6 @@ public class MonsterUIDisplay : MonoBehaviour
     }
 
     public void onClicked(){
-        Debug.LogFormat("{0} was clicked", monster.Name);
         ScreenManager.Instance.GoToMonsterScreen(monster);
     }
 }

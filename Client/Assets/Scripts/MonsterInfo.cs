@@ -21,7 +21,6 @@ public class MonsterInfo : MonoBehaviour {
 
 	void Start(){
 		Monster monster = ScreenManager.Instance.getCurrentMonster();
-		Debug.LogFormat("MonsterInfo for {0}", monster.Name);
 		PopulateData(monster);
 	}
 	public void PopulateData(Monster monster){
@@ -61,5 +60,9 @@ public class MonsterInfo : MonoBehaviour {
 
 		Transform baseAccuracyText = BaseAccuracy.Find("Value");
 		baseAccuracyText.GetComponent<Text>().text = string.Format("{0}", monster.base_accuracy);
+	}
+
+	public void Back(){
+		ScreenManager.Instance.LoadScreen("Main");
 	}
 }

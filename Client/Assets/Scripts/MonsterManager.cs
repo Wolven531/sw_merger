@@ -20,7 +20,7 @@ public class MonsterManager
 
     public IEnumerator GetMonsters()
     {
-        string address = "https://a3e0e0b3.ngrok.io";
+        string address = "https://60a1257c.ngrok.io";
         WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
         yield return www;
 
@@ -35,7 +35,6 @@ public class MonsterManager
         // NOTE: Get monsters from JSON
         //Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
         Monsters = response.monsters;
-        Debug.LogFormat("Monsters in Manager: {0}", Monsters.Count);
         IsLoaded = true;
     }
 }

@@ -32,7 +32,7 @@ public class Main : MonoBehaviour
     {
         RectTransform rect = monsterContainer.GetComponent<RectTransform>();
         int contHeight = 0;
-        Debug.LogFormat("Count:{0}", MonsterManager.Instance.Monsters.Count);
+        
         if (MonsterManager.Instance.Monsters.Count > 0)
         {
             //NOTE: The 50 is for padding at the top on the container
