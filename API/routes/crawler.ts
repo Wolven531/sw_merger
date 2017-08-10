@@ -37,24 +37,26 @@ export default class CrawlerRouter {
         res.json(returnVal);
     };
 
-    // private async lookupSim(url: string, returnVal: any): Promise<any> {
-    //     console.info('Launching sim request...');
-    //     this.optsSimReq.uri = url;
-    //     return request(this.optsSimReq, (error, resp, bodyBuffer) => {
-    //         const body = resp.body;
-    //         // NOTE: memOnly === false forces a save to disk
-    //         const newMon = new SummMon(body, { memOnly: false });
-    //         const newMonVerified = this.monMgr.addMonster(newMon);
-    //         returnVal.urls.searchNameUsed = newMon.name;
-    //         returnVal['monster'] = newMonVerified;
+    /*
+    private async lookupSim(url: string, returnVal: any): Promise<any> {
+        console.info('Launching sim request...');
+        this.optsSimReq.uri = url;
+        return request(this.optsSimReq, (error, resp, bodyBuffer) => {
+            const body = resp.body;
+            // NOTE: memOnly === false forces a save to disk
+            const newMon = new SummMon(body, { memOnly: false });
+            const newMonVerified = this.monMgr.addMonster(newMon);
+            returnVal.urls.searchNameUsed = newMon.name;
+            returnVal['monster'] = newMonVerified;
 
-    //         if (!newMonVerified) {
-    //             returnVal.err = `Failed to add monster. Check monster data and server log. newMon=${ JSON.stringify(newMon) }`;
-    //         }
+            if (!newMonVerified) {
+                returnVal.err = `Failed to add monster. Check monster data and server log. newMon=${ JSON.stringify(newMon) }`;
+            }
 
-    //         return Promise.resolve(returnVal);
-    //     });
-    // };
+            return Promise.resolve(returnVal);
+        });
+    };
+    */
 
     private handleRun(req, res, next): any {
         const id = parseInt(req.params.id, 10);
@@ -75,14 +77,16 @@ export default class CrawlerRouter {
 
         request(opts, (error, resp, bodyBuffer: Buffer) => {
             returnVal.err = error;
-            RequestManager.reqTo$(resp, bodyBuffer).then($ => {
-                if (!$) {
-                    returnVal.err += '\n$ was null...';
+            RequestManager.reqTo$(resp, bodyBuffer).then(($: Function) => {
+                if (($ === undefined) || ($ === null)) {
+                    returnVal.err += '\n$ was null or undefined...';
                     res.json(returnVal);
                     return;
                 }
-                returnVal.resultText = $(returnVal.crawler.domSelector).text();
-                returnVal.resultHtml = $(returnVal.crawler.domSelector).html();
+
+                const selectorResult = $(returnVal.crawler.domSelector);
+                returnVal.resultText = selectorResult.text() || '';
+                returnVal.resultHtml = selectorResult.html() || '';
 
                 res.json(returnVal);
             });

@@ -15,7 +15,7 @@ import { SummMon } from '../../models/monster';
 import { Crawler } from '../../models/crawler';
 
 export default class RequestManager {
-    private static compName = '[CrawlerManager]';
+    private static compName = '[RequestManager]';
 
     public static getSummCoOpts(url: string): any {
         return {
@@ -115,9 +115,9 @@ export default class RequestManager {
             return Promise.resolve(null);
         }
         if (canUseGzip) {
-            return this.convertGzipBodyToHtml(bodyBuffer);
+            return RequestManager.convertGzipBodyToHtml(bodyBuffer);
         } else if (canUseBrotli) {
-            return this.convertBrotliBodyToHtml(bodyBuffer);
+            return RequestManager.convertBrotliBodyToHtml(bodyBuffer);
         }
     }
 
@@ -130,6 +130,7 @@ export default class RequestManager {
             html += String.fromCharCode(elem);
         });
 
+        // TODO: awill: check if this unescaping is necessary
         const $ = cheerio.load(unescape(html, null));
         return Promise.resolve($);
     };
@@ -143,14 +144,16 @@ export default class RequestManager {
             console.warn(`${RequestManager.compName} [convertGzipBodyToHtml] bodyBuffer.byteLength was undefined`);
             return Promise.resolve(null);
         }
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve: Function, reject: Function) => {
             console.info(`${RequestManager.compName} [convertGzipBodyToHtml] decoding gzip from ${bodyBuffer.byteLength} bytes...`);
+
             zlib.unzip(bodyBuffer, (err: Error, unzippedBuffer: Buffer) => {
                 if (err) {
                     console.warn(`Error unzipping buffer: ${err}`);
                 }
-                const bodyText = unzippedBuffer.toString('utf8', 0, bodyBuffer.byteLength);
-                const $ = cheerio.load(unescape(bodyText, null));
+                const bodyText = unzippedBuffer.toString('utf8', 0, unzippedBuffer.byteLength);
+                const $ = cheerio.load(bodyText);
+
                 resolve($);
             });
         });
