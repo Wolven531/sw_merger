@@ -17,7 +17,6 @@ public class MonsterUIDisplay : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start() called in MonsterUIDisplay");
         // NOTE: bail out if monster is null
         if (this.monster == null)
         {
@@ -51,7 +50,11 @@ public class MonsterUIDisplay : MonoBehaviour
 
     public void SetMonster(Monster mon)
     {
-        Debug.Log("SetMonster called in MonsterUIDisplay");
         this.monster = mon;
+    }
+
+    public void onClicked(){
+        Debug.LogFormat("{0} was clicked", monster.Name);
+        ScreenManager.Instance.GoToMonsterScreen(monster);
     }
 }

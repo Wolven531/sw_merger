@@ -5,11 +5,22 @@ using UnityEngine;
 
 public class MonsterManager
 {
-    public List<Monster> Monsters;
+    private static MonsterManager _instance;
+    public List<Monster> Monsters = new List<Monster>();
     public bool IsLoaded = false;
+
+    public static MonsterManager Instance { 
+		get { 
+			if (_instance == null) {
+                _instance = new MonsterManager();
+			}
+			return _instance;
+		}
+	}
+
     public IEnumerator GetMonsters()
     {
-        string address = "https://f2caa318.ngrok.io";
+        string address = "https://a3e0e0b3.ngrok.io";
         WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
         yield return www;
 
@@ -24,6 +35,7 @@ public class MonsterManager
         // NOTE: Get monsters from JSON
         //Dictionary<string, List<Monster>> data = JsonConvert.DeserializeObject<Dictionary<string, List<Monster>>>(www.text);
         Monsters = response.monsters;
+        Debug.LogFormat("Monsters in Manager: {0}", Monsters.Count);
         IsLoaded = true;
     }
 }

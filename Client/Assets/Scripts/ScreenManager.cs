@@ -2,39 +2,20 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class ScreenManager : MonoBehaviour
+public class ScreenManager
 {
-	public static ScreenManager _instance;
+	private static ScreenManager _instance;
+	private Monster currentMonster;
 
 	public static ScreenManager Instance { 
 		get { 
 			if (_instance == null) {
-				Debug.Log ("Trying to accesss null reference of Instance.");
+				_instance = new ScreenManager();
 			}
 			return _instance;
 		}
 	}
 
-	public void Awake ()
-	{
-		if (_instance == null) {
-			_instance = this;
-			GameObject.DontDestroyOnLoad (gameObject);
-		} else {
-			Destroy (gameObject);
-		}
-	}
-	// Use this for initialization
-	void Start ()
-	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
 
 	public void LoadScreen (string ScreenName)
 	{
@@ -52,5 +33,19 @@ public class ScreenManager : MonoBehaviour
 			//Debug.LogFormat ("Loading Scene:{0}", Index + 1);
 			SceneManager.LoadScene (Index + 1);
 		}
+	}
+
+	public void setCurrentMonster(Monster monster){
+		currentMonster = monster;
+	}
+
+	public Monster getCurrentMonster(){
+		return currentMonster;
+	}
+
+	public void GoToMonsterScreen(Monster monster){
+		Debug.LogFormat("Going to MonsterInfo for {0}", monster.Name);
+		setCurrentMonster(monster);
+        LoadScreen("MonsterInfo");
 	}
 }

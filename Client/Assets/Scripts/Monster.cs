@@ -35,7 +35,7 @@ public class Monster {
     [JsonProperty(PropertyName = "base_accuracy")]
     public int base_accuracy;
 
-    // "id": 30,
+    //   "id": 30,
     //   "name": "Mei",
     //   "type": "fire",
     //   "isLegendary": false,
