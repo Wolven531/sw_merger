@@ -47,8 +47,10 @@ export default class Crawler {
 
         // NOTE: carry forward the ID
         if (data.hasOwnProperty('id')) {
+            console.info(`Carrying forward crawler ID, data.id=${data.id}`);
             this.id = data.id;
         } else {
+            console.info(`Using Crawler.counter for ID, Crawler.counter=${Crawler.counter}`);
             this.id = Crawler.counter;
             Crawler.counter++;
         }
@@ -123,23 +125,46 @@ export default class Crawler {
             return;
         }
 
-        // NOTE: if the file does not exist, create it now
+        // NOTE: if the file does not exist, create it now and return
         if (!fs.existsSync(pathStr)) {
             fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
-        } else {
-            // NOTE: if the file exists, check if it has been updated recently enough
-            const stats = fs.statSync(pathStr);
-            const now = moment();
-            const oneDayAgo = now.subtract(1, 'days');
-            const fileModifiedTime = moment(stats.mtime.getMilliseconds());
-            const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
-
-            if (opts.force || !isLessThanOneDay) {
-                // NOTE: update the last update property
-                this._tsLastUpdate = moment.utc().valueOf();
-                fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
-            }
+            return;
         }
+
+        // NOTE: if the file exists, check if it has been updated recently enough
+        const stats = fs.statSync(pathStr);
+        const now = moment();
+        const oneDayAgo = now.subtract(1, 'days');
+        const fileModifiedTime = moment(stats.mtime.getMilliseconds());
+        const isLessThanOneDay = fileModifiedTime.isBefore(oneDayAgo);
+
+        if (opts.force || !isLessThanOneDay) {
+            // NOTE: update the last update property
+            this._tsLastUpdate = moment.utc().valueOf();
+            fs.writeFileSync(pathStr, this.serialize(), { encoding: 'utf8', flag: 'w', mode: 0o644 });
+        }
+    };
+
+    /*
+        @summary This method attempts to remove the serialized file that represents this crawler
+    */
+    public eraseFile = (opts: any = null): void => {
+        const pathStr = this.getFileName();
+
+        if (!opts) {
+            opts = { };
+        }
+
+        if (!path) {
+            console.warn(`[${Crawler.getModelName()}] [eraseFile] No path, unable to erase file`);
+            return;
+        }
+
+        // NOTE: if the file does not exist, nothing more to do
+        if (!fs.existsSync(pathStr)) {
+            return;
+        }
+        fs.unlinkSync(pathStr);
     };
 
     /*

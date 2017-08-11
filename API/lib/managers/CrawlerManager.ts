@@ -62,6 +62,8 @@ export default class CrawlerManager {
         }
 
         delete this.internalMap[String(id)];
+        targetCrawler.eraseFile();
+
         return targetCrawler;
     };
 

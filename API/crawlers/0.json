@@ -1,1 +1,1 @@
-{"id":0,"name":"Ariel Crawler","url":"https://summonerswar.co/water-archangel-ariel","domSelector":"#overview-anchor .details-box .details-wrapper .detail-content > p","_tsCreation":1500246818737,"_tsLastUpdate":1500273659226}
+{"id":0,"name":"Star Rating Crawler","url":"https://summonerswar.co/water-archangel-ariel","domSelector":"#overview-anchor .details-box .details-wrapper .detail-item:nth-child(1) .detail-content p","_tsCreation":1500246818737,"_tsLastUpdate":1502418882935}
