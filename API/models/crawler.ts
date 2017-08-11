@@ -45,15 +45,17 @@ export default class Crawler {
             data = JSON.parse(data);
         }
 
-        // NOTE: carry forward the ID
-        if (data.hasOwnProperty('id')) {
+        // NOTE: carry forward the ID, if it exists (it will not for new crawlers)
+        if (data.hasOwnProperty('id') && (data.id !== null)) {
             console.info(`Carrying forward crawler ID, data.id=${data.id}`);
-            this.id = data.id;
         } else {
-            console.info(`Using Crawler.counter for ID, Crawler.counter=${Crawler.counter}`);
-            this.id = Crawler.counter;
             Crawler.counter++;
+            data.id = Crawler.counter;
+            console.info(`Using Crawler.counter for ID, Crawler.counter=${Crawler.counter}`);
         }
+
+        this.id = data.id;
+
         // NOTE: carry forward the creation time
         if (data.hasOwnProperty('_tsCreation')) {
             this._tsCreation = data._tsCreation;
@@ -185,7 +187,7 @@ export default class Crawler {
             path.resolve(__dirname, `..${path.sep}..${path.sep}crawlers${path.sep}${this.id}.json`)
         );
 
-        console.info(`getFileName is using fp=${fp}`);
+        console.info(`[${Crawler.getModelName()}] [getFileName] Using fp=${fp}`);
 
         return fp;
     };
