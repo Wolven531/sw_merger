@@ -45,11 +45,12 @@ export default class Crawler {
             data = JSON.parse(data);
         }
 
+        Crawler.counter++;
+
         // NOTE: carry forward the ID, if it exists (it will not for new crawlers)
         if (data.hasOwnProperty('id') && (data.id !== null)) {
             console.info(`Carrying forward crawler ID, data.id=${data.id}`);
         } else {
-            Crawler.counter++;
             data.id = Crawler.counter;
             console.info(`Using Crawler.counter for ID, Crawler.counter=${Crawler.counter}`);
         }
