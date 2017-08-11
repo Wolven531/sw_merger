@@ -5,14 +5,10 @@
     </div>
     <div *ngIf="resultText.length > 0">
         <h4>Result as Text</h4>
-        <textarea>
-            {{resultText}}
-        </textarea>
+        <textarea readonly="readonly" rows="1">{{resultText}}</textarea>
     </div>
     <div *ngIf="resultHtml.length > 0">
         <h4>Result as HTML</h4>
-        <textarea>
-            {{resultHtml}}
-        </textarea>
+        <textarea readonly="readonly" rows="1">{{resultHtml}}</textarea>
     </div>
 </div>

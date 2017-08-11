@@ -1,4 +1,4 @@
 .app-crawler-runner textarea {
-    height: 10em;
-    width: 50em;
+    padding: .5em .25em .75em .25em;
+    width: 30em;
 }

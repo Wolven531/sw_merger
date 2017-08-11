@@ -63,8 +63,10 @@ export default class CrawlerRouter {
         console.info(`[crawler] [handleRun] id=${ id }`);
         const returnVal = {
             crawler: this.crawlerMgr.getCrawler(id),
-            resultText: '',
+            _resultHtml: '',
+            _resultText: '',
             resultHtml: '',
+            resultText: '',
             err: null,
         };
         if (!returnVal.crawler) {
@@ -85,8 +87,12 @@ export default class CrawlerRouter {
                 }
 
                 const selectorResult = $(returnVal.crawler.domSelector);
-                returnVal.resultText = selectorResult.text() || '';
-                returnVal.resultHtml = selectorResult.html() || '';
+
+                returnVal._resultHtml = selectorResult.html() || '';
+                returnVal._resultText = selectorResult.text() || '';
+
+                returnVal.resultHtml = returnVal._resultHtml.trim();
+                returnVal.resultText = returnVal._resultText.trim();
 
                 res.json(returnVal);
             });
