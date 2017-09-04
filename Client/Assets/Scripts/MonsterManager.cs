@@ -20,7 +20,7 @@ public class MonsterManager
 
     public IEnumerator GetMonsters()
     {
-        string address = "https://60a1257c.ngrok.io";
+        string address = "https://4ce7f393.ngrok.io";
         WWW www = new WWW(string.Format("{0}/monsters?output=all", address));
         yield return www;
 
